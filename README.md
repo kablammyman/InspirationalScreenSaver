@@ -1,6 +1,6 @@
 # InspirationalScreenSaver
 
-This is a picture slide show screen saver. I use the CFGLib I created to set the configuration options at start up. 
+This is a picture slide show screen saver. I use the CFGLib I created to set the configuration options at start up. This also used allegro4 with the jpegAlleg extension. The current version was being set up to use SQLite3, but it does nothing with the lib yet...this is to work with SmartCatalogue. It will only compile with visual studio 2010 (or a more recent version of VS that uses visual studio's 2010 compiler set in the project options)
 
 This program has a very long history for me. Originally, I used the slide show screen saver that came with windows XP. Once I realized only a small subset of my images were able to be used, I found a similar program that could display all of my images (its called jpegSaver, its a great app). The issue with that program was that my photo collection was growing all the time, and having to re-scan the photo directory for caching was a time consuming process. I made an app to interface with that program to do this for me, then it would launch the screen saver when my app was done. My app was configurable…so I could only load a random directory or randomly pick X directories from a list. Eventually that jpegSavwe was updated and changed the way it worked (it went from using text files to a database) and then it stopped being updated at all. What that meant is that couldn’t use my app to manipulate jpegSaver.
 
@@ -18,7 +18,7 @@ New and interesting image selection techniques
 
 Add the stop watch timer to the app so I can change the timer interval without a restart
 
-Interact with Smart Catalogue
+Interact with SmartCatalogue
 
 Support full screen and window display (hopefully resizable windows with fully working windows controls)
 
