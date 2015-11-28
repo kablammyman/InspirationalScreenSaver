@@ -3,7 +3,7 @@
 
 #include <map>
 #include <string>
-#include "WindowsFiles.h"
+#include "myFileDirDll.h"
 #include "BitMask.h"
 
 /*
@@ -41,9 +41,13 @@ class ImageSelector {
 	std::string toUpper(std::string word);
 	bool checkForIgnorePathList(std::string curPath);
 	void addRangeToIgnoreList(std::vector<std::string> range);
+
+	int getIndexFromFile(string path);
+	string getDirFromIndex(string baseDir, size_t index, bool useIgnoreList = true);
+
 	inline int getNextFolderListIndex(string path, int curIndex)
 	{
-		if(curIndex < WindowsFiles::countFoldersinDir(path))
+		if(curIndex < FileDir::MyFileDirDll::getNumFilesInDir(path))
 			curIndex++;
 		else 
 			curIndex = 0;

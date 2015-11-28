@@ -1,6 +1,6 @@
 
 #include "queueImageSelector.h"
-#include "WindowsFiles.h"
+#include "myFileDirDll.h"
 
 using namespace std;
 
@@ -29,7 +29,7 @@ std::string queueImageSelector::getNextImage (std::vector<std::string> displayLi
 	else 
 		curDirIndex = 0;
 
-	int numFodlersInDir = WindowsFiles::countFoldersinDir(dir);
+	int numFodlersInDir = FileDir::MyFileDirDll::getNumFilesInDir(dir);
 	//first time we doing this for this dir, start at a random spot
 	if(sequentialIndex[curDirIndex] == -1) 	
 		sequentialIndex[curDirIndex] = getRandomNum(0,numFodlersInDir-1);
@@ -40,8 +40,8 @@ std::string queueImageSelector::getNextImage (std::vector<std::string> displayLi
 		sequentialIndex[curDirIndex] = 0;
 
 	
-	string newDir = getRandomDir( WindowsFiles::getDirFromIndex(dir, sequentialIndex[curDirIndex],false),false);
-	return WindowsFiles::getRandomFileFromDir(newDir);
+	string newDir = getRandomDir(getDirFromIndex(dir, sequentialIndex[curDirIndex],false),false);
+	return FileDir::MyFileDirDll::getRandomDirQuick(newDir);
 }
 //--------------------------------------------------------------------------------------------------------
 vector<string> queueImageSelector::queueFolderList(string path)
@@ -49,8 +49,8 @@ vector<string> queueImageSelector::queueFolderList(string path)
 	
 	//cout << "making a queue, starting from a random folder...\n";
 	
-	vector<string> folderList = WindowsFiles::getFolders(path);
-	int numFolders = WindowsFiles::countFoldersinDir(path);
+	vector<string> folderList = FileDir::MyFileDirDll::getAllFolderNamesInDir(path);
+	int numFolders = FileDir::MyFileDirDll::getNumFilesInDir(path);
 	int curDir = getRandomNum(0,numFolders);//doesnt seem to get last dir with the size() -1
 	int seqIndex = 0;
 	int *seqList = new int[numFolders];
@@ -67,12 +67,12 @@ vector<string> queueImageSelector::queueFolderList(string path)
 			{
 				
 				string dir = folderList[curDir];
-				if(seqList[curDir] < WindowsFiles::countFoldersinDir(dir) &&  seqList[curDir] > -1)	
+				if(seqList[curDir] < FileDir::MyFileDirDll::getNumFilesInDir(dir) &&  seqList[curDir] > -1)	
 					seqList[curDir] ++;
 				else
 					seqList[curDir] = 0;
 				
-				folderList.push_back(WindowsFiles::getDirFromIndex(dir, seqList[curDir]));
+				folderList.push_back(getDirFromIndex(dir, seqList[curDir]));
 				validFile = true;
 				if(curDir < numFolders)
 					curDir++;

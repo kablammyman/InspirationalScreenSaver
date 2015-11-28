@@ -1,16 +1,31 @@
-
 #include "workoutTimer.h"
+#include "mainApp.h"
 
-WorkoutTimer::WorkoutTimer (int x, int y) : renderObj(x,y,75,16)
+WorkoutTimer::WorkoutTimer (int x, int y) : RenderObject(x,y,75,16)
 {
 	soundPlayed = false;
 	timerOn = true;
-	min = 2, sec = 55,mil = 99;
 	startElapsedTimer();
+	sound = NULL;
+}
+
+WorkoutTimer::~WorkoutTimer()
+{
+	killSound();
+}
+
+void WorkoutTimer::killSound()
+{
+	if (sound != NULL)
+	{
+		delete sound;
+		sound = NULL;
+	}
 }
 //---------------------------------------------------------------------------------------	
 void WorkoutTimer::loadSoundFile(const char* filePath)
 {
+	killSound();
 	sound = new SoundProxy(filePath);
 }
 //---------------------------------------------------------------------------------------		
@@ -26,14 +41,12 @@ void WorkoutTimer::update()
 		sound->playSound();
 		soundPlayed = true;
 	}
-	clear(bmp);
-	textprintf_ex(bmp, font, 0, 0,  makecol(255,255,255), 0,"%d:%d:%d", workoutTimer.minutes,workoutTimer.seconds,workoutTimer.decimals);
 }
 //---------------------------------------------------------------------------------------		
-void WorkoutTimer::pauseWorkoutTimer()
+void WorkoutTimer::pauseWorkoutTimer(bool shouldPause)
 {
-	if(timerOn)
-		workoutTimer.pause = !workoutTimer.pause;
+	timerOn = shouldPause;
+	workoutTimer.pause = timerOn;
 }
 //---------------------------------------------------------------------------------------	
 void WorkoutTimer::startElapsedTimer()
@@ -49,13 +62,16 @@ void WorkoutTimer::startCountdownTimer()
 		timerOn = !timerOn;
 	else
 		timerOn = true;
-	workoutTimer.startCountdown(min,sec,mil);
+	workoutTimer.startCountdown(MainApp::Instance()->min, MainApp::Instance()->sec, MainApp::Instance()->mil);
 	soundPlayed = false;
 	
 }
 //---------------------------------------------------------------------------------------
  void WorkoutTimer::draw(BITMAP *dest)
 	{
+		clear(bmp);
+		textprintf_ex(bmp, font, 0, 0, makecol(255, 255, 255), 0, "%d:%d:%d", workoutTimer.minutes, workoutTimer.seconds, workoutTimer.decimals);
+
 		//blit(bmp, dest, 0, 0, x, y, w, h); 
 		stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h,x-100,y+30, bmp->w*2, bmp->h*2);
 	}

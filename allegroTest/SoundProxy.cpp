@@ -19,6 +19,13 @@ void SoundProxy::playSound()
 	play_sample(snd, volume, pan, speed, 0);
 }
 
+SoundProxy::~SoundProxy()
+{
+	destroy_sample(snd);
+	snd = NULL;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
 void write_little_endian(unsigned int word, int num_bytes, FILE *wav_file)
 {
     unsigned buf;

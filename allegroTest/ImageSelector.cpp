@@ -1,6 +1,6 @@
 
 #include "ImageSelector.h"
-#include "WindowsFiles.h"
+#include "myFileDirDll.h"
 
 using namespace std;
 
@@ -15,7 +15,7 @@ std::string ImageSelector::getNextImage ()
 
 	string img;
 	int index = 0;
-	int numFiles = WindowsFiles::countFilesInDir(curDir);
+	int numFiles = FileDir::MyFileDirDll::getNumFilesInDir(curDir);
 	if(numFiles == 0)
 		return "";
 
@@ -27,8 +27,8 @@ std::string ImageSelector::getNextImage ()
 
 	for(int i = 0; i < numFiles; i++)
 	{
-		img = WindowsFiles::getRandomFileFromDir(curDir);
-		index = WindowsFiles::getIndexFromFile(img);
+		img = FileDir::MyFileDirDll::getRandomFileQuick(curDir);
+		index = getIndexFromFile(img);
 		galImgeCounter = seenGalleries[curDir];
 		if(!BitMask::isBitSet(index,galImgeCounter))
 			break;
@@ -54,6 +54,21 @@ std::string ImageSelector::toUpper(std::string word)
 	}
 	std::string returnWord = newWord;
 	return returnWord;
+}
+//--------------------------------------------------------------------------------------------------------
+int ImageSelector::getIndexFromFile(string path)
+{
+	string file = FileDir::MyFileDirDll::getFileNameFromPathString(path);
+	string dirPath = FileDir::MyFileDirDll::getPathFromFullyQualifiedPathString(path);
+
+	vector<string> files = FileDir::MyFileDirDll::getAllFolderNamesInDir(dirPath);
+
+	for (size_t i = 0; i < files.size(); i++)
+	{
+		if (files[i].compare(path) == 0)
+			return i;
+	}
+	return -1; //this dir was empty, return empty string
 }
 //--------------------------------------------------------------------------------------------------------
 bool ImageSelector::checkForIgnorePathList(std::string curPath)
@@ -137,7 +152,7 @@ string ImageSelector::getRandomDir(string dir, bool useIgnoreList)
 		{
 			break;
 		}
-		vector<string> curDirList = WindowsFiles::getFolders(curDir);
+		vector<string> curDirList = FileDir::MyFileDirDll::getAllFolderNamesInDir(curDir);
 		
 		if(curDirList.size() == 0)//there are no more folders
 			done = true;
@@ -227,4 +242,31 @@ void ImageSelector::gotoPrevImage()
 		curImgSeenIndex--;
 	else
 		curImgSeenIndex = 0;
+}
+//--------------------------------------------------------------------------------------------------------
+string ImageSelector::getDirFromIndex(string baseDir, size_t index, bool useIgnoreList)
+{
+	//short circuit for ignore stuff
+	/*if(useIgnoreList)
+	{
+	if(checkForIgnorePathList(ignoreList, baseDir))
+	return "";
+	}*/
+
+	vector<string> curDirList = FileDir::MyFileDirDll::getAllFolderNamesInDir(baseDir.c_str());
+	if (index >= curDirList.size())
+		index = curDirList.size() - 1;
+	if (index < curDirList.size() && index > -1)
+	{
+		string returnDir = curDirList[index];
+		/*if(useIgnoreList)
+		{
+		if(checkForIgnorePathList(ignoreList, returnDir))
+		return "";
+		}*/
+		return returnDir;
+	}
+
+	//if we are here, then we prob had an invalid index
+	return "";
 }

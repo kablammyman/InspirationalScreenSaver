@@ -31,6 +31,7 @@ private:
 	//unsigned char* create_wav(unsigned long num_samples, /*short*/ int * data, int s_rate,int & sizeOfWav);
 public:
 	SoundProxy(const char * path);
+	~SoundProxy();
 
 	void playSound();
 	unsigned char *doSoundCreateTest();

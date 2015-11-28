@@ -1,5 +1,5 @@
 #include "shuffledImageSelector.h"
-#include "WindowsFiles.h"
+#include "myFileDirDll.h"
 
 using namespace std;
 
@@ -14,8 +14,8 @@ std::string shuffledImageSelector::getNextImage (std::vector<std::string> displa
 //--------------------------------------------------------------------------------------------------------
 vector<string> shuffledImageSelector::shuffleFolderList(string path)
 {
-	vector<string> folderList = WindowsFiles::getFolders(path);
-	int numFolders = WindowsFiles::countFoldersinDir(path);
+	vector<string> folderList = FileDir::MyFileDirDll::getAllFolderNamesInDir(path);
+	int numFolders = FileDir::MyFileDirDll::getNumFilesInDir(path);
 
 	//cout << "shuffling folders...\n";
 

@@ -11,6 +11,10 @@ protected:
 public:
 	virtual void update() {}
 	virtual void draw() {}
+	virtual void changeScreenSize(int screenW, int screenH)
+	{
+		renderer.resizeScreenBuffer(screenW, screenH);
+	}
 };
 
 #endif //SCENE_H

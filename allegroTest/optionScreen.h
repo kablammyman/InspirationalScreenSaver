@@ -11,7 +11,7 @@ class optionsScreen : public Scene
 	bool    insert;                    // true of should text be inserted
 	string  edittext;                         // an empty string for editting
 	string::iterator iter; // string iterator
-	renderObj *infoImg;
+	RenderObject *infoImg;
 public:
 	
 	optionsScreen();

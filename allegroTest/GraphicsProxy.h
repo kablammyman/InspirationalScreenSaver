@@ -14,8 +14,7 @@ class GraphicsProxy
 public:
 	static void initGraphics();
 	static void setColorDepth();
-	static bool changeScreenRes(bool fullScreen, int sw = 0, int sh = 0);
-	static bool getCompleteKeyPress(int k);
+	static bool changeScreenRes(bool fullScreen, bool useDesktopRes, int sw = 0, int sh = 0);
 	static BITMAP* loadJPEG(const char * filePath);
 
 	static int getScreenWidth();

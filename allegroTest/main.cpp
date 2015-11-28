@@ -3,21 +3,22 @@
 
 #include <sys/stat.h>
 
-
 #include <string>
 #include <vector>
 #include <stdio.h>
 
 #include "GraphicsProxy.h"
-#include "WindowsFiles.h"
-#include "mainApp.h"
+#include "myFileDirDll.h"
+#include "ScreenSaver.h"
 #include "optionScreen.h"
 #include "renderer.h"
+#include "stopWatchMain.h"
 
-
+#include "mainApp.h"
 
 //windows debugging symbols
 //debug definitions are turned on with /D
+//property pages -> c/c++-> Preprocessor Definitions -> /D turns on _DEBUG
 
 using namespace std;
 
@@ -37,21 +38,30 @@ int main(int argc, char* argv[])
 	GraphicsProxy::initGraphics();
 	GraphicsProxy::setColorDepth();
 	
-	if(!GraphicsProxy::changeScreenRes(true))
+	if(!GraphicsProxy::changeScreenRes(false,false,1280,1024))
 	{
 		exit(-1);
 	}
 
 	initAllegroTimer();
+	
+	MainApp::Instance()->initVars(filePathBase);
+	MainApp::Instance()->readCFG();
 
+	vector<Scene*> allScenes;
 
 	Scene *curScreen;
-	mainApp app;
+	ScreenSaver screenSaver;
 	optionsScreen options;
+	StopWatchMain stopWatchScreen;
 
-	app.readCFG(filePathBase);		
-	
-	curScreen = &app;
+	allScenes.push_back(&screenSaver);
+	allScenes.push_back(&options);
+	allScenes.push_back(&stopWatchScreen);
+
+	size_t sceneIndex = 0;
+
+	curScreen = allScenes[sceneIndex];
 
 	do//  all the looping begins here, duh
 	{                                 
@@ -59,7 +69,29 @@ int main(int argc, char* argv[])
 		{
 			if (key[KEY_ESC])  //this will exit you from the game...and the program as of now
 				done = true;
+			if (key[KEY_ALT] && key[KEY_ENTER])
+			{
+				while (key[KEY_ALT] && key[KEY_ENTER]) {}//only do action once key is released
 
+				if(GraphicsProxy::isFullScreen())
+					GraphicsProxy::changeScreenRes(false,false,1280,1024);
+				else
+					GraphicsProxy::changeScreenRes(true,true);
+
+				curScreen->changeScreenSize(GraphicsProxy::getScreenWidth(), GraphicsProxy::getScreenHeight());
+			}
+
+			if (key[KEY_F2])
+			{
+				while (key[KEY_F2]) {}//only do action once key is released
+
+				if (sceneIndex < (allScenes.size() - 1))
+					sceneIndex++;
+				else
+					sceneIndex = 0;
+
+				curScreen = allScenes[sceneIndex];
+			}
 			curScreen->update();
 			speed_counter--;   //for constant rate
 

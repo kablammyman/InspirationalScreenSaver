@@ -2,21 +2,21 @@
 #include "AllegroTimer.h"
 #include "SoundProxy.h"
 
-class WorkoutTimer : public renderObj
+class WorkoutTimer : public RenderObject
 {
 	AllegroTimer workoutTimer;
 	bool timerOn;
-	float min, sec,mil;
 	SoundProxy *sound;
 	bool soundPlayed;
+	void killSound();
 public: 
-	const char * soundFilePath;
 	WorkoutTimer (int x, int y);
-	
+	~WorkoutTimer();
+
 	void loadSoundFile(const char* filePath);
 
-	virtual void update();
-	void pauseWorkoutTimer();
+	void update();
+	void pauseWorkoutTimer(bool shouldPause);
 	void startCountdownTimer();
 	void startElapsedTimer();
 	void draw(BITMAP *dest);

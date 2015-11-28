@@ -28,57 +28,41 @@ void GraphicsProxy::setColorDepth()
 		alert("bad color depth", "couldnt set it", "Using defaults.","&Continue", NULL, 'c', 0);
 }
 //isFullScreen
-bool GraphicsProxy::changeScreenRes(bool fs, int sw, int sh )
+bool GraphicsProxy::changeScreenRes(bool fs, bool useDesktopRes, int sw, int sh )
 {
-
+	int ret = 0;
 	fullScreen = fs;
+
+	if (sw > 0 && sh > 0)
+	{
+		screenWidth = sw;
+		screenHeight = sh;
+	}
 	
-#ifdef _DEBUG
-	fullScreen = false;
-#endif
-
-	if (get_desktop_resolution(&screenWidth, &screenHeight) == 0)
+	if (fullScreen)
 	{
-		int ret = 0;
-		//property pages -> c/c++-> Preprocessor Definitions -> /D turns on _DEBUG
-		if(!fullScreen)
-		{
-			ret=set_gfx_mode(GFX_AUTODETECT_WINDOWED,1280,1024,0,0); screenWidth = 1280; screenHeight = 1024;
-			//let the program run in the background
-			set_display_switch_mode(SWITCH_BACKGROUND);
-		}
-		else
-		{
-			if(sw > 0 && sh > 0)
-			{
-				screenWidth = sw;
-				screenHeight = sh;
-			}
-			ret=set_gfx_mode(GFX_AUTODETECT_FULLSCREEN,screenWidth,screenHeight,0,0);
-			//let the program run in the background
-			set_display_switch_mode(SWITCH_BACKAMNESIA);
-		}
+		if (useDesktopRes)
+			get_desktop_resolution(&screenWidth, &screenHeight);
 
-		if(ret!=0)
-		{
-			allegro_message(allegro_error);
-			return false;
-		}
+		ret = set_gfx_mode(GFX_AUTODETECT_FULLSCREEN, screenWidth, screenHeight, 0, 0);
+		//let the program run in the background
+		set_display_switch_mode(SWITCH_BACKAMNESIA);
+		
 	}
+	else
+	{
+		ret = set_gfx_mode(GFX_AUTODETECT_WINDOWED, screenWidth, screenHeight, 0, 0);
+		//let the program run in the background
+		set_display_switch_mode(SWITCH_BACKGROUND);
+	}
+
+	if (ret != 0)
+	{
+		allegro_message(allegro_error);
+		return false;
+	}
+
 	return true;
-}
-
-
-
-//return true when key is pressed, then released	
-bool GraphicsProxy::getCompleteKeyPress(int k)
-{
-	if(key[k])
-	{
-	while (key[k]) {}//only do action once key is released
-		return true;
-	}
-	return false;
 }
 
 

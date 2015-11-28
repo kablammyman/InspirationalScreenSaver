@@ -9,7 +9,7 @@ optionsScreen::optionsScreen()
 	insert = true;
 	iter = edittext.begin();
 
-	infoImg = new renderObj(0,0,900,30);
+	infoImg = new RenderObject(0,0,900,30);
 
 	renderer.init(GraphicsProxy::getScreenWidth(), GraphicsProxy::getScreenHeight());
 	renderer.addToRenderList(infoImg);
