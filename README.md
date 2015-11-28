@@ -1,4 +1,24 @@
 # InspirationalScreenSaver
+This can only be built with visual studio 2010 becasue of the allegro 4 lib i used. If you build allegro 4 with a newer vis studio, or use another graphics lib, then you can build the project with a more modern version of visual studio.
+
+
+updates:
+
+Added the stop watch timer to the app so I can change the timer interval without a restart (press f2 to toggle the screens)
+
+Support full screen and window display (press alt+enter) 
+
+Future plans:
+
+Add fully working windows controls in windowed mode
+
+New and interesting screen transitions
+
+New and interesting image selection techniques
+
+Interact with SmartCatalogue
+
+Being able to use my “super clever” algo to prevent showing repeat images for directories that have more than 128 images
 
 This is a picture slide show screen saver. I use the CFGLib I created to set the configuration options at start up. This also used allegro4 with the jpegAlleg extension. The current version was being set up to use SQLite3, but it does nothing with the lib yet...this is to work with SmartCatalogue. It will only compile with visual studio 2010 (or a more recent version of VS that uses visual studio's 2010 compiler set in the project options)
 
@@ -9,17 +29,3 @@ That’s when I decided to make my own screen saver…one that just reads from a
 
 
 The latest version is feature complete with the previous version, but I haven’t added the new features I wanted yet. I did fix some older issues, and made things much more efficient, but adding the new transitions and image selection techniques hasn’t happened yet. Maybe one day… 
-
-Future plans:
-
-New and interesting screen transitions
-
-New and interesting image selection techniques
-
-Add the stop watch timer to the app so I can change the timer interval without a restart
-
-Interact with SmartCatalogue
-
-Support full screen and window display (hopefully resizable windows with fully working windows controls)
-
-Being able to use my “super clever” algo to prevent showing repeat images for directories that have more than 128 images
