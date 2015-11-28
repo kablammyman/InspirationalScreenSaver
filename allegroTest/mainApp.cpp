@@ -65,8 +65,13 @@ bool MainApp::readCFG()
 	}
 
 
-	numFoldersInBase = 24; // FileDir::MyFileDirDll::getNumFoldersinDir(mainWorkingPath);
+	numFoldersInBase = FileDir::MyFileDirDll::getNumFoldersinDir(mainWorkingPath);
 
+	if (numFoldersInBase < 1)
+	{
+		//alert("errorz", "invalid mainWorkingPaqth in cfg filw", "Using defaults.", "&Continue", NULL, 'c', 0);
+		return false;
+	}
 	for (size_t i = 0; i < displayDirs.size(); i++)
 		if (displayDirs[i] == "all")
 		{

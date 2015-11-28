@@ -1,11 +1,9 @@
 #include <allegro.h>
 #include <winalleg.h>
 
-#include <sys/stat.h>
 
 #include <string>
 #include <vector>
-#include <stdio.h>
 
 #include "GraphicsProxy.h"
 #include "myFileDirDll.h"

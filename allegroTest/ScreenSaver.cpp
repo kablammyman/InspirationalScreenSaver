@@ -110,9 +110,11 @@ bool ScreenSaver::doDelete(string path, string createDate)
 void ScreenSaver::changeImage(bool update)
 {			
 	filePath = allFiles.changeImage(update);
-	if(filePath.empty())
+	if (filePath.empty())
+	{
+		curImage->noImageMessage();
 		return;
-	
+	}
 	imageTimer.startCountdown(0,5,0);
 	imageTimer.pause = true;
 	curImage->loadImage(filePath);

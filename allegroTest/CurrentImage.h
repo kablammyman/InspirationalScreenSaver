@@ -14,13 +14,14 @@ class CurrentImage : public RenderObject
 	float scaleFactor;
 	float curImgWidth, curImgHeight;
 	float targetScaleFactor;
-
+	bool noImages;
 	std::string curImagePath;
 	int getRandomNum(int min, int max);
 public:
 	bool imageTransition;
 	virtual void update();
 	CurrentImage();
+	void noImageMessage();
 	void loadImage(std::string imageToLoad);
 	virtual void draw(BITMAP *dest);
 };

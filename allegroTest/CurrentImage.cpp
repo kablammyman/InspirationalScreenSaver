@@ -19,6 +19,7 @@ CurrentImage::CurrentImage() : RenderObject(0, 0, 200, 200)
 //---------------------------------------------------------------------------------------
 void CurrentImage::loadImage(std::string imageToLoad)
 {
+	noImages = false;
 	targetScaleFactor = 1.0f;
 	targetImgWidth = 0, targetImgHeight = 0;
 	curImagePath = imageToLoad;
@@ -111,6 +112,11 @@ void CurrentImage::draw(BITMAP *dest)
 		return;
 	}
 	
+	if (noImages)
+	{
+		textprintf_ex(dest, font, dest->w / 4, (dest->h / 2) + 10, makecol(255, 255, 255), 0, "NO IMAGES IN DIR!! Check your cfg file");
+		return;
+	}
 	if (imageTransition)
 		stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, x, y, (int)curImgWidth, (int)curImgHeight);
 	else
@@ -125,4 +131,9 @@ int CurrentImage::getRandomNum(int min, int max)
 		return ((diff * rand()) / RAND_MAX) + min;
 	}
 	//return rand()%max + min;
+}
+//---------------------------------------------------------------------------------------
+void CurrentImage::noImageMessage()
+{
+	noImages = true;
 }
