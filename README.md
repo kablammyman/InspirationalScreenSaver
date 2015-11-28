@@ -1,4 +1,5 @@
 # InspirationalScreenSaver
+This can only be built with visual studio 2010 becasue of the allegro 4 lib i used. If you build allegro 4 with a newer vis studio, or use another graphics lib, then you can build the project with a more modern version of visual studio.
 
 This is a picture slide show screen saver. I use the CFGLib I created to set the configuration options at start up. This also used allegro4 with the jpegAlleg extension. The current version was being set up to use SQLite3, but it does nothing with the lib yet...this is to work with SmartCatalogue. It will only compile with visual studio 2010 (or a more recent version of VS that uses visual studio's 2010 compiler set in the project options)
 
