@@ -1,5 +1,6 @@
 #include "CurrentImage.h"
 #include "GraphicsProxy.h"
+#include "mainApp.h"
 
 CurrentImage::CurrentImage() : RenderObject(0, 0, 200, 200)
 {
@@ -114,7 +115,7 @@ void CurrentImage::draw(BITMAP *dest)
 	
 	if (noImages)
 	{
-		textprintf_ex(dest, font, dest->w / 4, (dest->h / 2) + 10, makecol(255, 255, 255), 0, "NO IMAGES IN DIR!! Check your cfg file");
+		textprintf_ex(dest, font, dest->w / 4, (dest->h / 2) + 10, makecol(255, 255, 255), 0, "NO IMAGES IN %s, Check your cfg file", MainApp::Instance()->mainWorkingPath.c_str());
 		return;
 	}
 	if (imageTransition)
