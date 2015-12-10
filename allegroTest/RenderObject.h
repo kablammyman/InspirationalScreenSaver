@@ -32,6 +32,11 @@ public:
 			bmp = NULL;
 		}
 
+		if (w < 1 || h < 1)
+		{
+			bmp = NULL;
+			return;
+		}
 		bmp = create_bitmap(w, h);
 		clear(bmp);
 	}

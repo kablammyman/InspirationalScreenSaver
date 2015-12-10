@@ -22,6 +22,11 @@ void MainApp::initVars(string path)
 	timeinfo = NULL;
 
 	min = 2, sec = 5, mil = 0;
+	imageDisplayTimeLength = 5;
+	viewPathInfo = true;
+	viewClock = true;
+	viewWorkoutTimer = true;
+	useImageMemory = true;
 
 	filePathBase = path;
 	sndFile = filePathBase + "\\snd.wav";

@@ -40,6 +40,11 @@ public:
 	int dirSelectionForDisplay;
 	vector<string> displayDirs;
 
+	bool useImageMemory;
+	bool viewWorkoutTimer;
+	bool viewClock;
+	bool viewPathInfo;
+	int imageDisplayTimeLength;
 	/*
 	bool openDataBase(std::string name);
 	void closeDataBase();

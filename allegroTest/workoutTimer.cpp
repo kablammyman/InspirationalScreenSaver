@@ -69,6 +69,8 @@ void WorkoutTimer::startCountdownTimer()
 //---------------------------------------------------------------------------------------
  void WorkoutTimer::draw(BITMAP *dest)
 	{
+		if (!MainApp::Instance()->viewWorkoutTimer)
+			return;
 		clear(bmp);
 		textprintf_ex(bmp, font, 0, 0, makecol(255, 255, 255), 0, "%d:%d:%d", workoutTimer.minutes, workoutTimer.seconds, workoutTimer.decimals);
 

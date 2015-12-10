@@ -115,7 +115,7 @@ void ScreenSaver::changeImage(bool update)
 		curImage->noImageMessage();
 		return;
 	}
-	imageTimer.startCountdown(0,5,0);
+	imageTimer.startCountdown(0, MainApp::Instance()->imageDisplayTimeLength,0);
 	imageTimer.pause = true;
 	curImage->loadImage(filePath);
 }
@@ -128,6 +128,8 @@ void ScreenSaver::update()
 
 	renderer.updateAllRenderObjects();
 	imageTimer.updateStopWatch();
+	
+	
 	refreshTimer.updateStopWatch();
 
 	if(!curImage->imageTransition)
@@ -169,9 +171,12 @@ void ScreenSaver::update()
 void ScreenSaver::draw()
 {
 	clear(infoImg->getBitmap());
-	textprintf_ex(infoImg->getBitmap(), font, 10, 0, makecol(255, 255, 255), 0, "%s", filePath.c_str());
+	if(MainApp::Instance()->viewPathInfo)
+		textprintf_ex(infoImg->getBitmap(), font, 10, 0, makecol(255, 255, 255), 0, "%s", filePath.c_str());
+
 	textprintf_ex(infoImg->getBitmap(), font, 10, 10, makecol(255, 255, 255), 0, "fps: %d", fps);
-	textprintf_ex(infoImg->getBitmap(), font, 10, 20, makecol(255, 255, 255), 0, "%s", MainApp::Instance()->getTimeString().c_str());
+	if(MainApp::Instance()->viewClock)
+		textprintf_ex(infoImg->getBitmap(), font, 10, 20, makecol(255, 255, 255), 0, "%s", MainApp::Instance()->getTimeString().c_str());
 	/*#ifdef _DEBUG
 	textprintf_ex(screenBuffer, font, 10, 10, makecol(255, 255, 255), 0, "scale: %f (%f x %f)", scaleFactor, imgWidth, imgHeight);
 	textprintf_ex(screenBuffer, font, 10, 20, makecol(255, 255, 255), 0, "%d:%d:%d", imageTimer.minutes, imageTimer.seconds, imageTimer.decimals);
