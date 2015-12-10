@@ -1,4 +1,4 @@
-
+#include <algorithm>    // std::sort
 #include "ImageSelector.h"
 #include "myFileDirDll.h"
 
@@ -130,7 +130,7 @@ vector<string> ImageSelector::randomizeFolderList(string path, int numFolders)
 	return folderList;
 }
 //--------------------------------------------------------------------------------------------------------
-//pics a dir from the master list, then "digs" down to get soething new
+//picks a dir from the master list, then "digs" down to get soething new
 string ImageSelector::getRandomDir(string dir, bool useIgnoreList)
 {
 	//short circuit for ignore stuff
@@ -164,9 +164,40 @@ string ImageSelector::getRandomDir(string dir, bool useIgnoreList)
 
 		else
 		{
+			int size = curDirList.size();
 			int nextDir = 0;
-			if(curDirList.size()-1 > 1)
+
+			//if we have 1
+			if (size == 1)
+				nextDir = 0;
+			//we want the bigger dirs to have priority over smaller ones, so lets find the bigest one!
+			else if (size > 1 && size < 4)
+			{
+				vector<__int64> dirSizes;
+				__int64 runningSize = 0;
+				for (size_t i = 0; i < size; i++)
+				{
+					dirSizes.push_back(FileDir::MyFileDirDll::getDirSize(curDirList[i]));
+					runningSize += dirSizes.back();//add the latest item to the running count
+				}
+
+				//now treat all directors in here as 100%, find the percentage of each, so the rand
+				//has a high chance of picking the biggest dir
+				sort(dirSizes.begin(), dirSizes.end());
+
+				for (size_t i = 0; i < size; i++)
+					dirSizes[i] /= runningSize;
+
+				nextDir = getRandomNum(0, 100);
+
+				//find hte proper index that shows what percent
+				for (size_t i = 0; i < size; i++)
+					if (nextDir < dirSizes[i])
+						nextDir = i;
+			}
+			else
 				nextDir = getRandomNum(0, curDirList.size()-1);
+
 			string newDir = curDirList[nextDir];
 
 			if(useIgnoreList)
@@ -192,9 +223,12 @@ string ImageSelector::getRandomDir(string dir, bool useIgnoreList)
 //--------------------------------------------------------------------------------------------------------
 string ImageSelector::getRandomDirFromFolderList(vector<string> &dirList)
 {
-	if(dirList.size() > 0)
-		return dirList[getRandomNum(0,dirList.size()-1)];
-	return "";
+	if (dirList.size() == 0)
+		return "";
+	else if (dirList.size() == 0)
+		return dirList[0];
+	
+	return dirList[getRandomNum(0,dirList.size()-1)];
 }
 //---------------------------------------------------------------------------------------
 string ImageSelector::changeImage(bool update)

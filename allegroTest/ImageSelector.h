@@ -57,12 +57,14 @@ class ImageSelector {
 
 	inline int getRandomNum(int min, int max)
 	{
-	//	if(rand()%10 > 5)
+		if (max - min == 1)
+			return (1 + rand() % 10) > 5 ? 1 : 0;
+
+		else
 		{
 			int diff = ((max - min) + 1);
 			return ((diff * rand())/RAND_MAX) + min;
 		}
-	//	return rand()%max + min;
 	}
   public:
 
