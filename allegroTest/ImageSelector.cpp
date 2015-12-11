@@ -164,7 +164,7 @@ string ImageSelector::getRandomDir(string dir, bool useIgnoreList)
 
 		else
 		{
-			int size = curDirList.size();
+			size_t size = curDirList.size();
 			int nextDir = 0;
 
 			//if we have 1
@@ -186,14 +186,22 @@ string ImageSelector::getRandomDir(string dir, bool useIgnoreList)
 				sort(dirSizes.begin(), dirSizes.end());
 
 				for (size_t i = 0; i < size; i++)
-					dirSizes[i] /= runningSize;
+				{
+					double temp = ((double)dirSizes[i] / (double)runningSize);
+					temp *= 100;
+					dirSizes[i] =  (__int64)temp;
+				}
+				int index = getRandomNum(0, 100);
+				nextDir = -1;
 
-				nextDir = getRandomNum(0, 100);
-
-				//find hte proper index that shows what percent
 				for (size_t i = 0; i < size; i++)
-					if (nextDir < dirSizes[i])
+				{
+					if (index > dirSizes[i])
 						nextDir = i;
+				}
+
+				if(nextDir == -1)
+					nextDir = size-1;
 			}
 			else
 				nextDir = getRandomNum(0, curDirList.size()-1);
