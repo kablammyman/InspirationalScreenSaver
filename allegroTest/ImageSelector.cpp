@@ -190,13 +190,15 @@ string ImageSelector::getRandomDir(string dir, bool useIgnoreList)
 					double temp = ((double)dirSizes[i] / (double)runningSize);
 					temp *= 100;
 					dirSizes[i] =  (__int64)temp;
+					if (dirSizes[i] == 0)
+						dirSizes[i] = 1;
 				}
 				int index = getRandomNum(0, 100);
 				nextDir = -1;
 
-				for (size_t i = 0; i < size; i++)
+				for (size_t i = size-1; i > 0; i--)
 				{
-					if (index > dirSizes[i])
+					if (index < dirSizes[i])
 						nextDir = i;
 				}
 
@@ -233,7 +235,7 @@ string ImageSelector::getRandomDirFromFolderList(vector<string> &dirList)
 {
 	if (dirList.size() == 0)
 		return "";
-	else if (dirList.size() == 0)
+	else if (dirList.size() == 1)
 		return dirList[0];
 	
 	return dirList[getRandomNum(0,dirList.size()-1)];
