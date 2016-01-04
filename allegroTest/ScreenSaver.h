@@ -35,7 +35,7 @@ class ScreenSaver : public Scene
 	bool showLegend;
 	bool timeOver;
 
-	queueImageSelector allFiles;
+	queueImageSelector imageSelector;
 	KeyProxy keyProxy;
 
 	string filePath;

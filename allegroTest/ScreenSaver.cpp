@@ -28,7 +28,7 @@ ScreenSaver::ScreenSaver()
 	renderer.addToRenderList(infoImg);
 	setCurImgObj(curImage);
 
-	allFiles.init(MainApp::Instance()->numFoldersInBase);
+	imageSelector.init(MainApp::Instance()->numFoldersInBase);
 
 	/*	switch(dirSelectionForDisplay)
 	{
@@ -44,7 +44,7 @@ ScreenSaver::ScreenSaver()
 	break;
 	}*/
 
-	allFiles.setDisplayList(MainApp::Instance()->displayDirs);
+	imageSelector.setDisplayList(MainApp::Instance()->displayDirs);
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::setCurImgObj( CurrentImage *c)
@@ -74,14 +74,14 @@ bool ScreenSaver::doDelete(string path, string createDate)
 		MainApp::Instance()->writeToLogFile(delString);
 	}
 	
-	int recycleErrorVal = 	FileDir::MyFileDirDll::deleteFile( path.c_str() );
+	int recycleErrorVal = 	MyFileDirDll::deleteFile( path.c_str() );
 	int permDeleteErrorVal = 0;
 	if(recycleErrorVal > 0)//try to send to recycle bin failed
 	{
-		permDeleteErrorVal = FileDir::MyFileDirDll::deleteFile( path.c_str(),true );
+		permDeleteErrorVal = MyFileDirDll::deleteFile( path.c_str(),true );
 		if(permDeleteErrorVal == 0)//cant send there, perm delete
 		{
-			lastError = FileDir::MyFileDirDll::deleteAllFilesInDir( path.c_str() );
+			lastError = MyFileDirDll::deleteAllFilesInDir( path.c_str() );
 			if(lastError != "") //try to delete each file individually
 			{
 				string errorString = ("-------recycle error1: " + recycleErrorVal);
@@ -109,7 +109,7 @@ bool ScreenSaver::doDelete(string path, string createDate)
 //---------------------------------------------------------------------------------------
 void ScreenSaver::changeImage(bool update)
 {			
-	filePath = allFiles.changeImage(update);
+	filePath = imageSelector.changeImage(update);
 	if (filePath.empty())
 	{
 		curImage->noImageMessage();
@@ -190,20 +190,20 @@ void ScreenSaver::draw()
 }
 void ScreenSaver::gotoNextImage()
 {
-	allFiles.gotoNextImage();
+	imageSelector.gotoNextImage();
 	changeImage(false);
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::gotoPrevImage()
 {
-	allFiles.gotoPrevImage();
+	imageSelector.gotoPrevImage();
 	changeImage(false);
 	
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::deleteSingleImage(string fileToDelete)
 {
-	//allFiles.myDeleteFile( filePath.c_str() );
+	//imageSelector.myDeleteFile( filePath.c_str() );
 	doDelete(fileToDelete);
 	//clearScreen();
 	//textprintf_ex(screen, font, screenWidth/4, screenHeight/2,  makecol(255,255,255), 0, "deleted: %s",filePath.c_str());

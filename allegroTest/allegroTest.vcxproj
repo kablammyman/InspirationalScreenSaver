@@ -75,8 +75,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BitMask.cpp" />
     <ClCompile Include="CurrentImage.cpp" />
+    <ClCompile Include="GalleryMemory.cpp" />
     <ClCompile Include="GraphicsProxy.cpp" />
     <ClCompile Include="AllegroKeys.cpp" />
     <ClCompile Include="KeyProxy.cpp" />
@@ -96,9 +96,9 @@
     <None Include="C:\allegro-4.4.2\bin\allegro-4.4.2-md.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BitMask.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="CurrentImage.h" />
+    <ClInclude Include="GalleryMemory.h" />
     <ClInclude Include="GraphicsProxy.h" />
     <ClInclude Include="ImageSelector.h" />
     <ClInclude Include="AllegroKeys.h" />

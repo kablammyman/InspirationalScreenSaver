@@ -20,7 +20,7 @@ queueImageSelector::~queueImageSelector()
 	sequentialIndex.clear();
 }
 
-std::string queueImageSelector::getNextImage (std::vector<std::string> displayList)
+std::string queueImageSelector::getNextImage (std::vector<std::string> &displayList)
 {
 	string dir = displayList[curDirIndex];
 
@@ -29,7 +29,7 @@ std::string queueImageSelector::getNextImage (std::vector<std::string> displayLi
 	else 
 		curDirIndex = 0;
 
-	int numFodlersInDir = FileDir::MyFileDirDll::getNumFilesInDir(dir);
+	int numFodlersInDir = MyFileDirDll::getNumFilesInDir(dir);
 	//first time we doing this for this dir, start at a random spot
 	if(sequentialIndex[curDirIndex] == -1) 	
 		sequentialIndex[curDirIndex] = getRandomNum(0,numFodlersInDir-1);
@@ -41,7 +41,7 @@ std::string queueImageSelector::getNextImage (std::vector<std::string> displayLi
 
 	
 	string newDir = getRandomDir(getDirFromIndex(dir, sequentialIndex[curDirIndex],false),false);
-	return FileDir::MyFileDirDll::getRandomDirQuick(newDir);
+	return MyFileDirDll::getRandomDirQuick(newDir);
 }
 //--------------------------------------------------------------------------------------------------------
 vector<string> queueImageSelector::queueFolderList(string path)
@@ -49,8 +49,8 @@ vector<string> queueImageSelector::queueFolderList(string path)
 	
 	//cout << "making a queue, starting from a random folder...\n";
 	
-	vector<string> folderList = FileDir::MyFileDirDll::getAllFolderNamesInDir(path);
-	int numFolders = FileDir::MyFileDirDll::getNumFilesInDir(path);
+	vector<string> folderList = MyFileDirDll::getAllFolderNamesInDir(path);
+	int numFolders = MyFileDirDll::getNumFilesInDir(path);
 	int curDir = getRandomNum(0,numFolders);//doesnt seem to get last dir with the size() -1
 	int seqIndex = 0;
 	int *seqList = new int[numFolders];
@@ -67,7 +67,7 @@ vector<string> queueImageSelector::queueFolderList(string path)
 			{
 				
 				string dir = folderList[curDir];
-				if(seqList[curDir] < FileDir::MyFileDirDll::getNumFilesInDir(dir) &&  seqList[curDir] > -1)	
+				if(seqList[curDir] < MyFileDirDll::getNumFilesInDir(dir) &&  seqList[curDir] > -1)	
 					seqList[curDir] ++;
 				else
 					seqList[curDir] = 0;

@@ -70,7 +70,7 @@ bool MainApp::readCFG()
 	}
 
 
-	numFoldersInBase = FileDir::MyFileDirDll::getNumFoldersinDir(mainWorkingPath);
+	numFoldersInBase = MyFileDirDll::getNumFoldersinDir(mainWorkingPath);
 
 	if (numFoldersInBase < 1)
 	{
@@ -82,7 +82,7 @@ bool MainApp::readCFG()
 		{
 			//gotta dewlete other folders first
 			displayDirs.clear();
-			displayDirs = FileDir::MyFileDirDll::getAllFolderNamesInDir(mainWorkingPath);
+			displayDirs = MyFileDirDll::getAllFolderNamesInDir(mainWorkingPath);
 			break;
 		}
 

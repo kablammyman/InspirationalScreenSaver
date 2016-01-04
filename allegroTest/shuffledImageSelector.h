@@ -11,7 +11,7 @@ class shuffledImageSelector : ImageSelector
   protected:
     int width, height;  
   public:
-    std::string getNextImage (std::vector<std::string> displayList);
+    std::string getNextImage (std::vector<std::string> &displayList);
 	std::vector<std::string> shuffleFolderList(std::string path);
 };
 

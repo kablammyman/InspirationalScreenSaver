@@ -3,7 +3,7 @@
 
 using namespace std;
 
-std::string shuffledImageSelector::getNextImage (std::vector<std::string> displayList)
+std::string shuffledImageSelector::getNextImage (std::vector<std::string> &displayList)
 {
 	if(curDirIndex > 0)
 		curDirIndex--;
@@ -14,8 +14,8 @@ std::string shuffledImageSelector::getNextImage (std::vector<std::string> displa
 //--------------------------------------------------------------------------------------------------------
 vector<string> shuffledImageSelector::shuffleFolderList(string path)
 {
-	vector<string> folderList = FileDir::MyFileDirDll::getAllFolderNamesInDir(path);
-	int numFolders = FileDir::MyFileDirDll::getNumFilesInDir(path);
+	vector<string> folderList = MyFileDirDll::getAllFolderNamesInDir(path);
+	int numFolders = MyFileDirDll::getNumFilesInDir(path);
 
 	//cout << "shuffling folders...\n";
 

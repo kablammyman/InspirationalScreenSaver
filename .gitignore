@@ -4,3 +4,4 @@ Debug/
 ipch/
 *.sdf
 .vs/
+*.suo
