@@ -107,14 +107,20 @@ bool ScreenSaver::doDelete(string path, string createDate)
 
 }
 //---------------------------------------------------------------------------------------
-void ScreenSaver::changeImage(bool update)
+void ScreenSaver::changeImage(string newImage)
 {			
-	filePath = imageSelector.changeImage(update);
+	if (!newImage.empty())
+		filePath = newImage;
+	else
+		filePath = imageSelector.getNextImage();
+
+	//if we STILL dont have an image...
 	if (filePath.empty())
 	{
 		curImage->noImageMessage();
 		return;
 	}
+
 	imageTimer.startCountdown(0, MainApp::Instance()->imageDisplayTimeLength,0);
 	imageTimer.pause = true;
 	curImage->loadImage(filePath);
@@ -190,14 +196,14 @@ void ScreenSaver::draw()
 }
 void ScreenSaver::gotoNextImage()
 {
-	imageSelector.gotoNextImage();
-	changeImage(false);
+	string img = imageSelector.gotoNextImage();
+	changeImage(img);
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::gotoPrevImage()
 {
-	imageSelector.gotoPrevImage();
-	changeImage(false);
+	string img = imageSelector.gotoPrevImage();
+	changeImage(img);
 	
 }
 //---------------------------------------------------------------------------------------

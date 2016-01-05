@@ -66,7 +66,11 @@ int main(int argc, char* argv[])
 		while (speed_counter > 0)//this makes sure the game runs at a constant rate on any machine
 		{
 			if (key[KEY_ESC])  //this will exit you from the game...and the program as of now
+			{
 				done = true;
+				break;
+			}
+			
 			if (key[KEY_ALT] && key[KEY_ENTER])
 			{
 				while (key[KEY_ALT] && key[KEY_ENTER]) {}//only do action once key is released

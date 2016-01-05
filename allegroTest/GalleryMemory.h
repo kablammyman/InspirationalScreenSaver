@@ -21,18 +21,19 @@ class GalleryMemory
 	//gallery,index from seenImgList
 	map<string, vector<int>> seenGalleriesImageCount;
 
-	//int getIndexFromFile(string dir, string fileName);
+	//int maxSizeImageSeenList;
 public:
 	GalleryMemory()
 	{
 		curImgSeenIndex = 0; 
+		//maxSizeImageSeenList = 0;// 0 means umlimited
 	}
 	string getNextImage();
 	string getPrevImage();
 	string getNewImage();
 	bool isAtTopOfList()
 	{
-		if (seenImgList.size() == 0)
+		if (seenImgList.size() == 0) 
 			return true;
 		if (curImgSeenIndex == seenImgList.size()-1)
 			return true;
@@ -42,7 +43,8 @@ public:
 	{
 		return seenImgList[curImgSeenIndex];
 	}
+
 	void addImageToList(string imagePath);
 	bool hasSeenImage(string imagePath, int numFilesinDir);
-
+	void resetGallerySeenCount(string galleryName);
 };

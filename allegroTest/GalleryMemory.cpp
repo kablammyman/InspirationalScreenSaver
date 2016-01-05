@@ -42,9 +42,6 @@ void GalleryMemory::addImageToList(string imagePath)
 
 	seenImgList.push_back(imagePath);
 	
-	//has this gallery been accesed yet? if not, init the values!
-	/*if (seenGalleriesImageCount[dir].size() == 0)
-		seenGalleriesImageCount[dir].reserve(numFilesInDir);*/
 	curImgSeenIndex = seenImgList.size() - 1;
 	seenGalleriesImageCount[dir].push_back(curImgSeenIndex);
 
@@ -61,6 +58,11 @@ void GalleryMemory::addImageToList(string imagePath)
 	}
 	return -1; //this dir was empty, return empty string
 }*/
+void GalleryMemory::resetGallerySeenCount(string galleryName)
+{
+	seenGalleriesImageCount[galleryName].clear();
+}
+
 //---------------------------------------------------------------------------------------
 bool GalleryMemory::hasSeenImage(string imagePath, int numFilesinDir)
 {

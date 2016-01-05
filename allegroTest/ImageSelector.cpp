@@ -9,29 +9,6 @@ void ImageSelector::setDisplayList(std::vector<std::string> dispList)
 	displayList = dispList;
 }
 
-std::string ImageSelector::getNewImage ()
-{
-	curDir = getRandomDir(getRandomDirFromFolderList(displayList),true);
-
-	string img;
-	int index = 0;
-	int numFiles = MyFileDirDll::getNumFilesInDir(curDir);
-	if(numFiles == 0)
-		return "";
-	
-	//find an image we havent seen!
-	for (int i = 0; i < numFiles; i++)
-	{
-		img = MyFileDirDll::getRandomFileQuick(curDir);
-		if (!galMemory.hasSeenImage(img, numFiles))
-			break;
-
-		
-	}
-	
-	return img;
-}
-
 std::string ImageSelector::toUpper(std::string word)
 {
 	int i=0;
@@ -219,19 +196,53 @@ string ImageSelector::getRandomDirFromFolderList(vector<string> &dirList)
 	return dirList[getRandomNum(0,dirList.size()-1)];
 }
 //---------------------------------------------------------------------------------------
-string ImageSelector::changeImage(bool update)
+std::string ImageSelector::getNewImage()
+{
+	bool isUniqueImg = false;
+	string img;
+	int count = 0;
+	while (!isUniqueImg)
+	{
+		count++;
+		curDir = getRandomDir(getRandomDirFromFolderList(displayList), true);
+
+		int index = 0;
+		int numFiles = MyFileDirDll::getNumFilesInDir(curDir);
+		if (numFiles == 0)
+			return "";
+
+		//find an image we havent seen!
+
+		for (int i = 0; i < numFiles; i++)
+		{
+			img = MyFileDirDll::getRandomFileQuick(curDir);
+			if (!galMemory.hasSeenImage(img, numFiles))
+			{
+				isUniqueImg = true;
+				break;
+			}
+		}
+		//break out if we cant find an image after 100 tries
+		if (count > 100)
+			isUniqueImg = true;
+	}
+
+	galMemory.addImageToList(img);
+	return img;
+}
+
+string ImageSelector::getNextImage()
 {			
 	string returnImage;
 	
 	if (galMemory.isAtTopOfList())
-	{
 		returnImage = getNewImage();
-		galMemory.addImageToList(returnImage);
-	}
-	else
-		returnImage = galMemory.getCurrentImage();
 
-	if (returnImage == "") //we didnt find anything
+	else
+		returnImage = galMemory.getNextImage();
+		
+	//if the image is not valid, remove it from the list (if its there)
+	if (returnImage == "") 
 	{
 		for (size_t i = 0; i < displayList.size(); i++)
 			if (displayList[i] == returnImage)
@@ -241,14 +252,16 @@ string ImageSelector::changeImage(bool update)
 	return returnImage;
 }
 //---------------------------------------------------------------------------------------
-void ImageSelector::gotoNextImage()
+string ImageSelector::gotoNextImage()
 {
-	galMemory.getNextImage();
+	if (!galMemory.isAtTopOfList())
+		return galMemory.getNextImage();
+	return "";//this will single the changeImage method to get a new image
 }
 //---------------------------------------------------------------------------------------
-void ImageSelector::gotoPrevImage()
+string ImageSelector::gotoPrevImage()
 {
-	galMemory.getPrevImage();
+	return galMemory.getPrevImage();
 }
 //--------------------------------------------------------------------------------------------------------
 string ImageSelector::getDirFromIndex(string baseDir, size_t index, bool useIgnoreList)

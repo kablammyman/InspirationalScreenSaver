@@ -20,7 +20,7 @@ queueImageSelector::~queueImageSelector()
 	sequentialIndex.clear();
 }
 
-std::string queueImageSelector::getNextImage (std::vector<std::string> &displayList)
+std::string queueImageSelector::getNextImageInQueue (std::vector<std::string> &displayList)
 {
 	string dir = displayList[curDirIndex];
 

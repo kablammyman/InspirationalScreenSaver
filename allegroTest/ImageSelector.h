@@ -67,12 +67,14 @@ class ImageSelector {
 	~ImageSelector(){ignoreList.erase (ignoreList.begin(),ignoreList.end());}
 	
 	void setDisplayList(std::vector<std::string> dispList);
-    std::string getNewImage();
+    
 	std::vector<std::string> randomizeFolderList(std::string path, int numFolders);
 	std::string getRandomDir(std::string dir, bool useIgnoreList);
 	std::string getRandomDirFromFolderList(std::vector<std::string> &dirList);
-	std::string changeImage(bool update = true);
-	void gotoPrevImage();
-	void gotoNextImage();
+
+	std::string getNewImage();
+	std::string getNextImage();
+	std::string gotoPrevImage();
+	std::string gotoNextImage();
 };
 #endif

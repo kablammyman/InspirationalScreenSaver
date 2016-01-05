@@ -16,7 +16,7 @@ private:
 	queueImageSelector();
 	void init(int numFoldersInBase);
 	~queueImageSelector();
-    std::string getNextImage (std::vector<std::string> &displayList);
+    std::string getNextImageInQueue(std::vector<std::string> &displayList);
 	std::vector<std::string> queueFolderList(std::string path);
 };
 
