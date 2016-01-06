@@ -17,6 +17,7 @@ optionsScreen::optionsScreen()
 	menu->addMenuOption("toggle image memory",(int)MainApp::Instance()->useImageMemory);
 	menu->addMenuOption("image selection type", MainApp::Instance()->dirSelectionForDisplay);
 	menu->addMenuOption("image display timer", MainApp::Instance()->imageDisplayTimeLength);
+	menu->addMenuOption("num image to remember", MainApp::Instance()->imageMemAmt);
 
 	menu->set_menu_positions(GraphicsProxy::getScreenWidth()/2, GraphicsProxy::getScreenHeight()/3, 25, makecol(255, 255, 255), makecol(0, 255, 0));
 
@@ -261,6 +262,7 @@ void menu_class::update()
 	MainApp::Instance()->useImageMemory = setToggleBoundries(3);
 	MainApp::Instance()->dirSelectionForDisplay = set_boundries(4, 1, 3);
 	MainApp::Instance()->imageDisplayTimeLength = set_boundries(5, 3, 99);
+	MainApp::Instance()->imageMemAmt = set_boundries(6, 0, 100);
 }
 
 void menu_class::draw(BITMAP *dest)

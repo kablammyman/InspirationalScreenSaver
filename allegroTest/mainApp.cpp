@@ -23,6 +23,7 @@ void MainApp::initVars(string path)
 
 	min = 2, sec = 5, mil = 0;
 	imageDisplayTimeLength = 5;
+	imageMemAmt = 10;
 	viewPathInfo = true;
 	viewClock = true;
 	viewWorkoutTimer = true;

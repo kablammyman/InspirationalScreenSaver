@@ -45,6 +45,7 @@ public:
 	bool viewClock;
 	bool viewPathInfo;
 	int imageDisplayTimeLength;
+	int imageMemAmt;
 	/*
 	bool openDataBase(std::string name);
 	void closeDataBase();

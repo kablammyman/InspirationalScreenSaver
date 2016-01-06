@@ -45,6 +45,7 @@ ScreenSaver::ScreenSaver()
 	}*/
 
 	imageSelector.setDisplayList(MainApp::Instance()->displayDirs);
+	imageSelector.setImageMemAmt(MainApp::Instance()->imageMemAmt);
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::setCurImgObj( CurrentImage *c)

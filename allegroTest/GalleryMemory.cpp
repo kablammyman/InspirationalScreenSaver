@@ -1,38 +1,41 @@
 #include "GalleryMemory.h"
 #include "myfiledirdll.h"
+#include <algorithm> //for the remove method
 
 using namespace std;
 
+bool GalleryMemory::isAtTopOfList()
+{
+	if (seenImgList.size() == 0 || curImgSeenItr == seenImgList.end())
+		return true;
+	if (curImgSeenItr == --seenImgList.end())
+		return true;
+	return false;
+}
 //---------------------------------------------------------------------------------------
 string GalleryMemory::getNextImage()
 {
-	if (curImgSeenIndex < seenImgList.size()-1)//make sure we can go forward
-		curImgSeenIndex++;
+	if (curImgSeenItr != seenImgList.end())//make sure we can go forward
+		curImgSeenItr++;
 	else
-		curImgSeenIndex = seenImgList.size()-1;
+		curImgSeenItr = seenImgList.end();
+		
+	if(curImgSeenItr == seenImgList.end())
+		curImgSeenItr--;
 
-	return seenImgList[curImgSeenIndex];
+	return (*curImgSeenItr);
 }
 //---------------------------------------------------------------------------------------
 string GalleryMemory::getPrevImage()
 {
-	if (curImgSeenIndex > 0)//make sure we can go back
-		curImgSeenIndex--;
+	if (curImgSeenItr != seenImgList.begin())//make sure we can go back
+		curImgSeenItr--;
 	else
-		curImgSeenIndex = 0;
+		curImgSeenItr = seenImgList.begin();
 
-	return seenImgList[curImgSeenIndex];
+	return (*curImgSeenItr);
 }
-
-string GalleryMemory::getNewImage()
-{
-	string curDir = "nothing!";
-
-
-
-	return curDir;
-}
-
+//---------------------------------------------------------------------------------------
 void GalleryMemory::addImageToList(string imagePath)
 {
 	if (imagePath.empty())
@@ -42,29 +45,42 @@ void GalleryMemory::addImageToList(string imagePath)
 
 	seenImgList.push_back(imagePath);
 	
-	curImgSeenIndex = seenImgList.size() - 1;
-	seenGalleriesImageCount[dir].push_back(curImgSeenIndex);
+	curImgSeenItr = seenImgList.end();
+	//go back 1 so you get the latest element, not the end!
+	curImgSeenItr--;
+	//get the raw pointer from the iterator
+	seenGalleriesImageCount[dir].push_back(&*curImgSeenItr);
 
+	//if we are limiting how many images displayed, remove oldest element from list
+	//and make sure to remove the pointer from the map
+	if (maxSizeImageSeenList > 0 && maxSizeImageSeenList < seenImgList.size())
+	{
+		string imgToForget = (*seenImgList.begin());
+		string *ptr = getImgPathPtrFromMap(imgToForget);
+		//now the dir needs to be from the image we are removing from the list
+		dir = MyFileDirDll::getPathFromFullyQualifiedPathString(imgToForget);
+		
+		seenGalleriesImageCount[dir].erase(std::remove(seenGalleriesImageCount[dir].begin(), seenGalleriesImageCount[dir].end(), ptr), seenGalleriesImageCount[dir].end());
+		seenImgList.pop_front();
+
+	}
 }
 //--------------------------------------------------------------------------------------------------------
-/*int GalleryMemory::getIndexFromFile(string dir, string fileName)
-{
-	vector<string> files = MyFileDirDll::getAllFolderNamesInDir(dir);
-
-	for (size_t i = 0; i < files.size(); i++)
-	{
-		if (files[i].compare(fileName) == 0)
-			return i;
-	}
-	return -1; //this dir was empty, return empty string
-}*/
 void GalleryMemory::resetGallerySeenCount(string galleryName)
 {
 	seenGalleriesImageCount[galleryName].clear();
 }
-
 //---------------------------------------------------------------------------------------
-bool GalleryMemory::hasSeenImage(string imagePath, int numFilesinDir)
+bool GalleryMemory::hasSeenImage(string imagePath)
+{
+	string *ptr = getImgPathPtrFromMap(imagePath);
+
+	if (ptr == NULL)
+		return false;
+	return true;
+}
+
+string * GalleryMemory::getImgPathPtrFromMap(string imagePath)
 {
 	string dir = MyFileDirDll::getPathFromFullyQualifiedPathString(imagePath);
 	string file = MyFileDirDll::getFileNameFromPathString(imagePath);
@@ -73,40 +89,19 @@ bool GalleryMemory::hasSeenImage(string imagePath, int numFilesinDir)
 	//if the gallery has been accesed, the size of the vector assicated with it will be greater than 0
 	if (size > 0)
 	{
-		//go thru the vec to match the stored index with the list of seen files, if we have a match, then we seen this image already
+		//trying to do this in one line caused issues...my syntax was prob off.
+		vector<string *> tempVec = seenGalleriesImageCount[dir];
+		
+		//go thru the vec to match the stored strng pointer with the list of seen files, if we have a match, then we seen this image already
 		for (size_t i = 0; i < size; i++)
 		{
-			size_t index = seenGalleriesImageCount[dir][i];
-			if(seenImgList[index] == imagePath)
-				return true;
+			string *imgName = tempVec[i];
+			if (imgName == NULL)
+				continue;
+			if ((*imgName) == imagePath)
+				return imgName;
 		}
 	}
-	
-	return false;
+
+	return NULL;
 }
-
-
-/*string GalleryMemory::changeImage(bool update)
-{
-	string newImage;
-	if (curImgSeenIndex == seenImgList.size())//or whatever the top of the list is, then get a new img
-	{
-		newImage = getNewImage();
-		
-		else
-			return "";
-	}
-	else
-	{
-		if (curImgSeenIndex > 0)
-			newImage = seenImgList[curImgSeenIndex - 1];
-		else
-			newImage = seenImgList[0];
-	}
-	if (update)
-		curImgSeenIndex++;
-
-
-	return newImage;
-}*/
-

@@ -76,5 +76,7 @@ class ImageSelector {
 	std::string getNextImage();
 	std::string gotoPrevImage();
 	std::string gotoNextImage();
+
+	void setImageMemAmt(int x);
 };
 #endif

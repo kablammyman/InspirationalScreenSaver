@@ -216,7 +216,7 @@ std::string ImageSelector::getNewImage()
 		for (int i = 0; i < numFiles; i++)
 		{
 			img = MyFileDirDll::getRandomFileQuick(curDir);
-			if (!galMemory.hasSeenImage(img, numFiles))
+			if (!galMemory.hasSeenImage(img))
 			{
 				isUniqueImg = true;
 				break;
@@ -289,4 +289,8 @@ string ImageSelector::getDirFromIndex(string baseDir, size_t index, bool useIgno
 
 	//if we are here, then we prob had an invalid index
 	return "";
+}
+void ImageSelector::setImageMemAmt(int x)
+{
+	galMemory.setImageMemAmt(x);
 }
