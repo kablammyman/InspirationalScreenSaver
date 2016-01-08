@@ -44,8 +44,6 @@ class ScreenSaver : public Scene
 	int dirSelectionForDisplay;
 public:
 	
-	RenderObject *infoImg;
-	
 	ScreenSaver();
 	WorkoutTimer* workoutTimer;
 	void setCurImgObj(CurrentImage *c);

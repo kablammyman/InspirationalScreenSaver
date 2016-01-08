@@ -38,6 +38,10 @@ void Renderer::drawAllRenderObjectsToBuffer()
 {
 	for (size_t i = 0; i < renderList.size(); i++)
 		renderList[i]->draw(screenBuffer);
+	for (size_t i = 0; i < textList.size(); i++)
+		textprintf_ex(screenBuffer, font, textList[i].x, textList[i].y, textList[i].color, 0, "%s", textList[i].text.c_str());
+
+	textList.clear();
 }
 //---------------------------------------------------------------------------------------
 BITMAP* Renderer::getScreenBuffer()
@@ -73,6 +77,15 @@ void Renderer::resizeScreenBuffer(int screenW, int screenH)
 	drawAllRenderObjectsToBuffer();
 }
 
+void Renderer::drawText(int x, int y, int color, std::string text)
+{
+	ScreenText temp;
+	temp.x = x;
+	temp.y = y;
+	temp.color = color;
+	temp.text = text;
+	textList.push_back(temp);
+}
 
 /*
 void clearScreen()

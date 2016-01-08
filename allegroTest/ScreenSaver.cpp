@@ -12,7 +12,7 @@ ScreenSaver::ScreenSaver()
 
 	folderNum = 0;
 	
-	infoImg = new RenderObject(0,0,900,30);
+
 	workoutTimer = new WorkoutTimer(GraphicsProxy::getScreenWidth() - 100, 10);
 	workoutTimer->loadSoundFile(MainApp::Instance()->sndFile.c_str());
 	workoutTimer->pauseWorkoutTimer(true);
@@ -25,7 +25,6 @@ ScreenSaver::ScreenSaver()
 	renderer.addToRenderList(legend);
 	renderer.addToRenderList(curImage);
 	renderer.addToRenderList(workoutTimer);
-	renderer.addToRenderList(infoImg);
 	setCurImgObj(curImage);
 
 	imageSelector.init(MainApp::Instance()->numFoldersInBase);
@@ -177,13 +176,14 @@ void ScreenSaver::update()
 //---------------------------------------------------------------------------------------
 void ScreenSaver::draw()
 {
-	clear(infoImg->getBitmap());
-	if(MainApp::Instance()->viewPathInfo)
-		textprintf_ex(infoImg->getBitmap(), font, 10, 0, makecol(255, 255, 255), 0, "%s", filePath.c_str());
+	if (MainApp::Instance()->viewPathInfo)
+		renderer.drawText(10, 0, makecol(255, 255, 255), filePath);
 
-	textprintf_ex(infoImg->getBitmap(), font, 10, 10, makecol(255, 255, 255), 0, "fps: %d", fps);
+	//renderer.drawText( 10, 10, makecol(255, 255, 255), 0, to_string((int)fps));
+	
 	if(MainApp::Instance()->viewClock)
-		textprintf_ex(infoImg->getBitmap(), font, 10, 20, makecol(255, 255, 255), 0, "%s", MainApp::Instance()->getTimeString().c_str());
+		renderer.drawText(10, 20, makecol(255, 255, 255), MainApp::Instance()->getTimeString());
+
 	/*#ifdef _DEBUG
 	textprintf_ex(screenBuffer, font, 10, 10, makecol(255, 255, 255), 0, "scale: %f (%f x %f)", scaleFactor, imgWidth, imgHeight);
 	textprintf_ex(screenBuffer, font, 10, 20, makecol(255, 255, 255), 0, "%d:%d:%d", imageTimer.minutes, imageTimer.seconds, imageTimer.decimals);
