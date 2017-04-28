@@ -1,11 +1,11 @@
 project(InspirationalScreenSaver)
-include_directories(${CMAKE_SOURCE_DIR}/include) 
 include_directories($ENV{MY_GAME_UTILS} )
 include_directories($ENV{MY_FILE_UTILS} )
 include_directories($ENV{MY_CFG_UTILS} )
 
 
 IF(WIN32)
+include_directories(${CMAKE_SOURCE_DIR}/include) 
 set(SDL2_32_LIB ${CMAKE_SOURCE_DIR}/lib/win/x86/SDL2.lib)
 set(SDL2_64_LIB ${CMAKE_SOURCE_DIR}/lib/win/x64/SDL2.lib)
 set(SDL2MAIN_32_LIB ${CMAKE_SOURCE_DIR}/lib/win/x86/SDL2main.lib)
