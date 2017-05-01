@@ -1,11 +1,17 @@
+#ifdef _WIN32
+#include <Windows.h> //GetLatError()
+#endif
+
 #include "ScreenSaver.h"
-#include "GraphicsProxy.h"
+
 #include "keyProxy.h"
 #include "mainApp.h"
+#include "Globals.h"
+#include <ctime>
 
-
-ScreenSaver::ScreenSaver()
+ScreenSaver::ScreenSaver(SDL_ScreenStruct *s)
 {
+	ss = s;
 	timerOn = false;
 	showLegend = false;
 	timeOver = false;
@@ -13,21 +19,21 @@ ScreenSaver::ScreenSaver()
 	folderNum = 0;
 	
 
-	workoutTimer = new WorkoutTimer(GraphicsProxy::getScreenWidth() - 100, 10);
-	workoutTimer->loadSoundFile(MainApp::Instance()->sndFile.c_str());
-	workoutTimer->pauseWorkoutTimer(true);
+	//workoutTimer = new WorkoutTimer(ss->screenW - 100, 10);
+	//workoutTimer->loadSoundFile(mainApp->sndFile.c_str());
+	//workoutTimer->pauseWorkoutTimer(true);
 
-	legend = new AppLegend(GraphicsProxy::getScreenWidth() - 300,GraphicsProxy::getScreenHeight() -100);
+	legend = new AppLegend(ss->screenW - 300,ss->screenH - 100);
 	
-	curImage = new CurrentImage();
+	curImage = new CurrentImage(ss);
 
-	renderer.init(GraphicsProxy::getScreenWidth(), GraphicsProxy::getScreenHeight());
-	renderer.addToRenderList(legend);
-	renderer.addToRenderList(curImage);
-	renderer.addToRenderList(workoutTimer);
-	setCurImgObj(curImage);
+	renderer.Init(ss->screenW, ss->screenH);
+	renderer.AddToRenderList(legend);
+	renderer.AddToRenderList(curImage);
+	//renderer.AddToRenderList(workoutTimer);
+	SetCurImgObj(curImage);
 
-	imageSelector.init(MainApp::Instance()->numFoldersInBase);
+	//imageSelector.Init(mainApp->numFoldersInBase);
 
 	/*	switch(dirSelectionForDisplay)
 	{
@@ -43,56 +49,60 @@ ScreenSaver::ScreenSaver()
 	break;
 	}*/
 
-	imageSelector.setDisplayList(MainApp::Instance()->displayDirs);
-	imageSelector.setImageMemAmt(MainApp::Instance()->imageMemAmt);
+	imageSelector.SetDisplayList(displayDirs);
+	imageSelector.SetImageMemAmt(Globals::imageMemAmt);
+	time_t rawtime;
+	struct tm * timeinfo;
+	logFile = fopen("myfile.txt", "w");
+	fprintf(logFile, "\nCurrent local time and date: %s \n", asctime(timeinfo));
 }
 //---------------------------------------------------------------------------------------
-void ScreenSaver::setCurImgObj( CurrentImage *c)
+void ScreenSaver::SetCurImgObj( CurrentImage *c)
 {
 	curImage = c;
 }
 //---------------------------------------------------------------------------------------
-void ScreenSaver::changeScreenSize(int screenW, int screenH)
+void ScreenSaver::ChangeScreenSize(int screenW, int screenH)
 {
-	Scene::changeScreenSize(screenW, screenH);
-	workoutTimer->setX( GraphicsProxy::getScreenWidth() - 100); 
-	legend->setX(GraphicsProxy::getScreenWidth() - 300); 
-	legend->setY(GraphicsProxy::getScreenHeight() - 100);
+	Scene::ChangeScreenSize(screenW, screenH);
+	//workoutTimer->setX( GraphicsProxy::getScreenWidth() - 100); 
+	legend->SetX(ss->screenW - 300);
+	legend->SetY(ss->screenH - 100);
 }
 //---------------------------------------------------------------------------------------
-bool ScreenSaver::doDelete(string path, string createDate)
+bool ScreenSaver::DoDelete(string path, string createDate)
 {
 	string lastError = "";
 	if (createDate != "")
 	{
 		string delString = ("deleting: " + path + "created: " + createDate);
-		MainApp::Instance()->writeToLogFile(delString);
+		WriteToLogFile(delString);
 	}
 	else
 	{
 		string delString = ("deleting: " + path);
-		MainApp::Instance()->writeToLogFile(delString);
+		WriteToLogFile(delString);
 	}
 	
-	int recycleErrorVal = 	FileUtils::deleteFile( path.c_str() );
+	int recycleErrorVal = 	FileUtils::Delete_File( path.c_str() );
 	int permDeleteErrorVal = 0;
 	if(recycleErrorVal > 0)//try to send to recycle bin failed
 	{
-		permDeleteErrorVal = FileUtils::deleteFile( path.c_str(),true );
+		permDeleteErrorVal = FileUtils::Delete_File( path.c_str(),true );
 		if(permDeleteErrorVal == 0)//cant send there, perm delete
 		{
-			lastError = FileUtils::deleteAllFilesInDir( path.c_str() );
+			lastError = FileUtils::DeleteAllFilesInDir( path.c_str() );
 			if(lastError != "") //try to delete each file individually
 			{
 				string errorString = ("-------recycle error1: " + recycleErrorVal);
-				MainApp::Instance()->writeToLogFile(errorString);
+				WriteToLogFile(errorString);
 
 				errorString = ("-------perm error: " + permDeleteErrorVal);
-				MainApp::Instance()->writeToLogFile(errorString);
-				
+				WriteToLogFile(errorString);
+#ifdef _WIN32
 				errorString = ("-------GetLastError: " + GetLastError());
-				MainApp::Instance()->writeToLogFile(errorString);
-
+				WriteToLogFile(errorString);
+#endif
 				return false;
 			}
 		}
@@ -100,89 +110,87 @@ bool ScreenSaver::doDelete(string path, string createDate)
 	
 
 	if(recycleErrorVal == 0)
-		MainApp::Instance()->writeToLogFile("-----sent to recycle");
+		WriteToLogFile("-----sent to recycle");
 	else if(permDeleteErrorVal > 0)
-		MainApp::Instance()->writeToLogFile("-----sent to hell!");
+		WriteToLogFile("-----sent to hell!");
 	return true;
 
 }
 //---------------------------------------------------------------------------------------
-void ScreenSaver::changeImage(string newImage)
+void ScreenSaver::ChangeImage(string newImage)
 {			
 	if (!newImage.empty())
 		filePath = newImage;
 	else
-		filePath = imageSelector.getNextImage();
+		filePath = imageSelector.GetNextImage();
 
 	//if we STILL dont have an image...
 	if (filePath.empty())
 	{
-		curImage->noImageMessage();
+		curImage->NoImageMessage();
 		return;
 	}
 
-	imageTimer.startCountdown(0, MainApp::Instance()->imageDisplayTimeLength,0);
+	imageTimer.StartCountdown(0, Globals::imageDisplayTimeLength,0);
 	imageTimer.pause = true;
-	curImage->loadImage(filePath);
+	curImage->Load_Image(filePath);
 }
 //---------------------------------------------------------------------------------------
-void ScreenSaver::update()
+void ScreenSaver::Update()
 {
 	//when the timer is up, but we are still in logic loop, this will cause imgages to be skipped over
-	if(imageTimer.isTimeUp())
-		changeImage();
+	if(imageTimer.IsTimeUp())
+		ChangeImage();
 
-	renderer.updateAllRenderObjects();
-	imageTimer.updateStopWatch();
+	renderer.UpdateAllRenderObjects();
+	imageTimer.UpdateStopWatch();
 	
 	
-	refreshTimer.updateStopWatch();
+	refreshTimer.UpdateStopWatch();
 
 	if(!curImage->imageTransition)
 		imageTimer.pause = false;
-
-	MainApp::Instance()->updateTime();
 
 	int keys = keyProxy.convertKeyCodesToKeyFunction();
 
 	switch(keys)
 	{
 	case KeyProxy::nextImage:
-			gotoNextImage();
+			GotoNextImage();
 			break;
 
 		case KeyProxy::KeyFunctions::prevImage:
-			gotoPrevImage();
+			GotoPrevImage();
 			break;
 		case KeyProxy::pauseImage:
-			//gotoNextImage();
+			//GotoNextImage();
 			break;
 
 		case KeyProxy::deleteImage:
-			//gotoPrevImage();
+			//GotoPrevImage();
 			break;
 		case KeyProxy::deleteGallery:
 			//gotoNextImage();
 			break;
 
 		case KeyProxy::startDownTimer:
-			workoutTimer->startCountdownTimer();
+			//workoutTimer->startCountdownTimer();
 			break;
 		case KeyProxy::startUpTimer:
-			workoutTimer->startElapsedTimer();
+			//workoutTimer->startElapsedTimer();
 			break;
 	}
 }
 //---------------------------------------------------------------------------------------
-void ScreenSaver::draw()
+void ScreenSaver::Draw()
 {
-	if (MainApp::Instance()->viewPathInfo)
-		renderer.drawText(10, 0, makecol(255, 255, 255), filePath);
+	//if (Globals::viewPathInfo)
+	//	renderer.drawText(10, 0, RGB{ 255, 255, 255 }, filePath);
 
 	//renderer.drawText( 10, 10, makecol(255, 255, 255), 0, to_string((int)fps));
 	
-	if(MainApp::Instance()->viewClock)
-		renderer.drawText(10, 20, makecol(255, 255, 255), MainApp::Instance()->getTimeString());
+	//if(Globals::viewClock)
+	//	renderer.drawText(10, 20, RGB{ 255, 255, 255 }, mainApp->getTimeString());
 
 	/*#ifdef _DEBUG
 	textprintf_ex(screenBuffer, font, 10, 10, makecol(255, 255, 255), 0, "scale: %f (%f x %f)", scaleFactor, imgWidth, imgHeight);
@@ -192,39 +200,43 @@ void ScreenSaver::draw()
 	textprintf_ex(screenBuffer, font, 10, 40, makecol(255, 255, 255), 0, "%s", filePath.c_str());
 	textprintf_ex(screenBuffer, font, 10, 50, makecol(255, 255, 255), 0, "%s", asctime(timeinfo));
 	#endif*/
-
-	renderer.blitToScreen();
 }
-void ScreenSaver::gotoNextImage()
+void ScreenSaver::GotoNextImage()
 {
-	string img = imageSelector.gotoNextImage();
-	changeImage(img);
+	string img = imageSelector.GotoNextImage();
+	ChangeImage(img);
 }
 //---------------------------------------------------------------------------------------
-void ScreenSaver::gotoPrevImage()
+void ScreenSaver::GotoPrevImage()
 {
-	string img = imageSelector.gotoPrevImage();
-	changeImage(img);
+	string img = imageSelector.GotoPrevImage();
+	ChangeImage(img);
 	
 }
 //---------------------------------------------------------------------------------------
-void ScreenSaver::deleteSingleImage(string fileToDelete)
+void ScreenSaver::DeleteSingleImage(string fileToDelete)
 {
 	//imageSelector.myDeleteFile( filePath.c_str() );
-	doDelete(fileToDelete);
+	DoDelete(fileToDelete);
 	//clearScreen();
 	//textprintf_ex(screen, font, screenWidth/4, screenHeight/2,  makecol(255,255,255), 0, "deleted: %s",filePath.c_str());
 }
 //---------------------------------------------------------------------------------------
-void ScreenSaver::deleteGallery(string galleryToDelete)
+void ScreenSaver::DeleteGallery(string galleryToDelete)
 {
-	doDelete(galleryToDelete);
+	DoDelete(galleryToDelete);
 	//clearScreen();
 	//textprintf_ex(screen, font, screenWidth/4, screenHeight/2,  makecol(255,255,255), 0, "deleted: %s",filePath.c_str());
 }
 //---------------------------------------------------------------------------------------
-void ScreenSaver::toggleLegend()
+void ScreenSaver::ToggleLegend()
 {
 	showLegend = !showLegend;
 }
 //---------------------------------------------------------------------------------------
+void ScreenSaver::WriteToLogFile(string line)
+{
+	if (!logFile)
+		return;
+	fprintf(logFile, "%s\n", line.c_str());
+}

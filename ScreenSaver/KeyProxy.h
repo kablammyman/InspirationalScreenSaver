@@ -1,6 +1,4 @@
-#ifndef INPUT_PROXY_H
-#define INPUT_PROXY_H
-
+#pragma once
 
 class KeyProxy
 {
@@ -25,4 +23,4 @@ public:
 
 };
 
-#endif //INPUT_PROXY_H
+

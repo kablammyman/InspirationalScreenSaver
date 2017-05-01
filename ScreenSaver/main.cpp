@@ -8,57 +8,88 @@
 #include "SDL_syswm.h"
 #include <SDL_image.h>
 
-
+#include "mainApp.h"
 using namespace std;
 
+#define TICK_INTERVAL    30
+static Uint32 next_time;
+
+Uint32 time_left(void)
+{
+	Uint32 now;
+
+	now = SDL_GetTicks();
+	if (next_time <= now)
+		return 0;
+	else
+		return next_time - now;
+}
 
 int main(int argc, char *argv[])
 {
 
+	MainApp app;
+	//Event handler
 	SDL_Event e;
-	int SCREEN_WIDTH = 640, SCREEN_HEIGHT = 480;
 
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
 	IMG_Init(IMG_INIT_PNG);
 	TTF_Init();
-	string title = "ScreenSaver";
-	SDL_Window *window = SDL_CreateWindow(
-		title.c_str(),                  // window title
-		SDL_WINDOWPOS_UNDEFINED,           // initial x position
-		SDL_WINDOWPOS_UNDEFINED,           // initial y position
-		SCREEN_WIDTH,                               // width, in pixels
-		SCREEN_HEIGHT,                               // height, in pixels
-		SDL_WINDOW_RESIZABLE
-	);
 
-	// Check that the window was successfully created
-	if (window == NULL) {
-		// In the case that the window could not be made...
-		printf("Could not create window: %s\n", SDL_GetError());
-		exit(1);
+	//inGameTimer = SDL_AddTimer(DEFAULT_RESOLUTION, ticktock, NULL);//how long have we been playing this game
+	//inputTimer = SDL_AddTimer(DEFAULT_RESOLUTION, ticktock, NULL);//when was the last time someone pressed any sort of button
+	//totalRuntime = SDL_AddTimer(DEFAULT_RESOLUTION, ticktock, NULL);//how long has the arcade been on
+
+	app.InitWindow(640,480,false);
+	app.InitScreens();
+
+	next_time = SDL_GetTicks() + TICK_INTERVAL;
+	bool done = false;
+	while (!done)
+	{
+		while (SDL_PollEvent(&e)) 
+		{
+			/* We are only worried about SDL_KEYDOWN and SDL_KEYUP events */
+			switch (e.type) {
+			case SDL_KEYDOWN:
+				printf("Key press detected\n");
+				break;
+
+			case SDL_KEYUP:
+				printf("Key release detected\n");
+				break;
+
+			default:
+				break;
+			}
+		}
+		app.LogicUpdate();
+
+		//Handle events on queue
+		while (SDL_PollEvent(&e) != 0)
+		{
+			//User requests quit
+			if (e.type == SDL_QUIT)
+			{
+				done = true;
+			}
+		}
+
+		SDL_Delay(time_left());
+		next_time += TICK_INTERVAL;
+
+		app.GraphicsUpdate();
 	}
 
-	SDL_Renderer* renderer{
-		SDL_CreateRenderer(
-			window, -1,
-			SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE
-		)
-	};
-	if (!renderer) {
-		SDL_DestroyWindow(window);
-		SDL_Quit();
-		return 0;
-	}
+	/*SDL_RemoveTimer(inGameTimer);
+	SDL_RemoveTimer(inputTimer);
+	SDL_RemoveTimer(totalRuntime);*/
 
-	SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	
 
-	SDL_Delay(4000);
 
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
+	IMG_Quit();
+
 	SDL_Quit();
-
 	return 0;
 }

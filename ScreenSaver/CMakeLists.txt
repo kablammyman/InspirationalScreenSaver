@@ -2,6 +2,7 @@ project(InspirationalScreenSaver)
 include_directories($ENV{MY_GAME_UTILS} )
 include_directories($ENV{MY_FILE_UTILS} )
 include_directories($ENV{MY_CFG_UTILS} )
+include_directories($ENV{MY_STRING_UTILS} )
 
 
 IF(WIN32)
@@ -29,6 +30,11 @@ set(MY_CFG_LIB_32_D $ENV{MY_X86_DEBUG_LIBS}/CFGUtils.lib)
 set(MY_CFG_LIB_64_D $ENV{MY_X64_DEBUG_LIBS}/CFGUtils.lib)
 set(MY_FILE_LIB_32_R $ENV{MY_X86_RELEASE_LIBS}/CFGUtils.lib)
 set(MY_FILE_LIB_64_R $ENV{MY_X64_RELEASE_LIBS}/CFGUtils.lib)
+
+set(MY_STRING_LIB_32_D $ENV{MY_X86_DEBUG_LIBS}/StringUtils.lib)
+set(MY_STRING_LIB_64_D $ENV{MY_X64_DEBUG_LIBS}/StringUtils.lib)
+set(MY_STRING_LIB_32_R $ENV{MY_X86_RELEASE_LIBS}/StringUtils.lib)
+set(MY_STRING_LIB_64_R $ENV{MY_X64_RELEASE_LIBS}/StringUtils.lib)
 
 ELSEIF(APPLE)
 set(SDL2_32_LIB ${CMAKE_SOURCE_DIR}/lib/osx/x86/SDL2.a)
@@ -68,5 +74,5 @@ file(GLOB SOURCES
 add_executable(ScreenSaver ${SOURCES})
 
 
-target_link_libraries (ScreenSaver debug ${SDL2_64_LIB} ${SDL2MAIN_64_LIB} ${SDL2_TTF_64_LIB} ${SDL2_IMAGE_64_LIB} ${MY_GAME_LIB_64_D} ${MY_FILE_LIB_64_D} ${MY_CFG_LIB_64_D} 
-optimized ${SDL2_64_LIB} ${SDL2MAIN_64_LIB} ${SDL2_TTF_64_LIB} ${SDL2_IMAGE_64_LIB} ${MY_GAME_LIB_64_R} ${MY_FILE_LIB_64_R} ${MY_CFG_LIB_64_R} )
+target_link_libraries (ScreenSaver debug     ${SDL2_64_LIB} ${SDL2MAIN_64_LIB} ${SDL2_TTF_64_LIB} ${SDL2_IMAGE_64_LIB} ${MY_STRING_LIB_64_D} ${MY_GAME_LIB_64_D} ${MY_FILE_LIB_64_D} ${MY_CFG_LIB_64_D} )
+target_link_libraries (ScreenSaver optimized ${SDL2_64_LIB} ${SDL2MAIN_64_LIB} ${SDL2_TTF_64_LIB} ${SDL2_IMAGE_64_LIB} ${MY_STRING_LIB_64_R} ${MY_GAME_LIB_64_R} ${MY_FILE_LIB_64_R} ${MY_CFG_LIB_64_R} )

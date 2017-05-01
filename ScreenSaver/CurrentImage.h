@@ -1,4 +1,5 @@
 #pragma once
+#include "SDL_ScreenStruct.h"
 
 #include "RenderObject.h"
 #include <string>
@@ -16,14 +17,17 @@ class CurrentImage : public RenderObject
 	float targetScaleFactor;
 	bool noImages;
 	std::string curImagePath;
-	int getRandomNum(int min, int max);
+	
+	SDL_ScreenStruct *screenStruct;
+	
+	int GetRandomNum(int min, int max);
 public:
 	bool imageTransition;
-	virtual void update();
-	CurrentImage();
-	void noImageMessage();
-	void loadImage(std::string imageToLoad);
-	virtual void draw(PIXMAP *dest);
+	void Update();
+	CurrentImage(SDL_ScreenStruct *ss);
+	void NoImageMessage();
+	void Load_Image(std::string imageToLoad);
+	void Draw(PIXMAP *dest);
 };
 
 class AppLegend : public RenderObject

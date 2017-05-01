@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void ImageSelector::setDisplayList(std::vector<std::string> dispList)
+void ImageSelector::SetDisplayList(std::vector<std::string> dispList)
 {
 	displayList = dispList;
 }
@@ -27,7 +27,7 @@ std::string ImageSelector::toUpper(std::string word)
 }
 
 //--------------------------------------------------------------------------------------------------------
-bool ImageSelector::checkForIgnorePathList(std::string curPath)
+bool ImageSelector::CheckForIgnorePathList(std::string curPath)
 {
 	size_t found;
 	std::string path = toUpper(curPath);
@@ -46,13 +46,13 @@ bool ImageSelector::checkForIgnorePathList(std::string curPath)
 	return false;
 }
 //--------------------------------------------------------------------------------------------------------
-void ImageSelector::addRangeToIgnoreList(std::vector<std::string> range)
+void ImageSelector::AddRangeToIgnoreList(std::vector<std::string> range)
 {
 	for(int i = 0; i < (int)range.size(); i++)
 		ignoreList.push_back(range[i]);
 }
 //--------------------------------------------------------------------------------------------------------
-vector<string> ImageSelector::randomizeFolderList(string path, int numFolders)
+vector<string> ImageSelector::RandomizeFolderList(string path, int numFolders)
 {
 	//cout << "getting random folders...\n";
 	vector<string> folderList;
@@ -70,7 +70,7 @@ vector<string> ImageSelector::randomizeFolderList(string path, int numFolders)
 			//countall the dirs in the path given, then get a random num from that!
 			//int randomDir = getRandomNum(0,masterFolderList.size()-1);//doesnt seem to get last dir with the size() -1
 			string newPath = "";
-			if(checkForIgnorePathList(newPath))
+			if(CheckForIgnorePathList(newPath))
 			{
 				validFile = false;
 				loopCpunter++;
@@ -87,12 +87,12 @@ vector<string> ImageSelector::randomizeFolderList(string path, int numFolders)
 }
 //--------------------------------------------------------------------------------------------------------
 //picks a dir from the master list, then "digs" down to get soething new
-string ImageSelector::getRandomDir(string dir, bool useIgnoreList)
+string ImageSelector::GetRandomDir(string dir, bool useIgnoreList)
 {
 	//short circuit for ignore stuff
 	if(useIgnoreList)
 	{
-		if(checkForIgnorePathList(dir)) 
+		if(CheckForIgnorePathList(dir)) 
 			return "";
 	}
 
@@ -108,7 +108,7 @@ string ImageSelector::getRandomDir(string dir, bool useIgnoreList)
 		{
 			break;
 		}
-		vector<string> curDirList = CFGUtils::GetFloatValueFromList(curDir);
+		vector<string> curDirList = FileUtils::GetAllFileNamesInDir(curDir);
 		
 		if(curDirList.size() == 0)//there are no more folders
 			done = true;
@@ -149,7 +149,7 @@ string ImageSelector::getRandomDir(string dir, bool useIgnoreList)
 					if (dirSizes[i] == 0)
 						dirSizes[i] = 1;
 				}
-				int index = getRandomNum(0, 100);
+				int index = GetRandomNum(0, 100);
 				nextDir = -1;
 
 				for (size_t i = size-1; i > 0; i--)
@@ -162,13 +162,13 @@ string ImageSelector::getRandomDir(string dir, bool useIgnoreList)
 					nextDir = size-1;
 			}
 			else
-				nextDir = getRandomNum(0, curDirList.size()-1);
+				nextDir = GetRandomNum(0, curDirList.size()-1);
 
 			string newDir = curDirList[nextDir];
 
 			if(useIgnoreList)
 			{
-				if(checkForIgnorePathList(newDir)) //if we find something to ignore
+				if(CheckForIgnorePathList(newDir)) //if we find something to ignore
 				{
 					loopCount++;
 					continue;//try again
@@ -187,17 +187,17 @@ string ImageSelector::getRandomDir(string dir, bool useIgnoreList)
 	return curDir;
 }
 //--------------------------------------------------------------------------------------------------------
-string ImageSelector::getRandomDirFromFolderList(vector<string> &dirList)
+string ImageSelector::GetRandomDirFromFolderList(vector<string> &dirList)
 {
 	if (dirList.size() == 0)
 		return "";
 	else if (dirList.size() == 1)
 		return dirList[0];
 	
-	return dirList[getRandomNum(0,dirList.size()-1)];
+	return dirList[GetRandomNum(0,dirList.size()-1)];
 }
 //---------------------------------------------------------------------------------------
-std::string ImageSelector::getNewImage()
+std::string ImageSelector::GetNewImage()
 {
 	bool isUniqueImg = false;
 	string img;
@@ -205,7 +205,7 @@ std::string ImageSelector::getNewImage()
 	while (!isUniqueImg)
 	{
 		count++;
-		curDir = getRandomDir(getRandomDirFromFolderList(displayList), true);
+		curDir = GetRandomDir(GetRandomDirFromFolderList(displayList), true);
 
 		int index = 0;
 		int numFiles = FileUtils::GetNumFilesInDir(curDir);
@@ -232,12 +232,12 @@ std::string ImageSelector::getNewImage()
 	return img;
 }
 
-string ImageSelector::getNextImage()
+string ImageSelector::GetNextImage()
 {			
 	string returnImage;
 	
 	if (galMemory.isAtTopOfList())
-		returnImage = getNewImage();
+		returnImage = GetNewImage();
 
 	else
 		returnImage = galMemory.getNextImage();
@@ -253,19 +253,19 @@ string ImageSelector::getNextImage()
 	return returnImage;
 }
 //---------------------------------------------------------------------------------------
-string ImageSelector::gotoNextImage()
+string ImageSelector::GotoNextImage()
 {
 	if (!galMemory.isAtTopOfList())
 		return galMemory.getNextImage();
 	return "";//this will single the changeImage method to get a new image
 }
 //---------------------------------------------------------------------------------------
-string ImageSelector::gotoPrevImage()
+string ImageSelector::GotoPrevImage()
 {
 	return galMemory.getPrevImage();
 }
 //--------------------------------------------------------------------------------------------------------
-string ImageSelector::getDirFromIndex(string baseDir, size_t index, bool useIgnoreList)
+string ImageSelector::GetDirFromIndex(string baseDir, size_t index, bool useIgnoreList)
 {
 	//short circuit for ignore stuff
 	/*if(useIgnoreList)
@@ -274,7 +274,7 @@ string ImageSelector::getDirFromIndex(string baseDir, size_t index, bool useIgno
 	return "";
 	}*/
 
-	vector<string> curDirList = CFGUtils::GetFloatValueFromList(baseDir.c_str());
+	vector<string> curDirList = FileUtils::GetAllFileNamesInDir(baseDir.c_str());
 	if (index >= curDirList.size())
 		index = curDirList.size() - 1;
 	if (index < curDirList.size() && index > -1)
@@ -291,7 +291,7 @@ string ImageSelector::getDirFromIndex(string baseDir, size_t index, bool useIgno
 	//if we are here, then we prob had an invalid index
 	return "";
 }
-void ImageSelector::setImageMemAmt(int x)
+void ImageSelector::SetImageMemAmt(int x)
 {
 	galMemory.setImageMemAmt(x);
 }

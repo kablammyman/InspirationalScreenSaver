@@ -1,5 +1,4 @@
-#ifndef BASE_IMG_SEL_H
-#define BASE_IMG_SEL_H
+#pragma once
 
 #include <map>
 #include <string>
@@ -32,12 +31,12 @@ class ImageSelector {
 	string curDir;
 
 	std::string toUpper(std::string word);
-	bool checkForIgnorePathList(std::string curPath);
-	void addRangeToIgnoreList(std::vector<std::string> range);
+	bool CheckForIgnorePathList(std::string curPath);
+	void AddRangeToIgnoreList(std::vector<std::string> range);
 
-	string getDirFromIndex(string baseDir, size_t index, bool useIgnoreList = true);
+	string GetDirFromIndex(string baseDir, size_t index, bool useIgnoreList = true);
 
-	inline int getNextFolderListIndex(string path, int curIndex)
+	inline int GetNextFolderListIndex(string path, int curIndex)
 	{
 		if(curIndex < FileUtils::GetNumFilesInDir(path))
 			curIndex++;
@@ -47,7 +46,7 @@ class ImageSelector {
 		return curIndex;
 	}
 
-	inline int getRandomNum(int min, int max)
+	inline int GetRandomNum(int min, int max)
 	{
 		if (max - min == 1)
 			return (1 + rand() % 10) > 5 ? 1 : 0;
@@ -66,17 +65,16 @@ class ImageSelector {
 	}
 	~ImageSelector(){ignoreList.erase (ignoreList.begin(),ignoreList.end());}
 	
-	void setDisplayList(std::vector<std::string> dispList);
+	void SetDisplayList(std::vector<std::string> dispList);
     
-	std::vector<std::string> randomizeFolderList(std::string path, int numFolders);
-	std::string getRandomDir(std::string dir, bool useIgnoreList);
-	std::string getRandomDirFromFolderList(std::vector<std::string> &dirList);
+	std::vector<std::string> RandomizeFolderList(std::string path, int numFolders);
+	std::string GetRandomDir(std::string dir, bool useIgnoreList);
+	std::string GetRandomDirFromFolderList(std::vector<std::string> &dirList);
 
-	std::string getNewImage();
-	std::string getNextImage();
-	std::string gotoPrevImage();
-	std::string gotoNextImage();
+	std::string GetNewImage();
+	std::string GetNextImage();
+	std::string GotoPrevImage();
+	std::string GotoNextImage();
 
-	void setImageMemAmt(int x);
+	void SetImageMemAmt(int x);
 };
-#endif

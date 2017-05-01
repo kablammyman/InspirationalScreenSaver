@@ -2,7 +2,7 @@
 
 int KeyProxy::pollKeys()
 {
-	return AllegroKeys::getKeyByScanCode();
+	return 0;//AllegroKeys::getKeyByScanCode();
 }
 int KeyProxy::convertKeyCodesToKeyFunction()
 {

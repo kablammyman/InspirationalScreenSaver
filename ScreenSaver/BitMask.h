@@ -1,5 +1,4 @@
-#ifndef BITMASK_H
-#define BITMASK_H
+#pragma once
 
 
 class BitMask
@@ -11,5 +10,3 @@ public:
 	static bool isBitSet(unsigned int bit, unsigned int num);
 	static void setBit(unsigned int bit, unsigned int & num);
 };
-
-#endif //BITMASK_H

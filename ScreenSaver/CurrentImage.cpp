@@ -1,9 +1,9 @@
 #include "CurrentImage.h"
-#include "GraphicsProxy.h"
 #include "mainApp.h"
 
-CurrentImage::CurrentImage() : RenderObject(0, 0, 200, 200)
+CurrentImage::CurrentImage(SDL_ScreenStruct *ss) : RenderObject(0, 0, 200, 200)
 {
+	screenStruct = ss;
 	targetX = 0, targetY = 0;
 	imgSpeed = 4;
 	delX = 0;
@@ -18,7 +18,7 @@ CurrentImage::CurrentImage() : RenderObject(0, 0, 200, 200)
 	amt = 0.005f;
 }
 //---------------------------------------------------------------------------------------
-void CurrentImage::loadImage(std::string imageToLoad)
+void CurrentImage::Load_Image(std::string imageToLoad)
 {
 	noImages = false;
 	targetScaleFactor = 1.0f;
@@ -27,36 +27,39 @@ void CurrentImage::loadImage(std::string imageToLoad)
 
 	//release mem from prev image
 	if (bmp)
-		destroy_bitmap(bmp);
+	{
+		bmp->Destroy();
+		bmp = nullptr;
+	}
 
-	bmp = GraphicsProxy::loadJPEG(imageToLoad.c_str());
+	//bmp = GraphicsProxy::loadJPEG(imageToLoad.c_str());
 	if (!bmp)//sometimes the bmp fails to load, until i figure out why, ill just do this
 	{
-		bmp = NULL;
+		bmp = 0;
 		return;
 	}
 	imageTransition = true;
-	float bw = bmp->w;
-	float bh = bmp->h;
+	int bw = bmp->w;
+	int bh = bmp->h;
 	if (bmp->w >= bmp->h)
-		targetScaleFactor = float(GraphicsProxy::getScreenWidth() / bw);
+		targetScaleFactor = float(screenStruct->screenW / bw);
 	else
-		targetScaleFactor = float(GraphicsProxy::getScreenHeight() / bh);
+		targetScaleFactor = float(screenStruct->screenH / bh);
 	//scale it to fit up whole screen with aspect ratio
 	targetImgHeight = bmp->h * ((targetScaleFactor * 100) / 100) + 1;
 	targetImgWidth = bmp->w  * ((targetScaleFactor * 100) / 100) + 1;
 
 	//postion img in center of screen
-	targetX = (GraphicsProxy::getScreenWidth() / 2) - (targetImgWidth / 2);
-	targetY = (GraphicsProxy::getScreenHeight() / 2) - (targetImgHeight / 2);
+	targetX = (screenStruct->screenW / 2) - (targetImgWidth / 2);
+	targetY = (screenStruct->screenH / 2) - (targetImgHeight / 2);
 
-	x = getRandomNum(-(GraphicsProxy::getScreenWidth() / 2), (GraphicsProxy::getScreenWidth()));
-	y = getRandomNum(-(GraphicsProxy::getScreenHeight() / 2), (GraphicsProxy::getScreenHeight()));
+	x = GetRandomNum(-(screenStruct->screenW / 2), (screenStruct->screenW));
+	y = GetRandomNum(-(screenStruct->screenH / 2), (screenStruct->screenH));
 
 	scaleFactor = 0;
 }
 //---------------------------------------------------------------------------------------
-void CurrentImage::update()
+void CurrentImage::Update()
 {
 	if (!imageTransition)
 		return;
@@ -105,26 +108,28 @@ void CurrentImage::update()
 
 }
 //---------------------------------------------------------------------------------------
-void CurrentImage::draw(PIXMAP *dest)
+void CurrentImage::Draw(PIXMAP *dest)
 {
-	if (!bmp)
+	/*if (!bmp)
 	{
+		
+
 		textprintf_ex(dest, font, dest->w / 4, (dest->h / 2) + 10, makecol(255, 255, 255), 0, "Error loading %s", curImagePath.c_str());
 		return;
 	}
 	
 	if (noImages)
 	{
-		textprintf_ex(dest, font, dest->w / 4, (dest->h / 2) + 10, makecol(255, 255, 255), 0, "NO IMAGES IN %s, Check your cfg file", MainApp::Instance()->mainWorkingPath.c_str());
+		textprintf_ex(dest, font, dest->w / 4, (dest->h / 2) + 10, makecol(255, 255, 255), 0, "NO IMAGES IN %s, Check your cfg file", mainApp->mainWorkingPath.c_str());
 		return;
-	}
-	if (imageTransition)
+	}*/
+	/*if (imageTransition)
 		stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, x, y, (int)curImgWidth, (int)curImgHeight);
 	else
-		stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, targetX, targetY, targetImgWidth, targetImgHeight);
+		stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, targetX, targetY, targetImgWidth, targetImgHeight);*/
 }
 //---------------------------------------------------------------------------------------
-int CurrentImage::getRandomNum(int min, int max)
+int CurrentImage::GetRandomNum(int min, int max)
 {
 	//if(rand()%10 > 5)
 	{
@@ -134,7 +139,7 @@ int CurrentImage::getRandomNum(int min, int max)
 	//return rand()%max + min;
 }
 //---------------------------------------------------------------------------------------
-void CurrentImage::noImageMessage()
+void CurrentImage::NoImageMessage()
 {
 	noImages = true;
 }

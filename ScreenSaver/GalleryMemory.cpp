@@ -75,7 +75,7 @@ bool GalleryMemory::hasSeenImage(string imagePath)
 {
 	string *ptr = getImgPathPtrFromMap(imagePath);
 
-	if (ptr == NULL)
+	if (ptr == 0)
 		return false;
 	return true;
 }
@@ -96,12 +96,12 @@ string * GalleryMemory::getImgPathPtrFromMap(string imagePath)
 		for (size_t i = 0; i < size; i++)
 		{
 			string *imgName = tempVec[i];
-			if (imgName == NULL)
+			if (imgName == 0)
 				continue;
 			if ((*imgName) == imagePath)
 				return imgName;
 		}
 	}
 
-	return NULL;
+	return 0;
 }

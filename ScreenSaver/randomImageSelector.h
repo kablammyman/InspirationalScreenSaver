@@ -1,5 +1,4 @@
-#ifndef RANDOM_IMG_SEL_H
-#define RANDOM_IMG_SEL_H
+#pragma once
 
 #include <vector>
 #include <string>
@@ -17,4 +16,3 @@ class randomImageSelector : ImageSelector
 	std::string getRandomDirFromFolderList(std::vector<std::string> dirList);
 };
 
-#endif

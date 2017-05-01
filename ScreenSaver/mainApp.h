@@ -2,17 +2,16 @@
 #include <string>
 #include <vector>
 
+#include "SDL_ScreenStruct.h"
+#include "ScreenSaver.h"
+//#include "OptionsScreen.h"
+//#include "StopWatchScreen.h"
 
 using namespace std;
+
 class MainApp
 {
-	MainApp() {};
-	MainApp(MainApp const&) {};             // copy constructor is private
-	MainApp& operator=(MainApp const&) {};  // assignment operator is private
-	static MainApp* m_pInstance;
 	
-
-	FILE *logFile;
 
 	time_t rawtime;
 	struct tm* timeinfo;
@@ -21,33 +20,42 @@ class MainApp
 	int stime;
 
 public:
-	MainApp::~MainApp();
-	static MainApp* Instance();
-	
-	void initVars(string path);
-	bool readCFG();
+	vector<Scene*> allScenes;
+	Scene *curScreen;
+	size_t sceneIndex;
 
-	void writeToLogFile(string line);
+	ScreenSaver *screenSaver;
+	//OptionsScreen *optionScreen;
+	//StopWatch *stopwatchScren;
+
+
+	SDL_Window *window;
+	SDL_Renderer *renderer;
+	SDL_ScreenStruct screenStruct;
+
+	int largeFontSize;
+	int fontSize;
+
+	MainApp();
+	
+
+	void InitWindow(int SCREEN_WIDTH, int SCREEN_HEIGHT, bool fullScreen = true);
+	void InitScreens();
+	void LogicUpdate();
+	void GraphicsUpdate();
+
+	bool ReadCFG();
+
+	
 	void updateTime();
 	string getTimeString();
-	float min, sec, mil;
+	
 	int numFoldersInBase; 
 	string mainWorkingPath;//main path to work from
 	string sndFile;
 	string filePathBase;
 	string ignoreFilePath;
 	string deletedFilesPath;
-	int dirSelectionForDisplay;
-	vector<string> displayDirs;
+	
 
-	bool useImageMemory;
-	bool viewWorkoutTimer;
-	bool viewClock;
-	bool viewPathInfo;
-	int imageDisplayTimeLength;
-	int imageMemAmt;
-	/*
-	bool openDataBase(std::string name);
-	void closeDataBase();
-	*/
 };
