@@ -5,3 +5,4 @@ ipch/
 *.sdf
 .vs/
 *.suo
+build_vs2015/

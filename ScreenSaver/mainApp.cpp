@@ -27,7 +27,7 @@ MainApp::MainApp()
 	Globals::viewWorkoutTimer = true;
 	Globals::useImageMemory = true;
 
-	filePathBase = "C:\\";
+	filePathBase = "D:\\source\\InspirationalScreenSaver\\build_vs2015\\ScreenSaver\\Debug";
 	sndFile = filePathBase + "\\snd.wav";
 
 	srand((unsigned)time(0));
@@ -36,7 +36,7 @@ MainApp::MainApp()
 
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
-
+	screenSaver = new ScreenSaver(&screenStruct);
 	
 }
 //---------------------------------------------------------------------------------------
@@ -170,7 +170,7 @@ void MainApp::InitScreens()
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	TTF_Font* font = TTF_OpenFont(menuFontPath.c_str(), largeFontSize);
 
-	
+	sceneIndex = 0;
 	screenStruct.font = font;
 	screenStruct.renderer = renderer;
 	screenStruct.fontSize = fontSize;

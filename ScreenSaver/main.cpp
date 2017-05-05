@@ -40,6 +40,7 @@ int main(int argc, char *argv[])
 	//inputTimer = SDL_AddTimer(DEFAULT_RESOLUTION, ticktock, NULL);//when was the last time someone pressed any sort of button
 	//totalRuntime = SDL_AddTimer(DEFAULT_RESOLUTION, ticktock, NULL);//how long has the arcade been on
 
+	app.ReadCFG();
 	app.InitWindow(640,480,false);
 	app.InitScreens();
 

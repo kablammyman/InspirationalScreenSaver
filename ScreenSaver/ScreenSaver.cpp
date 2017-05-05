@@ -53,6 +53,9 @@ ScreenSaver::ScreenSaver(SDL_ScreenStruct *s)
 	imageSelector.SetImageMemAmt(Globals::imageMemAmt);
 	time_t rawtime;
 	struct tm * timeinfo;
+
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
 	logFile = fopen("myfile.txt", "w");
 	fprintf(logFile, "\nCurrent local time and date: %s \n", asctime(timeinfo));
 }
