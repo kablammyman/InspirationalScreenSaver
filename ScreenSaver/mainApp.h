@@ -32,6 +32,7 @@ public:
 	SDL_Window *window;
 	SDL_Renderer *renderer;
 	SDL_ScreenStruct screenStruct;
+	SDL_Texture * screenBufferTexture;
 
 	int largeFontSize;
 	int fontSize;
@@ -44,7 +45,7 @@ public:
 	void LogicUpdate();
 	void GraphicsUpdate();
 
-	bool ReadCFG();
+	bool ReadCFG(string path = "");
 
 	
 	void updateTime();

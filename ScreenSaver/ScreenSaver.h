@@ -10,6 +10,8 @@
 #include "CurrentImage.h"
 #include "StopWatch.h"
 #include "ImageSelector.h"
+#include "BitmapFont.h"
+
 
 //#include "queueImageSelector.h"
 //#include "shuffledImageSelector.h"
@@ -47,7 +49,7 @@ class ScreenSaver : public Scene
 
 	FILE *logFile;
 	void WriteToLogFile(string line);
-
+	StockBitmapFont font;
 	
 public:
 	int dirSelectionForDisplay;

@@ -27,7 +27,7 @@ MainApp::MainApp()
 	Globals::viewWorkoutTimer = true;
 	Globals::useImageMemory = true;
 
-	filePathBase = "D:\\source\\InspirationalScreenSaver\\build_vs2015\\ScreenSaver\\Debug";
+	filePathBase = "";
 	sndFile = filePathBase + "\\snd.wav";
 
 	srand((unsigned)time(0));
@@ -36,15 +36,14 @@ MainApp::MainApp()
 
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
-	screenSaver = new ScreenSaver(&screenStruct);
-	
 }
 //---------------------------------------------------------------------------------------
-bool MainApp::ReadCFG()
+bool MainApp::ReadCFG(string path)
 {
 	
 	//sndFile.replace( sndFile.begin(), sndFile.end(), '\\', '/' );
-
+	if(path != "")
+		filePathBase = path;
 	ignoreFilePath = filePathBase + "\\morningGloryCfg.txt";
 	deletedFilesPath = filePathBase + "\\deletedFiles.txt";
 
@@ -116,6 +115,10 @@ void MainApp::GraphicsUpdate()
 	SDL_RenderClear(renderer);
 
 	curScreen->Draw();
+
+	SDL_UpdateTexture(screenBufferTexture, NULL, curScreen->GetSceneScreenBuffer()->pixels, screenStruct.screenW * sizeof(Uint32));
+	SDL_RenderClear(renderer);
+	SDL_RenderCopy(renderer, screenBufferTexture, NULL, NULL);
 	SDL_RenderPresent(renderer);
 }
 //---------------------------------------------------------------------------------------
@@ -123,11 +126,12 @@ void MainApp::InitWindow(int SCREEN_WIDTH, int SCREEN_HEIGHT, bool fullScreen)
 {
 	screenStruct.screenW = SCREEN_WIDTH;
 	screenStruct.screenH = SCREEN_HEIGHT;
+	screenSaver = new ScreenSaver(&screenStruct);
 
 	// Create an application window with the following settings:
 	if (!fullScreen)
 		window = SDL_CreateWindow(
-			"Arcade Frontend",                  // window title
+			"ScreenSaver",                  // window title
 			SDL_WINDOWPOS_UNDEFINED,           // initial x position
 			SDL_WINDOWPOS_UNDEFINED,           // initial y position
 			screenStruct.screenW,                               // width, in pixels
@@ -136,7 +140,7 @@ void MainApp::InitWindow(int SCREEN_WIDTH, int SCREEN_HEIGHT, bool fullScreen)
 		);
 	else
 		window = SDL_CreateWindow(
-			"Arcade Frontend",                  // window title
+			"ScreenSaver",                  // window title
 			SDL_WINDOWPOS_UNDEFINED,           // initial x position
 			SDL_WINDOWPOS_UNDEFINED,           // initial y position
 			screenStruct.screenW,                               // width, in pixels
@@ -169,6 +173,7 @@ void MainApp::InitScreens()
 	string menuFontPath = "";
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	TTF_Font* font = TTF_OpenFont(menuFontPath.c_str(), largeFontSize);
+	screenBufferTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, screenStruct.screenW, screenStruct.screenH);
 
 	sceneIndex = 0;
 	screenStruct.font = font;

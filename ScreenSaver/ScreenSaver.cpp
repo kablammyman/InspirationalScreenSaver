@@ -187,8 +187,9 @@ void ScreenSaver::Update()
 //---------------------------------------------------------------------------------------
 void ScreenSaver::Draw()
 {
-	//if (Globals::viewPathInfo)
-	//	renderer.drawText(10, 0, RGB{ 255, 255, 255 }, filePath);
+	if (Globals::viewPathInfo)
+		font.Draw(renderer.GetScreenBuffer(), "test", 10, 0);
+
 
 	//renderer.drawText( 10, 10, makecol(255, 255, 255), 0, to_string((int)fps));
 	
