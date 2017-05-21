@@ -57,7 +57,7 @@ ScreenSaver::ScreenSaver(SDL_ScreenStruct *s)
 	}*/
 
 	
-	ImageManager.SetImageMemAmt(Globals::imageMemAmt);
+	imageManager.SetImageMemAmt(Globals::imageMemAmt);
 	
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
@@ -72,7 +72,7 @@ void ScreenSaver::SetCurImgObj( CurrentImage *c)
 //---------------------------------------------------------------------------------------
 void ScreenSaver::SetDisplayDirs(vector<string> dirs)
 {
-	ImageManager.SetDisplayList(dirs);
+	imageManager.SetDisplayList(dirs);
 
 	
 
@@ -138,7 +138,7 @@ void ScreenSaver::ChangeImage(string newImage)
 	if (!newImage.empty())
 		filePath = newImage;
 	else
-		filePath = ImageManager.GetNextImage();
+		filePath = imageManager.GetNextImage();
 
 	//if we STILL dont have an image...
 	if (filePath.empty())
@@ -223,20 +223,20 @@ void ScreenSaver::DrawScene()
 }
 void ScreenSaver::GotoNextImage()
 {
-	string img = ImageManager.GotoNextImage();
+	string img = imageManager.GotoNextImage();
 	ChangeImage(img);
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::GotoPrevImage()
 {
-	string img = ImageManager.GotoPrevImage();
+	string img = imageManager.GotoPrevImage();
 	ChangeImage(img);
 	
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::DeleteSingleImage(string fileToDelete)
 {
-	//ImageManager.myDeleteFile( filePath.c_str() );
+	//imageManager.myDeleteFile( filePath.c_str() );
 	DoDelete(fileToDelete);
 	//clearScreen();
 	//textprintf_ex(screen, font, screenWidth/4, screenHeight/2,  makecol(255,255,255), 0, "deleted: %s",filePath.c_str());
