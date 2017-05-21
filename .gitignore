@@ -6,3 +6,4 @@ ipch/
 .vs/
 *.suo
 build_vs2015/
+build_linux/

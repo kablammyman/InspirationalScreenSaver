@@ -110,23 +110,25 @@ void CurrentImage::Update()
 //---------------------------------------------------------------------------------------
 void CurrentImage::Draw(PIXMAP *dest)
 {
-	/*if (!bmp)
+	if (!bmp)
 	{
-		
-
-		textprintf_ex(dest, font, dest->w / 4, (dest->h / 2) + 10, makecol(255, 255, 255), 0, "Error loading %s", curImagePath.c_str());
+		string msg = "Error loading " + curImagePath;
+		font.Draw(dest, msg,dest->w / 4, (dest->h / 2) + 10 );
 		return;
 	}
 	
 	if (noImages)
 	{
-		textprintf_ex(dest, font, dest->w / 4, (dest->h / 2) + 10, makecol(255, 255, 255), 0, "NO IMAGES IN %s, Check your cfg file", mainApp->mainWorkingPath.c_str());
+		string msg = "NO IMAGES IN YOUR MAIN WORKING PATH, Check your cfg file";
+		font.Draw(dest, msg, dest->w / 4, (dest->h / 2) + 10);
 		return;
-	}*/
-	/*if (imageTransition)
-		stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, x, y, (int)curImgWidth, (int)curImgHeight);
+	}
+	if (imageTransition)
+		font.Draw(dest, "Doing a cool transition!!!", dest->w / 4, (dest->h / 2) + 10);
+		//stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, x, y, (int)curImgWidth, (int)curImgHeight);
 	else
-		stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, targetX, targetY, targetImgWidth, targetImgHeight);*/
+		font.Draw(dest, "Displaying a cool picture!", dest->w / 4, (dest->h / 2) + 10);
+		//stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, targetX, targetY, targetImgWidth, targetImgHeight);*/
 }
 //---------------------------------------------------------------------------------------
 int CurrentImage::GetRandomNum(int min, int max)

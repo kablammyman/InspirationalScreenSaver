@@ -3,7 +3,7 @@
 
 #include "RenderObject.h"
 #include <string>
-
+#include "BitmapFont.h"
 class CurrentImage : public RenderObject
 {
 	int targetX, targetY;
@@ -19,7 +19,8 @@ class CurrentImage : public RenderObject
 	std::string curImagePath;
 	
 	SDL_ScreenStruct *screenStruct;
-	
+	StockBitmapFont font;
+
 	int GetRandomNum(int min, int max);
 public:
 	bool imageTransition;

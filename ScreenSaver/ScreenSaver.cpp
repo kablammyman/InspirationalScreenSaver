@@ -17,7 +17,14 @@ ScreenSaver::ScreenSaver(SDL_ScreenStruct *s)
 	timeOver = false;
 
 	folderNum = 0;
-	
+
+	timeinfo = 0;
+	srand((unsigned)time(0));
+	ltime = (long)time(0);
+	stime = (unsigned)ltime / 2;
+
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
 
 	//workoutTimer = new WorkoutTimer(ss->screenW - 100, 10);
 	//workoutTimer->loadSoundFile(mainApp->sndFile.c_str());
@@ -27,13 +34,13 @@ ScreenSaver::ScreenSaver(SDL_ScreenStruct *s)
 	
 	curImage = new CurrentImage(ss);
 
-	renderer.Init(ss->screenW, ss->screenH);
-	renderer.AddToRenderList(legend);
-	renderer.AddToRenderList(curImage);
-	//renderer.AddToRenderList(workoutTimer);
+	InitRenderController(ss->screenW, ss->screenH);
+	AddToRenderList(legend);
+	AddToRenderList(curImage);
+	//AddToRenderList(workoutTimer);
 	SetCurImgObj(curImage);
 
-	//imageSelector.Init(mainApp->numFoldersInBase);
+	//ImageManager.Init(mainApp->numFoldersInBase);
 
 	/*	switch(dirSelectionForDisplay)
 	{
@@ -49,11 +56,9 @@ ScreenSaver::ScreenSaver(SDL_ScreenStruct *s)
 	break;
 	}*/
 
-	imageSelector.SetDisplayList(displayDirs);
-	imageSelector.SetImageMemAmt(Globals::imageMemAmt);
-	time_t rawtime;
-	struct tm * timeinfo;
-
+	
+	ImageManager.SetImageMemAmt(Globals::imageMemAmt);
+	
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
 	logFile = fopen("myfile.txt", "w");
@@ -63,6 +68,14 @@ ScreenSaver::ScreenSaver(SDL_ScreenStruct *s)
 void ScreenSaver::SetCurImgObj( CurrentImage *c)
 {
 	curImage = c;
+}
+//---------------------------------------------------------------------------------------
+void ScreenSaver::SetDisplayDirs(vector<string> dirs)
+{
+	ImageManager.SetDisplayList(dirs);
+
+	
+
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::ChangeScreenSize(int screenW, int screenH)
@@ -125,7 +138,7 @@ void ScreenSaver::ChangeImage(string newImage)
 	if (!newImage.empty())
 		filePath = newImage;
 	else
-		filePath = imageSelector.GetNextImage();
+		filePath = ImageManager.GetNextImage();
 
 	//if we STILL dont have an image...
 	if (filePath.empty())
@@ -139,13 +152,14 @@ void ScreenSaver::ChangeImage(string newImage)
 	curImage->Load_Image(filePath);
 }
 //---------------------------------------------------------------------------------------
-void ScreenSaver::Update()
+void ScreenSaver::UpdateScene()
 {
+	
 	//when the timer is up, but we are still in logic loop, this will cause imgages to be skipped over
 	if(imageTimer.IsTimeUp())
 		ChangeImage();
 
-	renderer.UpdateAllRenderObjects();
+	//UpdateAllRenderObjects();
 	imageTimer.UpdateStopWatch();
 	
 	
@@ -185,16 +199,18 @@ void ScreenSaver::Update()
 	}
 }
 //---------------------------------------------------------------------------------------
-void ScreenSaver::Draw()
+void ScreenSaver::DrawScene()
 {
+	Scene::DrawScene();
 	if (Globals::viewPathInfo)
-		font.Draw(renderer.GetScreenBuffer(), "test", 10, 0);
-
+		DrawTextOnScene(filePath, 10, 0);
+	
+	if(Globals::viewClock)
+		DrawTextOnScene(getTimeString(), 10, 10);
 
 	//renderer.drawText( 10, 10, makecol(255, 255, 255), 0, to_string((int)fps));
 	
-	//if(Globals::viewClock)
-	//	renderer.drawText(10, 20, RGB{ 255, 255, 255 }, mainApp->getTimeString());
+	
 
 	/*#ifdef _DEBUG
 	textprintf_ex(screenBuffer, font, 10, 10, makecol(255, 255, 255), 0, "scale: %f (%f x %f)", scaleFactor, imgWidth, imgHeight);
@@ -207,20 +223,20 @@ void ScreenSaver::Draw()
 }
 void ScreenSaver::GotoNextImage()
 {
-	string img = imageSelector.GotoNextImage();
+	string img = ImageManager.GotoNextImage();
 	ChangeImage(img);
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::GotoPrevImage()
 {
-	string img = imageSelector.GotoPrevImage();
+	string img = ImageManager.GotoPrevImage();
 	ChangeImage(img);
 	
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::DeleteSingleImage(string fileToDelete)
 {
-	//imageSelector.myDeleteFile( filePath.c_str() );
+	//ImageManager.myDeleteFile( filePath.c_str() );
 	DoDelete(fileToDelete);
 	//clearScreen();
 	//textprintf_ex(screen, font, screenWidth/4, screenHeight/2,  makecol(255,255,255), 0, "deleted: %s",filePath.c_str());
@@ -243,4 +259,15 @@ void ScreenSaver::WriteToLogFile(string line)
 	if (!logFile)
 		return;
 	fprintf(logFile, "%s\n", line.c_str());
+}
+//---------------------------------------------------------------------------------------
+void  ScreenSaver::updateTime()
+{
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+}
+//---------------------------------------------------------------------------------------
+string ScreenSaver::getTimeString()
+{
+	return asctime(timeinfo);
 }

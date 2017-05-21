@@ -8,7 +8,7 @@
 #endif
 
 #include "FileUtils.h"
-#include <ctime> 
+
 
 float Globals::min, Globals::sec, Globals::mil;
 int Globals::imageDisplayTimeLength;
@@ -21,7 +21,7 @@ bool Globals::useImageMemory;
 MainApp::MainApp()
 {
 	mainWorkingPath = "C:\\";//main path to work from
-	timeinfo = 0;
+	
 
 	Globals::min = 2, Globals::sec = 5, Globals::mil = 0;
 	Globals::imageDisplayTimeLength = 5;
@@ -34,12 +34,6 @@ MainApp::MainApp()
 	filePathBase = "";
 	sndFile = filePathBase + "\\snd.wav";
 
-	srand((unsigned)time(0));
-	ltime = time(0);
-	stime = (unsigned)ltime / 2;
-
-	time(&rawtime);
-	timeinfo = localtime(&rawtime);
 }
 //---------------------------------------------------------------------------------------
 bool MainApp::ReadCFG(string path)
@@ -59,8 +53,33 @@ bool MainApp::ReadCFG(string path)
 	}
 
 	mainWorkingPath = CFGUtils::GetCfgStringValue("mainWorkingPath");
+	numFoldersInBase = FileUtils::GetNumFoldersinDir(mainWorkingPath);
+	if (numFoldersInBase < 1)
+	{
+		//alert("errorz", "invalid mainWorkingPaqth in cfg filw", "Using defaults.", "&Continue", 0, 'c', 0);
+		return false;
+	}
+
 	screenSaver->dirSelectionForDisplay = CFGUtils::GetCfgIntValue("dirSelectionForDisplay");
-	screenSaver->displayDirs = CFGUtils::GetCfgListValue("displayDirs");
+	
+	vector<string> dirs = CFGUtils::GetCfgListValue("displayDirs");
+	for (size_t i = 0; i < dirs.size(); i++)
+		if (dirs[i] == "all")
+		{
+			//gotta dewlete other folders first
+			dirs.clear();
+			dirs = FileUtils::GetAllFolderNamesInDir(mainWorkingPath);
+			break;
+		}
+
+	if (dirs.size() == 0)
+	{
+		if (mainWorkingPath[mainWorkingPath.size() - 1] != '\\')
+			mainWorkingPath.append("\\");
+		dirs.push_back(mainWorkingPath);
+	}
+
+	screenSaver->SetDisplayDirs(dirs);
 
 	vector<string> stopWatch = CFGUtils::GetCfgListValue("stopWatch");
 	if (!stopWatch.empty())
@@ -70,47 +89,13 @@ bool MainApp::ReadCFG(string path)
 		Globals::mil = CFGUtils::GetFloatValueFromList("stopWatch", "mil");
 	}
 
-
-	numFoldersInBase = FileUtils::GetNumFoldersinDir(mainWorkingPath);
-
-	if (numFoldersInBase < 1)
-	{
-		//alert("errorz", "invalid mainWorkingPaqth in cfg filw", "Using defaults.", "&Continue", 0, 'c', 0);
-		return false;
-	}
-	for (size_t i = 0; i < screenSaver->displayDirs.size(); i++)
-		if (screenSaver->displayDirs[i] == "all")
-		{
-			//gotta dewlete other folders first
-			screenSaver->displayDirs.clear();
-			screenSaver->displayDirs = FileUtils::GetAllFolderNamesInDir(mainWorkingPath);
-			break;
-		}
-
-	if (screenSaver->displayDirs.size() == 0)
-	{
-		if (mainWorkingPath[mainWorkingPath.size() - 1] != '\\')
-			mainWorkingPath.append("\\");
-		screenSaver->displayDirs.push_back(mainWorkingPath);
-	}
-
 	return true;
 }
-//---------------------------------------------------------------------------------------
-void  MainApp::updateTime()
-{
-	time(&rawtime);
-	timeinfo = localtime(&rawtime);
-}
-//---------------------------------------------------------------------------------------
-string MainApp::getTimeString()
-{
-	return asctime(timeinfo);
-}
+
 //---------------------------------------------------------------------------------------
 void MainApp::LogicUpdate()
 {
-	curScreen->Update();
+	curScreen->UpdateScene();
 }
 //---------------------------------------------------------------------------------------
 void MainApp::GraphicsUpdate()
@@ -118,7 +103,7 @@ void MainApp::GraphicsUpdate()
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
 
-	curScreen->Draw();
+	curScreen->DrawScene();
 
 	SDL_UpdateTexture(screenBufferTexture, NULL, curScreen->GetSceneScreenBuffer()->pixels, screenStruct.screenW * sizeof(Uint32));
 	SDL_RenderClear(renderer);

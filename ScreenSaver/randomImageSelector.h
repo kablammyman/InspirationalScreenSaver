@@ -3,16 +3,22 @@
 #include <vector>
 #include <string>
 
-#include "baseImageSelector.h"
+#include "ImageSelector.h"
 
-class randomImageSelector : ImageSelector
+class RandomImageSelector : public ImageSelector
 {
-  protected:
-    int width, height;  
-  public:
-    std::string getNextImage (std::vector<std::string> displayList);
-	std::vector<std::string> randomizeFolderList(std::string path, int numFolders);
-	std::string getRandomDir(std::string dir, bool useIgnoreList);
-	std::string getRandomDirFromFolderList(std::vector<std::string> dirList);
+  private:
+	int MAX_LOOP_COUNT;
+	std::string GetRandomDir(bool useIgnoreList);
+	std::string GetRandomDirFromFolderList(std::vector<std::string> &dirList);
+	void RandomizeFolderList( int numFolders);
+public:
+	RandomImageSelector()
+	{
+		MAX_LOOP_COUNT = 5;
+	}
+
+	std::string GetNewImage();
+	
 };
 

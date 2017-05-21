@@ -11,13 +11,6 @@ using namespace std;
 
 class MainApp
 {
-	
-
-	time_t rawtime;
-	struct tm* timeinfo;
-
-	long ltime;
-	int stime;
 
 public:
 	vector<Scene*> allScenes;
@@ -48,8 +41,7 @@ public:
 	bool ReadCFG(string path = "");
 
 	
-	void updateTime();
-	string getTimeString();
+	
 	
 	int numFoldersInBase; 
 	string mainWorkingPath;//main path to work from

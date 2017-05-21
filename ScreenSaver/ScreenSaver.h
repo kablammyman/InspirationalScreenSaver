@@ -4,17 +4,18 @@
 #include <vector>
 
 #include "Scene.h"
+#include "RenderController.h"
 
 #include "KeyProxy.h"
 #include "SDL_ScreenStruct.h"
 #include "CurrentImage.h"
 #include "StopWatch.h"
-#include "ImageSelector.h"
-#include "BitmapFont.h"
+#include "ImageManager.h"
 
 
-//#include "queueImageSelector.h"
-//#include "shuffledImageSelector.h"
+
+//#include "queueImageManager.h"
+//#include "shuffledImageManager.h"
 //#include "workoutTimer.h"
 
 
@@ -35,7 +36,7 @@ class ScreenSaver : public Scene
 	bool showLegend;
 	bool timeOver;
 
-	ImageSelector imageSelector;
+	ImageManager ImageManager;
 	KeyProxy keyProxy;
 
 	string filePath;
@@ -46,14 +47,21 @@ class ScreenSaver : public Scene
 	//WorkoutTimer* workoutTimer;
 	SDL_ScreenStruct *ss;
 
+	time_t rawtime;
+	struct tm* timeinfo;
+
+	long ltime;
+	int stime;
 
 	FILE *logFile;
 	void WriteToLogFile(string line);
-	StockBitmapFont font;
 	
+	void updateTime();
+	string getTimeString();
+
 public:
 	int dirSelectionForDisplay;
-	vector<string> displayDirs;
+	//vector<string> displayDirs;
 	ScreenSaver(SDL_ScreenStruct *s);
 	~ScreenSaver()
 	{
@@ -63,8 +71,8 @@ public:
 	void SetCurImgObj(CurrentImage *c);
 	
 	bool DoDelete(string path, string createDate = "");
-	void Update();
-
+	void UpdateScene();
+	void SetDisplayDirs(vector<string> dirs);
 	void ChangeImage(string newImage = "");
 	void GotoNextImage();
 	void GotoPrevImage();
@@ -72,8 +80,8 @@ public:
 	void DeleteGallery(string galleryToDelete);
 	void ToggleLegend();
 	//void PauseWorkoutTimer();
-	virtual void ChangeScreenSize(int screenW, int screenH);
-	void Draw();
+	void ChangeScreenSize(int screenW, int screenH);
+	void DrawScene();
 
 };
 
