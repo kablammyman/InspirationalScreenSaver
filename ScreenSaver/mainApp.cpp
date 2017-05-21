@@ -2,7 +2,11 @@
 #include "Globals.h"
 
 #include "CFGUtils.h"
+
+#ifdef _WIN32
 #include <Windows.h>
+#endif
+
 #include "FileUtils.h"
 #include <ctime> 
 

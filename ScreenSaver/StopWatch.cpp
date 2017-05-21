@@ -9,7 +9,7 @@ StopWatch::StopWatch()
 	TimeUnit *hour = new TimeUnit(0,24);
 
 	mil->next = sec;
-	mil->prev = NULL;
+	mil->prev = nullptr;
 
 	sec->next = min;
 	sec->prev = mil;
@@ -17,7 +17,7 @@ StopWatch::StopWatch()
 	min->next = hour;
 	min->prev = sec;
 
-	hour->next = NULL;
+	hour->next = nullptr;
 	hour->prev = min;
 
 }

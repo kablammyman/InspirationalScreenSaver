@@ -129,8 +129,8 @@ string ImageSelector::GetRandomDir(string dir, bool useIgnoreList)
 			//we want the bigger dirs to have priority over smaller ones, so lets find the bigest one!
 			else if (size > 1 && size < 4)
 			{
-				vector<__int64> dirSizes;
-				__int64 runningSize = 0;
+				vector<long long> dirSizes;
+				long long runningSize = 0;
 				for (size_t i = 0; i < size; i++)
 				{
 					dirSizes.push_back(FileUtils::GetDirSize(curDirList[i]));
@@ -145,7 +145,7 @@ string ImageSelector::GetRandomDir(string dir, bool useIgnoreList)
 				{
 					double temp = ((double)dirSizes[i] / (double)runningSize);
 					temp *= 100;
-					dirSizes[i] =  (__int64)temp;
+					dirSizes[i] =  (long long)temp;
 					if (dirSizes[i] == 0)
 						dirSizes[i] = 1;
 				}

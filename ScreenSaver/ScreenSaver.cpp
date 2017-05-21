@@ -4,7 +4,7 @@
 
 #include "ScreenSaver.h"
 
-#include "keyProxy.h"
+#include "KeyProxy.h"
 #include "mainApp.h"
 #include "Globals.h"
 #include <ctime>

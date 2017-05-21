@@ -22,14 +22,14 @@ struct TimeUnit
 		{
 			//make this a loop in case its overa time unit
 			unit -= max;
-			if(next != NULL)
+			if(next != nullptr)
 				next->Inc(1);
 			else unit = max;
 		}
 		else if(unit == max)
 		{
 			unit = min;
-			if (next != NULL)
+			if (next != nullptr)
 				next->Inc(1);
 			else unit = max;
 		}
@@ -41,15 +41,15 @@ struct TimeUnit
 		unit -= amt;
 		if (unit < min)
 		{
-			unit = max - abs(unit);
-			if (prev != NULL)
+			unit = max - std::abs(unit);
+			if (prev != nullptr)
 				prev->Dec(1);
 			else unit = min;
 		}
 		else if (unit == min)
 		{
 			unit = max;
-			if (prev != NULL)
+			if (prev != nullptr)
 				prev->Dec(1);
 			else unit = min;
 		}
