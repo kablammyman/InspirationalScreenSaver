@@ -62,8 +62,11 @@ bool MainApp::ReadCFG(string path)
 	int numFoldersInBase = FileUtils::GetNumFoldersinDir(mainWorkingPath);
 	if (numFoldersInBase < 1)
 	{
-		screenSaver->WriteToLogFile("invalid mainWorkingPath in cfg file: " + mainWorkingPath);
-		return false;
+		if (FileUtils::GetNumFilesInDir(mainWorkingPath) == 0)
+		{
+			screenSaver->WriteToLogFile("invalid mainWorkingPath in cfg file: " + mainWorkingPath);
+			return false;
+		}
 	}
 
 	screenSaver->dirSelectionForDisplay = CFGUtils::GetCfgIntValue("dirSelectionForDisplay");
