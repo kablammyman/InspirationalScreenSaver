@@ -5,6 +5,8 @@
 
 #ifdef _WIN32
 #include <Windows.h>
+#else
+#include <dirent.h>
 #endif
 
 #include "FileUtils.h"
@@ -60,6 +62,8 @@ bool MainApp::ReadCFG(string path)
 
 	mainWorkingPath = CFGUtils::GetCfgStringValue("mainWorkingPath");
 	int numFoldersInBase = FileUtils::GetNumFoldersinDir(mainWorkingPath);
+	
+	
 	if (numFoldersInBase < 1)
 	{
 		if (FileUtils::GetNumFilesInDir(mainWorkingPath) == 0)
@@ -73,14 +77,17 @@ bool MainApp::ReadCFG(string path)
 	
 	vector<string> dirs = CFGUtils::GetCfgListValue("displayDirs");
 	for (size_t i = 0; i < dirs.size(); i++)
+	{
+		if(dirs[i].back() == '\r')
+		    dirs[i].pop_back();
 		if (dirs[i] == "all")
 		{
-			//gotta dewlete other folders first
+			//gotta delete other folders first
 			dirs.clear();
 			dirs = FileUtils::GetAllFolderNamesInDir(mainWorkingPath);
 			break;
 		}
-
+	}
 	if (dirs.size() == 0)
 	{
 		if (mainWorkingPath[mainWorkingPath.size() - 1] != Globals::SLASH)

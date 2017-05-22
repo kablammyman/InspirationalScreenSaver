@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.9)
 project(InspirationalScreenSaver)
 
 set (CMAKE_CXX_STANDARD 11)
-
+set(CMAKE_BUILD_TYPE Debug)
 	IF (WIN32)
 		set (CMAKE_CXX_FLAGS "/D _CRT_SECURE_NO_WARNINGS -W4 /EHsc")
 		set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_SOURCE_DIR}/bin/Debug)
