@@ -54,7 +54,7 @@ class ScreenSaver : public Scene
 	int stime;
 
 	FILE *logFile;
-	void WriteToLogFile(string line);
+	
 	
 	void updateTime();
 	string getTimeString();
@@ -82,6 +82,6 @@ public:
 	//void PauseWorkoutTimer();
 	void ChangeScreenSize(int screenW, int screenH);
 	void DrawScene();
-
+	void WriteToLogFile(string line);
 };
 

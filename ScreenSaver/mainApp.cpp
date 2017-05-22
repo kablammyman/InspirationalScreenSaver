@@ -17,10 +17,17 @@ bool Globals::viewPathInfo;
 bool Globals::viewClock;
 bool Globals::viewWorkoutTimer;
 bool Globals::useImageMemory;
-
+char Globals::SLASH;
 MainApp::MainApp()
 {
+#ifdef _WIN32
+	Globals::SLASH = '\\';
 	mainWorkingPath = "C:\\";//main path to work from
+#else
+	Globals::SLASH = '/';
+	mainWorkingPath = "/media/";//main path to work from
+#endif
+	
 	
 
 	Globals::min = 2, Globals::sec = 5, Globals::mil = 0;
@@ -32,7 +39,7 @@ MainApp::MainApp()
 	Globals::useImageMemory = true;
 
 	filePathBase = "";
-	sndFile = filePathBase + "\\snd.wav";
+	sndFile = filePathBase + Globals::SLASH +"snd.wav";
 
 }
 //---------------------------------------------------------------------------------------
@@ -42,21 +49,20 @@ bool MainApp::ReadCFG(string path)
 	//sndFile.replace( sndFile.begin(), sndFile.end(), '\\', '/' );
 	if(path != "")
 		filePathBase = path;
-	ignoreFilePath = filePathBase + "\\morningGloryCfg.txt";
-	deletedFilesPath = filePathBase + "\\deletedFiles.txt";
+	string cfgFile = filePathBase + Globals::SLASH + "morningGloryCfg.txt";
 
-	if (!CFGUtils::ReadCfgFile(ignoreFilePath, '|'))
+	if (!CFGUtils::ReadCfgFile(cfgFile, '|'))
 	{
-		printf("Error opening %s\n", ignoreFilePath.c_str());
-		//alert("errorz", ignoreFilePath.c_str(), "Using defaults.","&Continue", 0, 'c', 0);
+		printf("Error opening %s\n", cfgFile.c_str());
+		screenSaver->WriteToLogFile("Error opening "+ cfgFile);
 		return false;
 	}
 
 	mainWorkingPath = CFGUtils::GetCfgStringValue("mainWorkingPath");
-	numFoldersInBase = FileUtils::GetNumFoldersinDir(mainWorkingPath);
+	int numFoldersInBase = FileUtils::GetNumFoldersinDir(mainWorkingPath);
 	if (numFoldersInBase < 1)
 	{
-		//alert("errorz", "invalid mainWorkingPaqth in cfg filw", "Using defaults.", "&Continue", 0, 'c', 0);
+		screenSaver->WriteToLogFile("invalid mainWorkingPath in cfg file: " + mainWorkingPath);
 		return false;
 	}
 
@@ -74,8 +80,8 @@ bool MainApp::ReadCFG(string path)
 
 	if (dirs.size() == 0)
 	{
-		if (mainWorkingPath[mainWorkingPath.size() - 1] != '\\')
-			mainWorkingPath.append("\\");
+		if (mainWorkingPath[mainWorkingPath.size() - 1] != Globals::SLASH)
+			mainWorkingPath += Globals::SLASH;
 		dirs.push_back(mainWorkingPath);
 	}
 

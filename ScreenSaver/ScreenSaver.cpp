@@ -40,7 +40,7 @@ ScreenSaver::ScreenSaver(SDL_ScreenStruct *s)
 	//AddToRenderList(workoutTimer);
 	SetCurImgObj(curImage);
 
-	//ImageManager.Init(mainApp->numFoldersInBase);
+	//imageManager.Init(mainApp->numFoldersInBase);
 
 	/*	switch(dirSelectionForDisplay)
 	{
@@ -61,7 +61,7 @@ ScreenSaver::ScreenSaver(SDL_ScreenStruct *s)
 	
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
-	logFile = fopen("myfile.txt", "w");
+	logFile = fopen("screenSaverLog.txt", "w");
 	fprintf(logFile, "\nCurrent local time and date: %s \n", asctime(timeinfo));
 }
 //---------------------------------------------------------------------------------------

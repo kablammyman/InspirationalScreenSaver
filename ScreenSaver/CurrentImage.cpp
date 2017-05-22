@@ -119,8 +119,8 @@ void CurrentImage::Draw(PIXMAP *dest)
 	
 	if (noImages)
 	{
-		string msg = "NO IMAGES IN YOUR MAIN WORKING PATH, Check your cfg file";
-		font.Draw(dest, msg, dest->w / 4, (dest->h / 2) + 10);
+		string msg = "NO IMAGES IN MAIN WORKING PATH! Check the log file and your cfg file";
+		font.Draw(dest, msg, dest->w / 8, (dest->h / 2) + 20);
 		return;
 	}
 	if (imageTransition)

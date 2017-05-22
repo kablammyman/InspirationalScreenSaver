@@ -11,4 +11,5 @@ public:
 	static int imageDisplayTimeLength;
 	static int imageMemAmt;
 	static float min, sec, mil;
+	static char SLASH;
 };

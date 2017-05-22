@@ -40,15 +40,8 @@ public:
 
 	bool ReadCFG(string path = "");
 
-	
-	
-	
-	int numFoldersInBase; 
 	string mainWorkingPath;//main path to work from
 	string sndFile;
 	string filePathBase;
-	string ignoreFilePath;
-	string deletedFilesPath;
-	
 
 };
