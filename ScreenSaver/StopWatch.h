@@ -5,7 +5,7 @@
 struct TimeUnit
 {
 	//reset is a time we enter
-	int min,max, reset;
+	int min,max;
 	int unit;
 	
 	TimeUnit *next;
@@ -14,6 +14,7 @@ struct TimeUnit
 	{
 		min = m;
 		max = n;
+		unit = min;
 	}
 	void Inc(int amt)
 	{
@@ -54,13 +55,21 @@ struct TimeUnit
 			else unit = min;
 		}
 	}
+
+	bool IsBottomedOut()
+	{
+		return unit == min;
+	}
+	
 };
 struct StopWatch
 {
 	
 	// decimals, seconds, minutes, hours;	
 	TimeUnit *mil;
-
+	TimeUnit *sec;
+	TimeUnit *min;
+	TimeUnit *hour;
 	bool elapsedTimer;
 
 	bool pause;

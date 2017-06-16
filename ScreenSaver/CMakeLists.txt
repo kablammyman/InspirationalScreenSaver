@@ -3,7 +3,7 @@ include_directories($ENV{MY_GAME_UTILS} )
 include_directories($ENV{MY_FILE_UTILS} )
 include_directories($ENV{MY_CFG_UTILS} )
 include_directories($ENV{MY_STRING_UTILS} )
-
+include_directories(${CMAKE_SOURCE_DIR}/3rdParty )
 
 IF(WIN32)
 include_directories(${CMAKE_SOURCE_DIR}/include) 
@@ -74,7 +74,9 @@ ENDIF()
 
 file(GLOB SOURCES
 	${PROJECT_SOURCE_DIR}/*.h
-	${PROJECT_SOURCE_DIR}/*.cpp)
+	${PROJECT_SOURCE_DIR}/*.cpp
+	${CMAKE_SOURCE_DIR}/3rdParty/*.h 
+	${CMAKE_SOURCE_DIR}/3rdParty/*.cpp )
 add_executable(ScreenSaver ${SOURCES})
 
 

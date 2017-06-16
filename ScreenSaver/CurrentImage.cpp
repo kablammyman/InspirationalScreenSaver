@@ -1,6 +1,6 @@
 #include "CurrentImage.h"
 #include "mainApp.h"
-
+#include "stb_image.h"
 CurrentImage::CurrentImage(SDL_ScreenStruct *ss) : RenderObject(0, 0, 200, 200)
 {
 	screenStruct = ss;
@@ -29,18 +29,30 @@ void CurrentImage::Load_Image(std::string imageToLoad)
 	if (bmp)
 	{
 		bmp->Destroy();
+		delete bmp;
 		bmp = nullptr;
 	}
 
-	//bmp = GraphicsProxy::loadJPEG(imageToLoad.c_str());
-	if (!bmp)//sometimes the bmp fails to load, until i figure out why, ill just do this
+
+	int bw;
+	int bh;
+	int bpp;
+	unsigned char* imgData = stbi_load(imageToLoad.c_str(), &bw, &bh, &bpp, 4);
+	if (!imgData)
 	{
-		bmp = 0;
+		return;
+	}
+	bmp = new PIXMAP(imgData,bw,bh);
+	//once the data ahs been copied into our class, get rid of raw data
+	stbi_image_free(imgData);
+
+	if (!bmp)//sometimes the bmp fails to load, until i figure out why, ill just do this
+	{	
+		bmp = nullptr;
 		return;
 	}
 	imageTransition = true;
-	int bw = bmp->w;
-	int bh = bmp->h;
+	
 	if (bmp->w >= bmp->h)
 		targetScaleFactor = float(screenStruct->screenW / bw);
 	else
@@ -124,10 +136,11 @@ void CurrentImage::Draw(PIXMAP *dest)
 		return;
 	}
 	if (imageTransition)
-		font.Draw(dest, "Doing a cool transition!!!", dest->w / 4, (dest->h / 2) + 10);
+		bmp->Blit(dest, 0, 0);
+		//font.Draw(dest, "Doing a cool transition!!!", dest->w / 4, (dest->h / 2) + 10);
 		//stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, x, y, (int)curImgWidth, (int)curImgHeight);
 	else
-		font.Draw(dest, "Displaying a cool picture!", dest->w / 4, (dest->h / 2) + 10);
+		bmp->Blit(dest,0,0);
 		//stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, targetX, targetY, targetImgWidth, targetImgHeight);*/
 }
 //---------------------------------------------------------------------------------------

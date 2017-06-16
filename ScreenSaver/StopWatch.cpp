@@ -4,9 +4,9 @@
 StopWatch::StopWatch()
 {
 	mil = new TimeUnit(0,99);
-	TimeUnit *sec = new TimeUnit(0,59);
-	TimeUnit *min = new TimeUnit(0,59); 
-	TimeUnit *hour = new TimeUnit(0,24);
+	sec = new TimeUnit(0,59);
+	min = new TimeUnit(0,59); 
+	hour = new TimeUnit(0,24);
 
 	mil->next = sec;
 	mil->prev = nullptr;
@@ -39,9 +39,7 @@ void StopWatch::StartCountdown(int min, int sec, int milli)
 	//decimals = milli;
 	//seconds = sec;
 	//minutes = min;
-	pause = false;
-	timeOver = false;
-	
+	pause = false;	
 }
 //---------------------------------------------------
 void StopWatch::UpdateCountdown()
@@ -58,10 +56,9 @@ void StopWatch::UpdateStopWatch()
 //---------------------------------------------------
 bool StopWatch::IsTimeUp()
 {  
-	/*if(decimals <= 0 && seconds <= 0 && minutes <= 0)
+	 if (mil->IsBottomedOut() && sec->IsBottomedOut() && min->IsBottomedOut() && hour->IsBottomedOut())
 		return true;
-	return false;*/
-	return true;
+	 return false;
 }
 
 int StopWatch::Convert_to_milliseconds(int min, int sec,int dec)
