@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <ctime>
 
 struct TimeUnit
 {
@@ -36,23 +37,54 @@ struct TimeUnit
 		}
 		
 	}
+	int GetNumUnitsElapsed(int amt)
+	{
+		int numLoops = 0;
+		if (unit - amt < min)
+		{
+			numLoops++;
+			unit = max-amt;
+			while (amt > max)
+			{
+				amt -= max;
+				numLoops++;
+				unit = amt;
+				
+			}
+		}
+		else
+		{
+			unit -= amt;
+		}
+		return numLoops;
+	}
 
 	void Dec(int amt)
 	{
-		unit -= amt;
-		if (unit < min)
+		if (IsBottomedOut())
 		{
-			unit = max - std::abs(unit);
-			if (prev != nullptr)
-				prev->Dec(1);
-			else unit = min;
+			if(next == nullptr)
+				return;
+			else
+			{
+				if(next->IsBottomedOut())
+					return;
+			}
 		}
-		else if (unit == min)
+
+		int numUnitsElapsed = GetNumUnitsElapsed(amt);
+		if (numUnitsElapsed > 0)
 		{
-			unit = max;
-			if (prev != nullptr)
-				prev->Dec(1);
-			else unit = min;
+			if (next != nullptr)
+			{
+				if (next->IsBottomedOut())
+				{
+					unit = min;
+					return;
+				}
+				else
+					next->Dec(numUnitsElapsed);
+			}
 		}
 	}
 
@@ -60,6 +92,7 @@ struct TimeUnit
 	{
 		return unit == min;
 	}
+
 	
 };
 struct StopWatch
@@ -74,6 +107,7 @@ struct StopWatch
 
 	bool pause;
 	bool timeOver;
+	clock_t latestClockMilis;
 
 	StopWatch();
 
@@ -81,9 +115,10 @@ struct StopWatch
 	void StartElapsedTimer();
 	void StartCountdown(int min, int sec, int milli);
 	void UpdateElapsedTime();
-	void UpdateCountdown();
+	void UpdateCountdown(int amt);
 	void UpdateStopWatch();
 	bool IsTimeUp();
 	void Convert_to_standard(int time, int &min, int &sec, int &dec);
 	int Convert_to_milliseconds(int min, int sec,int dec);
+	void ToString(char * outStr);
 };

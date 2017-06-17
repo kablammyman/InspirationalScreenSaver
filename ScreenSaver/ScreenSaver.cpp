@@ -149,7 +149,7 @@ void ScreenSaver::ChangeImage(string newImage)
 
 	imageTimer.StartCountdown(0, Globals::imageDisplayTimeLength,0);
 	//imageTimer.pause = true;
-	curImage->Load_Image(filePath);
+	//curImage->Load_Image(filePath);
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::UpdateScene()
@@ -204,17 +204,22 @@ void ScreenSaver::DrawScene()
 	Scene::DrawScene();
 	if (Globals::viewPathInfo)
 		DrawTextOnScene(filePath, 10, 0);
-	
+
 	if(Globals::viewClock)
 		DrawTextOnScene(getTimeString(), 10, 10);
 
+	char timerString[12];
+	
+	imageTimer.ToString(timerString);
+	DrawTextOnScene(timerString, 500, 10);
+	
 	//renderer.drawText( 10, 10, makecol(255, 255, 255), 0, to_string((int)fps));
 	
 	
 
 	/*#ifdef _DEBUG
 	textprintf_ex(screenBuffer, font, 10, 10, makecol(255, 255, 255), 0, "scale: %f (%f x %f)", scaleFactor, imgWidth, imgHeight);
-	textprintf_ex(screenBuffer, font, 10, 20, makecol(255, 255, 255), 0, "%d:%d:%d", imageTimer.minutes, imageTimer.seconds, imageTimer.decimals);
+	
 	textprintf_ex(dest, font, 10, 10,  makecol(255,255,255), 0, "x t:  (%d x %d)", x,y);
 	textprintf_ex(dest, font, 10, 20,  makecol(255,255,255), 0, "tarX tarY: %f (%d x %d)",scaleFactor, targetX,targetY);
 	textprintf_ex(screenBuffer, font, 10, 40, makecol(255, 255, 255), 0, "%s", filePath.c_str());

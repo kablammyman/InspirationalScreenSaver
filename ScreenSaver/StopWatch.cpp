@@ -29,29 +29,34 @@ void StopWatch::StartElapsedTimer()
 //---------------------------------------------------
 void StopWatch::UpdateElapsedTime()
 {  
+
 }
 
 //---------------------------------------------------
-void StopWatch::StartCountdown(int min, int sec, int milli)
+void StopWatch::StartCountdown(int mins, int secs, int milli)
 {  
-	//startMilli = milliSec;
 	elapsedTimer = false;
-	//decimals = milli;
-	//seconds = sec;
-	//minutes = min;
-	pause = false;	
+	mil->unit = milli;
+	sec->unit = secs;
+	min->unit = mins;
+	pause = false;
+	mil->Dec(1);
+	latestClockMilis = clock();
 }
 //---------------------------------------------------
-void StopWatch::UpdateCountdown()
+void StopWatch::UpdateCountdown(int amt)
 {  
+	mil->Dec(amt);
 }
 //---------------------------------------------------
 void StopWatch::UpdateStopWatch()
 {  
+	latestClockMilis = clock() - latestClockMilis;
+	// printf ("It took me %d clicks (%f seconds).\n",latestClockMilis,((float)latestClockMilis)/CLOCKS_PER_SEC)
 	if(elapsedTimer)
 		UpdateElapsedTime();
 	else
-		UpdateCountdown();
+		UpdateCountdown(latestClockMilis);
 }
 //---------------------------------------------------
 bool StopWatch::IsTimeUp()
@@ -74,3 +79,23 @@ void StopWatch::Convert_to_standard(int time, int &min, int &sec, int &dec)
 	sec = x%60;
 }
 
+void StopWatch::ToString(char * outStr)
+{
+
+	outStr[0] = '0' + (hour->unit/10);
+	outStr[1] = '0' + (hour->unit % 10);
+	outStr[2] = ':';
+	
+	outStr[3] = '0' + (min->unit / 10);
+	outStr[4] = '0' + (min->unit % 10);
+	outStr[5] = ':';
+	
+	outStr[6] = '0' + (sec->unit / 10);
+	outStr[7] = '0' + (sec->unit % 10);
+	outStr[8] = ':';
+	
+	outStr[9] = '0' + (mil->unit / 10);
+	outStr[10] = '0' + (mil->unit % 10);
+	outStr[11] = '\0';
+
+}
