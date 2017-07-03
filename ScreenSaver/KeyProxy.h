@@ -18,7 +18,7 @@ public:
 	};
 
 	KeyFunctions keyFunctions;
-	int convertKeyCodesToKeyFunction();
+	int ConvertKeyCodesToKeyFunction();
 	int pollKeys();
 
 };

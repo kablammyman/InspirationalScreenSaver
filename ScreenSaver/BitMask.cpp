@@ -39,7 +39,7 @@ void BitMask::printBits(unsigned int n)
 
 bool BitMask::isBitSet(unsigned int bit, unsigned int num)
 {
-	return ((1 << bit) & num);
+	return bool((1 << bit) & num);
 }
 
 void BitMask::setBit(unsigned int bit, unsigned int & num)

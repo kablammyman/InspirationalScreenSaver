@@ -147,8 +147,8 @@ void ScreenSaver::ChangeImage(string newImage)
 		return;
 	}
 
-//	imageTimer.StartCountdown(0, Globals::imageDisplayTimeLength, 0);
-	imageTimer.StartCountdown(2, 0,99);
+	imageTimer.StartCountdown(0, Globals::imageDisplayTimeLength, 0);
+//	imageTimer.StartCountdown(2, 0,99);
 	//imageTimer.pause = true;
 	curImage->Load_Image(filePath);
 }
@@ -169,7 +169,7 @@ void ScreenSaver::UpdateScene()
 	if(!curImage->imageTransition)
 		imageTimer.pause = false;
 
-	int keys = keyProxy.convertKeyCodesToKeyFunction();
+	int keys = keyProxy.ConvertKeyCodesToKeyFunction();
 
 	switch(keys)
 	{

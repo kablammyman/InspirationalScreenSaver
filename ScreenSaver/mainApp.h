@@ -5,7 +5,7 @@
 #include "SDL_ScreenStruct.h"
 #include "ScreenSaver.h"
 //#include "OptionsScreen.h"
-//#include "StopWatchScreen.h"
+#include "StopWatchScreen.h"
 
 using namespace std;
 
@@ -19,7 +19,7 @@ public:
 
 	ScreenSaver *screenSaver;
 	//OptionsScreen *optionScreen;
-	//StopWatch *stopwatchScren;
+	StopWatch *stopwatchScren;
 
 
 	SDL_Window *window;

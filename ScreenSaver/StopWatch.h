@@ -19,7 +19,7 @@ struct TimeUnit
 	}
 	void Inc(int amt)
 	{
-		
+		Dec(-amt);
 	}
 
 	//returns true if bottomed out

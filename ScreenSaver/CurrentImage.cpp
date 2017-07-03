@@ -33,7 +33,6 @@ void CurrentImage::Load_Image(std::string imageToLoad)
 		bmp = nullptr;
 	}
 
-
 	int bw;
 	int bh;
 	int bpp;
@@ -68,7 +67,7 @@ void CurrentImage::Load_Image(std::string imageToLoad)
 	x = GetRandomNum(-(screenStruct->screenW / 2), (screenStruct->screenW));
 	y = GetRandomNum(-(screenStruct->screenH / 2), (screenStruct->screenH));
 	scaleFactor = 0;
-	test = 0;
+
 }
 //---------------------------------------------------------------------------------------
 void CurrentImage::Update()
@@ -128,18 +127,10 @@ void CurrentImage::Draw(PIXMAP *dest)
 		return;
 	}
 	if (imageTransition)
-	{
 		bmp->DrawScaledCopy(dest, x, y, (unsigned int)curImgWidth, (unsigned int)curImgHeight);
-		//bmp->Blit(dest, x, y);
-		//test++;
-		//if(test > 15)
-		//imageTransition = false;
-	}
-		//font.Draw(dest, "Doing a cool transition!!!", dest->w / 4, (dest->h / 2) + 10);
 		//stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, x, y, (int)curImgWidth, (int)curImgHeight);
+	
 	else
-		//bmp->DrawScaledCopy(dest, x, y, (unsigned int)curImgWidth, (unsigned int)curImgHeight);
-		//bmp->Blit(dest,x,y);
 		bmp->DrawScaledCopy(dest, x, y, targetImgWidth, targetImgHeight);
 		//stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, targetX, targetY, targetImgWidth, targetImgHeight);*/
 }

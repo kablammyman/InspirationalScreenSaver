@@ -4,7 +4,7 @@ int KeyProxy::pollKeys()
 {
 	return 0;//AllegroKeys::getKeyByScanCode();
 }
-int KeyProxy::convertKeyCodesToKeyFunction()
+int KeyProxy::ConvertKeyCodesToKeyFunction()
 {
 	int temp = pollKeys();
 	switch(temp)

@@ -70,36 +70,36 @@ bool StopWatch::IsTimeUp()
 	 return false;
 }
 
-int StopWatch::Convert_to_milliseconds(int min, int sec,int dec)
+int StopWatch::Convert_to_milliseconds(int _min, int _sec,int _dec)
 {
-   return (min*60000)+(sec*1000)+dec; 
+   return (_min*60000)+(_sec*1000)+_dec; 
 }
 //---------------------------------------------------
-void StopWatch::Convert_to_standard(int time, int &min, int &sec, int &dec)
+void StopWatch::Convert_to_standard(int time, int &_min, int &_sec, int &_dec)
 {
-	dec = time%99;
+	_dec = time%99;
 	int x = time/99;
-	min = x/60;
-	sec = x%60;
+	_min = x/60;
+	_sec = x%60;
 }
 
 void StopWatch::ToString(char * outStr)
 {
 
-	outStr[0] = '0' + (hour->unit/10);
-	outStr[1] = '0' + (hour->unit % 10);
+	outStr[0] = char('0' + (hour->unit/10));
+	outStr[1] = char('0' + (hour->unit % 10));
 	outStr[2] = ':';
 	
-	outStr[3] = '0' + (min->unit / 10);
-	outStr[4] = '0' + (min->unit % 10);
+	outStr[3] = char('0' + (min->unit / 10));
+	outStr[4] = char('0' + (min->unit % 10));
 	outStr[5] = ':';
 	
-	outStr[6] = '0' + (sec->unit / 10);
-	outStr[7] = '0' + (sec->unit % 10);
+	outStr[6] = char('0' + (sec->unit / 10));
+	outStr[7] = char('0' + (sec->unit % 10));
 	outStr[8] = ':';
 	
-	outStr[9] = '0' + (mil->unit / 10);
-	outStr[10] = '0' + (mil->unit % 10);
+	outStr[9] = char('0' + (mil->unit / 10));
+	outStr[10] = char('0' + (mil->unit % 10));
 	outStr[11] = '\0';
 
 }
