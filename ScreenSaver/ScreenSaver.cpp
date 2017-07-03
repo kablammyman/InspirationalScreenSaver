@@ -147,9 +147,10 @@ void ScreenSaver::ChangeImage(string newImage)
 		return;
 	}
 
-	imageTimer.StartCountdown(0, Globals::imageDisplayTimeLength,0);
+//	imageTimer.StartCountdown(0, Globals::imageDisplayTimeLength, 0);
+	imageTimer.StartCountdown(2, 0,99);
 	//imageTimer.pause = true;
-	//curImage->Load_Image(filePath);
+	curImage->Load_Image(filePath);
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::UpdateScene()
@@ -159,7 +160,7 @@ void ScreenSaver::UpdateScene()
 	if(imageTimer.IsTimeUp())
 		ChangeImage();
 
-	//UpdateAllRenderObjects();
+	curImage->Update();
 	imageTimer.UpdateStopWatch();
 	
 	
@@ -201,6 +202,7 @@ void ScreenSaver::UpdateScene()
 //---------------------------------------------------------------------------------------
 void ScreenSaver::DrawScene()
 {
+	ClearScreenBuffer();
 	Scene::DrawScene();
 	if (Globals::viewPathInfo)
 		DrawTextOnScene(filePath, 10, 0);
@@ -208,8 +210,8 @@ void ScreenSaver::DrawScene()
 	if(Globals::viewClock)
 		DrawTextOnScene(getTimeString(), 10, 10);
 
+	//debug
 	char timerString[12];
-	
 	imageTimer.ToString(timerString);
 	DrawTextOnScene(timerString, 500, 10);
 	

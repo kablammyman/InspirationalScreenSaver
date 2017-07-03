@@ -54,9 +54,9 @@ void CurrentImage::Load_Image(std::string imageToLoad)
 	imageTransition = true;
 	
 	if (bmp->w >= bmp->h)
-		targetScaleFactor = float(screenStruct->screenW / bw);
+		targetScaleFactor = float(screenStruct->screenW) / float(bw);
 	else
-		targetScaleFactor = float(screenStruct->screenH / bh);
+		targetScaleFactor = float(screenStruct->screenH) / float( bh);
 	//scale it to fit up whole screen with aspect ratio
 	targetImgHeight = bmp->h * ((targetScaleFactor * 100) / 100) + 1;
 	targetImgWidth = bmp->w  * ((targetScaleFactor * 100) / 100) + 1;
@@ -67,8 +67,8 @@ void CurrentImage::Load_Image(std::string imageToLoad)
 
 	x = GetRandomNum(-(screenStruct->screenW / 2), (screenStruct->screenW));
 	y = GetRandomNum(-(screenStruct->screenH / 2), (screenStruct->screenH));
-
 	scaleFactor = 0;
+	test = 0;
 }
 //---------------------------------------------------------------------------------------
 void CurrentImage::Update()
@@ -94,26 +94,17 @@ void CurrentImage::Update()
 
 
 
-	int curPos = x - targetX;
+	if(x < (targetX - imgSpeed))
+		x += imgSpeed;
+	else if (x > (targetX+imgSpeed))
+		x -= imgSpeed;
+	else x = targetX;
 
-	x += (curPos - imgSpeed);
-	/*if(curPos > imgSpeed+1)
-	x -= imgSpeed;
-	else if(curPos < imgSpeed)
-	x += imgSpeed;
-	else
-	x = targetX;
-	*/
-	curPos = y - targetY;
-	y += (curPos - imgSpeed);
-
-	/*if(curPos > imgSpeed+1)
-	y -= imgSpeed;
-	else if(curPos < imgSpeed)
-	y += imgSpeed;
-	else
-	y = targetY;*/
-
+	if (y < (targetY - imgSpeed))
+		y += imgSpeed;
+	else if (y > (targetY + imgSpeed))
+		y -= imgSpeed;
+	else y = targetY;
 
 	if (scaleFactor >= targetScaleFactor && (abs(x - targetX) <= imgSpeed && abs(y - targetY) <= imgSpeed))
 		imageTransition = false;
@@ -122,6 +113,7 @@ void CurrentImage::Update()
 //---------------------------------------------------------------------------------------
 void CurrentImage::Draw(PIXMAP *dest)
 {
+
 	if (!bmp)
 	{
 		string msg = "Error loading " + curImagePath;
@@ -136,11 +128,19 @@ void CurrentImage::Draw(PIXMAP *dest)
 		return;
 	}
 	if (imageTransition)
-		bmp->Blit(dest, 0, 0);
+	{
+		bmp->DrawScaledCopy(dest, x, y, (unsigned int)curImgWidth, (unsigned int)curImgHeight);
+		//bmp->Blit(dest, x, y);
+		//test++;
+		//if(test > 15)
+		//imageTransition = false;
+	}
 		//font.Draw(dest, "Doing a cool transition!!!", dest->w / 4, (dest->h / 2) + 10);
 		//stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, x, y, (int)curImgWidth, (int)curImgHeight);
 	else
-		bmp->Blit(dest,0,0);
+		//bmp->DrawScaledCopy(dest, x, y, (unsigned int)curImgWidth, (unsigned int)curImgHeight);
+		//bmp->Blit(dest,x,y);
+		bmp->DrawScaledCopy(dest, x, y, targetImgWidth, targetImgHeight);
 		//stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, targetX, targetY, targetImgWidth, targetImgHeight);*/
 }
 //---------------------------------------------------------------------------------------

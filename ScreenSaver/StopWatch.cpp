@@ -51,12 +51,16 @@ void StopWatch::UpdateCountdown(int amt)
 //---------------------------------------------------
 void StopWatch::UpdateStopWatch()
 {  
-	latestClockMilis = clock() - latestClockMilis;
-	// printf ("It took me %d clicks (%f seconds).\n",latestClockMilis,((float)latestClockMilis)/CLOCKS_PER_SEC)
+
+	//double duration = (clock() - latestClockMilis) / (double)CLOCKS_PER_SEC;
+	//latestClockMilis = (clock() - latestClockMilis) / (int)CLOCKS_PER_SEC;
+	double duration = clock() - latestClockMilis;
+
 	if(elapsedTimer)
 		UpdateElapsedTime();
 	else
-		UpdateCountdown(latestClockMilis);
+		UpdateCountdown((int)duration);
+	latestClockMilis = clock();
 }
 //---------------------------------------------------
 bool StopWatch::IsTimeUp()

@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 	IMG_Init(IMG_INIT_PNG);
 	TTF_Init();
 
-	app.InitWindow(640, 480, false);
+	app.InitWindow(1280, 1024, false);
 	
 	//inGameTimer = SDL_AddTimer(DEFAULT_RESOLUTION, ticktock, NULL);//how long have we been playing this game
 	//inputTimer = SDL_AddTimer(DEFAULT_RESOLUTION, ticktock, NULL);//when was the last time someone pressed any sort of button

@@ -19,80 +19,55 @@ struct TimeUnit
 	}
 	void Inc(int amt)
 	{
-		unit += amt;
-		if (unit > max+1)
-		{
-			//make this a loop in case its overa time unit
-			unit -= max;
-			if(next != nullptr)
-				next->Inc(1);
-			else unit = max;
-		}
-		else if(unit == max)
-		{
-			unit = min;
-			if (next != nullptr)
-				next->Inc(1);
-			else unit = max;
-		}
 		
 	}
-	int GetNumUnitsElapsed(int amt)
+
+	//returns true if bottomed out
+	bool Dec(int amt)
 	{
-		int numLoops = 0;
+		//if we are the last time unit, and we are alrady at zero, then the prev
+		//unit should not reset
+		if (IsBottomedOut() && next == nullptr)
+		{
+			return true;
+		}
+		//figure out how much time has passed between last go round
+		int numUnitsElapsed = 0;
 		if (unit - amt < min)
 		{
-			numLoops++;
-			unit = max-amt;
-			while (amt > max)
-			{
-				amt -= max;
-				numLoops++;
-				unit = amt;
-				
+		//how to get how many revs and remainder with divsion?
+
+			if (next != nullptr)
+			{			
+				//if (numUnitsElapsed > 0)
+				//	unit = min;
+
+				if(next->Dec(numUnitsElapsed))
+					unit = min;
 			}
+			else //at teh end of the list
+			{
+				return false;
+			}
+			
 		}
+		
 		else
 		{
 			unit -= amt;
+			return false;
 		}
-		return numLoops;
-	}
-
-	void Dec(int amt)
-	{
-		if (IsBottomedOut())
-		{
-			if(next == nullptr)
-				return;
-			else
-			{
-				if(next->IsBottomedOut())
-					return;
-			}
-		}
-
-		int numUnitsElapsed = GetNumUnitsElapsed(amt);
-		if (numUnitsElapsed > 0)
-		{
-			if (next != nullptr)
-			{
-				if (next->IsBottomedOut())
-				{
-					unit = min;
-					return;
-				}
-				else
-					next->Dec(numUnitsElapsed);
-			}
-		}
+		return true;
 	}
 
 	bool IsBottomedOut()
 	{
 		return unit == min;
 	}
-
+	bool IsToppedOut()
+	{
+		return unit == max;
+	}
 	
 };
 struct StopWatch
