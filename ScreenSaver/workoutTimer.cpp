@@ -1,12 +1,13 @@
 #include "workoutTimer.h"
 #include "mainApp.h"
+#include "Globals.h"
 
 WorkoutTimer::WorkoutTimer (int x, int y) : RenderObject(x,y,75,16)
 {
 	soundPlayed = false;
 	timerOn = true;
 	StartElapsedTimer();
-	sound = 0;
+	sound = nullptr;
 }
 
 WorkoutTimer::~WorkoutTimer()
@@ -19,7 +20,7 @@ void WorkoutTimer::KillSound()
 	if (sound != 0)
 	{
 		delete sound;
-		sound = 0;
+		sound = nullptr;
 	}
 }
 //---------------------------------------------------------------------------------------	
@@ -51,7 +52,7 @@ void WorkoutTimer::PauseWorkoutTimer(bool shouldPause)
 //---------------------------------------------------------------------------------------	
 void WorkoutTimer::StartElapsedTimer()
 {
-	workoutTimer.startElapsedTimer();
+	workoutTimer.StartElapsedTimer();
 	timerOn = true;
 	soundPlayed = false;
 }
@@ -62,14 +63,14 @@ void WorkoutTimer::StartCountdownTimer()
 		timerOn = !timerOn;
 	else
 		timerOn = true;
-	workoutTimer.startCountdown(MainApp::Instance()->min, MainApp::Instance()->sec, MainApp::Instance()->mil);
+	workoutTimer.StartCountdown(Globals::min, Globals::sec, Globals::mil);
 	soundPlayed = false;
 	
 }
 //---------------------------------------------------------------------------------------
  void WorkoutTimer::Draw(PIXMAP *dest)
 	{
-		if (!MainApp::Instance()->viewWorkoutTimer)
+		if (!Globals::viewWorkoutTimer)
 			return;
 		//VIC//clear(bmp);
 		//VIC//textprintf_ex(bmp, font, 0, 0, makecol(255, 255, 255), 0, "%d:%d:%d", workoutTimer.minutes, workoutTimer.seconds, workoutTimer.decimals);

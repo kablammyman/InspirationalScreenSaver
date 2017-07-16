@@ -1,99 +1,43 @@
 #pragma once
+#include   <time.h>
+//we can use this to verify the setup was done. right now, no checks are in place
 
-#include <cmath>
-#include <ctime>
+//to make sure the allegro timer stuff gets done, we will make the user call this method
 
-struct TimeUnit
+
+class StopWatch
 {
-	//reset is a time we enter
-	int min,max;
-	int unit;
-	
-	TimeUnit *next;
-	TimeUnit *prev;
-	TimeUnit(int m, int n)
-	{
-		min = m;
-		max = n;
-		unit = min;
-	}
-	void Inc(int amt)
-	{
-		Dec(-amt);
-	}
-
-	//returns true if bottomed out
-	bool Dec(int amt)
-	{
-		//if we are the last time unit, and we are alrady at zero, then the prev
-		//unit should not reset
-		if (IsBottomedOut() && next == nullptr)
-		{
-			return true;
-		}
-		//figure out how much time has passed between last go round
-		int numUnitsElapsed = 0;
-		if (unit - amt < min)
-		{
-		//how to get how many revs and remainder with divsion?
-
-			if (next != nullptr)
-			{			
-				//if (numUnitsElapsed > 0)
-				//	unit = min;
-
-				if(next->Dec(numUnitsElapsed))
-					unit = min;
-			}
-			else //at teh end of the list
-			{
-				return false;
-			}
-			
-		}
-		
-		else
-		{
-			unit -= amt;
-			return false;
-		}
-		return true;
-	}
-
-	bool IsBottomedOut()
-	{
-		return unit == min;
-	}
-	bool IsToppedOut()
-	{
-		return unit == max;
-	}
-	
-};
-struct StopWatch
-{
-	
-	// decimals, seconds, minutes, hours;	
-	TimeUnit *mil;
-	TimeUnit *sec;
-	TimeUnit *min;
-	TimeUnit *hour;
+private:
+	time_t begin, end;
+	long elapsedTimeSinceLast;
+	unsigned int milliSec;
+	void UpdateMilli();
+public:
+	int decimals, seconds, minutes,hours;
+	int dec_factor, sec_factor, min_factor;
 	bool elapsedTimer;
-
+	unsigned int startMilli;
 	bool pause;
 	bool timeOver;
-	clock_t latestClockMilis;
 
-	StopWatch();
-
-
+	StopWatch()
+	{
+		hours = 0;
+		decimals = seconds = minutes = 0;
+		dec_factor = sec_factor = min_factor = 0;
+		elapsedTimer = true;
+		startMilli = milliSec;
+	}
+	void ToString(char *outStr);
 	void StartElapsedTimer();
 	void StartCountdown(int min, int sec, int milli);
 	void UpdateElapsedTime();
-	void UpdateCountdown(int amt);
+	void UpdateCountdown();
 	void UpdateStopWatch();
 	bool IsTimeUp();
 	void Convert_to_standard(int time, int &min, int &sec, int &dec);
 	int Convert_to_milliseconds(int min, int sec,int dec);
-	void ToString(char * outStr);
+	void AddToMins(int amt);
+	void AddToSecs(int amt);
+	void AddToMils(int amt);
 };

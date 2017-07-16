@@ -1,3 +1,4 @@
+#pragma once
 #include <math.h>
 #include "GraphicsPrimitives.h"
 #include "Scene.h"
@@ -8,7 +9,12 @@
 #include <vector>
 
 using namespace std;
-
+#include "SDL_ScreenStruct.h"
+struct MouseProxy
+{
+	int x,y;
+	bool button1,button2;
+};
 class StopWatchScreen : public Scene, public ButtonCallback
 {
 	bool done;
@@ -22,16 +28,17 @@ class StopWatchScreen : public Scene, public ButtonCallback
 	//SoundProxy *sound;
 	//FONT *myFont;
 	StockBitmapFont font;
-	void ButtonPressed(int id);
+	void ButtonPressed(int _id);
 	vector<Button *> stopWatchButtons;
-
+	MouseProxy mouse;
+	char curTime[20];
 public:
 
 	bool timeOver;//used to know when to play time over sound
-	//AllegroTimer workoutTimer;
+	StopWatch workoutTimer;
 	void UpdateScene();
 	void DrawScene();
-	StopWatchScreen();
+	StopWatchScreen(SDL_ScreenStruct *s);
 	~StopWatchScreen();
 	double convertSecondsToDays(double secs);
 

@@ -1,10 +1,10 @@
 #include "RenderController.h"
-//#include "AllegroTimer.h"
+#include "StopWatch.h"
 //#include "SoundProxy.h"
 
 class WorkoutTimer : public RenderObject
 {
-	AllegroTimer workoutTimer;
+	StopWatch workoutTimer;
 	bool timerOn;
 	//SoundProxy *sound;
 	bool soundPlayed;
