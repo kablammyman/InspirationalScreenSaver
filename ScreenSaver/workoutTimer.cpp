@@ -17,7 +17,7 @@ WorkoutTimer::~WorkoutTimer()
 
 void WorkoutTimer::KillSound()
 {
-	if (sound != 0)
+	if (sound != nullptr)
 	{
 		delete sound;
 		sound = nullptr;
@@ -27,7 +27,7 @@ void WorkoutTimer::KillSound()
 void WorkoutTimer::LoadSoundFile(const char* filePath)
 {
 	KillSound();
-	sound = new SoundProxy(filePath);
+	sound = new SoundUtils(filePath);
 }
 //---------------------------------------------------------------------------------------		
 void WorkoutTimer::Update()
@@ -39,7 +39,7 @@ void WorkoutTimer::Update()
 
 	if(sound != 0 && !soundPlayed && workoutTimer.timeOver)
 	{
-		sound->playSound();
+		sound->PlaySound();
 		soundPlayed = true;
 	}
 }

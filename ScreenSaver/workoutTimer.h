@@ -1,12 +1,12 @@
 #include "RenderController.h"
 #include "StopWatch.h"
-//#include "SoundProxy.h"
+#include "SoundUtils.h"
 
 class WorkoutTimer : public RenderObject
 {
 	StopWatch workoutTimer;
 	bool timerOn;
-	//SoundProxy *sound;
+	SoundUtils *sound;
 	bool soundPlayed;
 	void KillSound();
 public: 
