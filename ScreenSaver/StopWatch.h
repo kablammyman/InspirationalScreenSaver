@@ -1,20 +1,23 @@
 #pragma once
-#include   <time.h>
-//we can use this to verify the setup was done. right now, no checks are in place
 
-//to make sure the allegro timer stuff gets done, we will make the user call this method
+#include <iostream>
+#include <ctime>
+#include <chrono>
 
+using namespace std::chrono;
 
 class StopWatch
 {
 private:
-	time_t begin, end;
-	long elapsedTimeSinceLast;
-	unsigned int milliSec;
+	high_resolution_clock::time_point start; 
+	high_resolution_clock::time_point curTime;
+	duration<double, std::milli> time_span;
+	float seconds,minutes,hours;
+	unsigned long over,milli;//used in conversion process
 	void UpdateMilli();
 public:
-	int decimals, seconds, minutes,hours;
-	int dec_factor, sec_factor, min_factor;
+	//the vars hold what we will display on screen
+	int dispMilli, dispSeconds, dispMinutes,dispHours;
 	bool elapsedTimer;
 	unsigned int startMilli;
 	bool pause;
@@ -22,12 +25,11 @@ public:
 
 	StopWatch()
 	{
-		hours = 0;
-		decimals = seconds = minutes = 0;
-		dec_factor = sec_factor = min_factor = 0;
+		dispMilli = dispSeconds = dispMinutes = dispHours = 0;
 		elapsedTimer = true;
-		startMilli = milliSec;
+		startMilli = 0;
 	}
+	void ConvertMilliToTimePieces();
 	void ToString(char *outStr);
 	void StartElapsedTimer();
 	void StartCountdown(int min, int sec, int milli);

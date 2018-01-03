@@ -3,21 +3,17 @@
 
 void StopWatch::UpdateMilli()
 {
-	end = time(NULL);
-	milliSec = difftime(end, begin);
-	/*hour = milliSec / 3600;
-	
-	long v = totsec % 3600;
-	min = v / 60;
-	sec = v % 60;
-	*/
+	curTime = high_resolution_clock::now();
+	time_span = curTime - start;
+
+	milli = time_span.count();
 }
 
 void StopWatch::StartElapsedTimer()
 {  
-	startMilli = milliSec;
+	start = high_resolution_clock::now();
 	elapsedTimer = true;
-	decimals = 0;
+	milli = 0;
 	seconds = 0;
 	minutes = 0;
 	pause = false;
@@ -26,115 +22,40 @@ void StopWatch::StartElapsedTimer()
 //---------------------------------------------------
 void StopWatch::UpdateElapsedTime()
 {  
+	//this used to work becasue it would just take the updated amount of time, and "add" it to the curren time
+	//and if the ipdated time diff is always 0, then it would add 0 to the current time, meaning no change.
 	if(pause)
 	{
-		startMilli = milliSec;
 		return;
 	}
-	if(milliSec >= (startMilli+99))
-	{                             
-		int updateAmt = milliSec - (startMilli+99);
-		if(updateAmt > 99)//if more than a second passed by
-		{
-			int min,sec,dec;
-			Convert_to_standard(updateAmt, min, sec, dec);
-			decimals += dec;
-			seconds += sec;
-			minutes += min;
-		}
-		else
-			decimals = updateAmt;             
-		startMilli = milliSec;
-		seconds++;
-	}
-	else
-	{
-		decimals++;
-	}
-	if(seconds >= 60)
-	{                                                      
-		seconds = 0;
-		minutes++;                    
-	}      
+	
 }
 
 //---------------------------------------------------
-void StopWatch::StartCountdown(int min, int sec, int milli)
+void StopWatch::StartCountdown(int min, int sec, int _milli)
 {  
-	startMilli = milliSec;
+	start = high_resolution_clock::now();
 	elapsedTimer = false;
-	decimals = milli;
+	milli = milli;
 	seconds = sec;
 	minutes = min;
-
-	if(decimals == 0)
-	{
-		if(seconds > 0)
-			seconds--;
-		else if(minutes > 0)
-		{
-			minutes--;
-			seconds = 59;
-		}
-	}
-
 	pause = false;
 	timeOver = false;
-	
 }
 //---------------------------------------------------
 void StopWatch::UpdateCountdown()
 {  
 	if(pause)
 	{
-		startMilli = milliSec;
 		return;
 	}
 
-	decimals = (startMilli+99) - milliSec;
-	
-	if(decimals <= 0)
-	{                             
-		if(minutes == 0 && seconds == 0)
-		{
-			decimals = 0;
-			timeOver = true;
-			return;
-		}
-		int updateAmt = milliSec - (startMilli+99);
-		if(updateAmt > 99)//if more than a second passed by
-		{
-			int min,sec,dec;
-			Convert_to_standard(updateAmt, min, sec, dec);
-			decimals = dec;
-			seconds -= sec;
-			minutes -= min;
-		}
-		decimals = 0;
-		bool secChange = false;
-
-		if(minutes > 0 && seconds == 0)
-		{
-			minutes--;
-			seconds = 59;
-			secChange = true;
-		}
-		if(seconds > 0)
-		{
-			if(!secChange)//if we already modified the seconds, dont mod it again
-				seconds--;
-			startMilli = milliSec; 
-		}
-		if(seconds <= 0)
-			seconds = 0;
-		if(minutes <= 0)
-			minutes = 0;
-		
-	}
 }
 //---------------------------------------------------
 void StopWatch::UpdateStopWatch()
 {  
+	UpdateMilli();
+
 	if(elapsedTimer)
 		UpdateElapsedTime();
 	else
@@ -143,7 +64,7 @@ void StopWatch::UpdateStopWatch()
 //---------------------------------------------------
 bool StopWatch::IsTimeUp()
 {  
-	if(decimals <= 0 && seconds <= 0 && minutes <= 0)
+	if(milli <= 0 && seconds <= 0 && minutes <= 0)
 		return true;
 	return false;
 }
@@ -160,6 +81,16 @@ void StopWatch::Convert_to_standard(int time, int &min, int &sec, int &dec)
 	min = x/60;
 	sec = x%60;
 }
+
+void StopWatch::ConvertMilliToTimePieces()
+{
+	dispHours = (milli / 3600000);//thats 5 zeros!
+	over = (milli % 3600000);
+	dispMinutes = (over / 60000);
+	over = (over % 60000);
+	dispSeconds = over / 1000;
+	dispMilli = over % 1000;
+}
 //---------------------------------------------------
 void StopWatch::AddToMins(int amt)
 {
@@ -173,26 +104,26 @@ void StopWatch::AddToSecs(int amt)
 //---------------------------------------------------
 void StopWatch::AddToMils(int amt)
 {
-	decimals += amt;
+	milli += amt;
 }
 //---------------------------------------------------
 void StopWatch::ToString(char * outStr)
 {
 	//return 2 digits for each time unit
-	outStr[0] = char('0' + (hours / 10));
-	outStr[1] = char('0' + (hours % 10));
+	outStr[0] = char('0' + (dispHours / 10));
+	outStr[1] = char('0' + (dispHours % 10));
 	outStr[2] = ':';
 
-	outStr[3] = char('0' + (minutes / 10));
-	outStr[4] = char('0' + (minutes % 10));
+	outStr[3] = char('0' + (dispMinutes / 10));
+	outStr[4] = char('0' + (dispMinutes % 10));
 	outStr[5] = ':';
 
-	outStr[6] = char('0' + (seconds / 10));
-	outStr[7] = char('0' + (seconds % 10));
+	outStr[6] = char('0' + (dispSeconds / 10));
+	outStr[7] = char('0' + (dispSeconds % 10));
 	outStr[8] = ':';
 
-	outStr[9] = char('0' + (decimals / 10));
-	outStr[10] = char('0' + (decimals % 10));
+	outStr[9] = char('0' + (milli / 10));
+	outStr[10] = char('0' + (milli % 10));
 	outStr[11] = '\0';
 
 }

@@ -224,14 +224,14 @@ double StopWatchScreen::convertSecondsToDays(double secs)
 void StopWatchScreen::AddMin( int x)
 {
 	Globals::min += x;
-	workoutTimer.minutes = Globals::min;
+	workoutTimer.dispMinutes = Globals::min;
 }
 void StopWatchScreen::SubMin( int x)
 {
 	if (Globals::min > 0)
 	{
 		Globals::min -= x;
-		workoutTimer.minutes = Globals::min;
+		workoutTimer.dispMinutes = Globals::min;
 	}
 }
 void StopWatchScreen::AddSec( int x)
@@ -241,7 +241,7 @@ void StopWatchScreen::AddSec( int x)
 	else
 		Globals::sec = 0;
 
-	workoutTimer.seconds = Globals::sec;
+	workoutTimer.dispSeconds = Globals::sec;
 }
 void StopWatchScreen::SubSec( int x)
 {
@@ -250,7 +250,7 @@ void StopWatchScreen::SubSec( int x)
 	else
 		Globals::sec = 59;
 		
-	workoutTimer.seconds = Globals::sec;
+	workoutTimer.dispSeconds = Globals::sec;
 	
 }
 void StopWatchScreen::AddMil( int x)
@@ -260,7 +260,7 @@ void StopWatchScreen::AddMil( int x)
 	else
 		Globals::mil = 0;
 
-	workoutTimer.decimals = Globals::mil;
+	workoutTimer.dispMilli = Globals::mil;
 	
 }
 void StopWatchScreen::SubMil( int x)
@@ -270,28 +270,28 @@ void StopWatchScreen::SubMil( int x)
 	else
 		Globals::mil = 99;
 
-	workoutTimer.decimals = Globals::mil;
+	workoutTimer.dispMilli = Globals::mil;
 	
 }
 void StopWatchScreen::Start()
 {
 	workoutTimer.pause = !workoutTimer.pause;
-	if (workoutTimer.decimals == 0)
+	if (workoutTimer.dispMilli == 0)
 	{
-		if (workoutTimer.seconds > 1)
-			workoutTimer.seconds--;
-		else if (workoutTimer.minutes > 1)
+		if (workoutTimer.dispSeconds > 1)
+			workoutTimer.dispSeconds--;
+		else if (workoutTimer.dispMinutes > 1)
 		{
-			workoutTimer.minutes--;
-			workoutTimer.seconds = 59;
+			workoutTimer.dispMinutes--;
+			workoutTimer.dispSeconds = 59;
 		}
 	}
 	//if we pause so we can change the timer, let the values be accurate
 	if (workoutTimer.pause)
 	{
-		Globals::min = workoutTimer.minutes;
-		Globals::sec = workoutTimer.seconds;
-		Globals::mil = workoutTimer.decimals;
+		Globals::min = workoutTimer.dispMinutes;
+		Globals::sec = workoutTimer.dispSeconds;
+		Globals::mil = workoutTimer.dispMinutes;
 	}
 }
 
@@ -300,15 +300,15 @@ void StopWatchScreen::Reset()
 {
 	if (!workoutTimer.elapsedTimer)
 	{
-		workoutTimer.minutes = Globals::min;
-		workoutTimer.seconds = Globals::sec;
-		workoutTimer.decimals = Globals::mil;
+		workoutTimer.dispMinutes = Globals::min;
+		workoutTimer.dispSeconds = Globals::sec;
+		workoutTimer.dispMilli = Globals::mil;
 	}
 	else
 	{
-		workoutTimer.minutes = 0;
-		workoutTimer.seconds = 0;
-		workoutTimer.decimals = 0;
+		workoutTimer.dispMinutes = 0;
+		workoutTimer.dispSeconds = 0;
+		workoutTimer.dispMilli = 0;
 	}
 	workoutTimer.pause = true;
 	workoutTimer.timeOver = false;
