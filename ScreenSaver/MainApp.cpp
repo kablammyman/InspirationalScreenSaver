@@ -1,4 +1,4 @@
-#include "mainApp.h"
+#include "MainApp.h"
 #include "Globals.h"
 
 #include "CFGUtils.h"

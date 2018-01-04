@@ -1,5 +1,5 @@
 #include "workoutTimer.h"
-#include "mainApp.h"
+#include "MainApp.h"
 #include "Globals.h"
 
 WorkoutTimer::WorkoutTimer (int x, int y) : RenderObject(x,y,75,16)

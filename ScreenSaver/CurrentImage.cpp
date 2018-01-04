@@ -1,5 +1,5 @@
 #include "CurrentImage.h"
-#include "mainApp.h"
+#include "MainApp.h"
 #include "stb_image.h"
 CurrentImage::CurrentImage(SDL_ScreenStruct *ss) : RenderObject(0, 0, 200, 200)
 {

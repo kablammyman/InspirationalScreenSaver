@@ -8,7 +8,7 @@
 #include "SDL_syswm.h"
 //#include <SDL_image.h>
 
-#include "mainApp.h"
+#include "MainApp.h"
 using namespace std;
 
 #define TICK_INTERVAL    30
