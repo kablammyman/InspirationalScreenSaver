@@ -13,8 +13,8 @@ private:
 	high_resolution_clock::time_point curTime;
 	duration<double, std::milli> time_span;
 	float seconds,minutes,hours;
-	unsigned long over,milli;//used in conversion process
-	void UpdateMilli();
+	unsigned long over,milli, milSinceLAstFrame;//used in conversion process
+
 public:
 	//the vars hold what we will display on screen
 	int dispMilli, dispSeconds, dispMinutes,dispHours;

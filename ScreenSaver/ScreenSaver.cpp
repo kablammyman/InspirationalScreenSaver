@@ -148,7 +148,7 @@ void ScreenSaver::ChangeImage(string newImage)
 	}
 
 	imageTimer.StartCountdown(0, Globals::imageDisplayTimeLength, 0);
-//	imageTimer.StartCountdown(2, 0,99);
+//	imageTimer.StartElapsedTimer();
 	//imageTimer.pause = true;
 	curImage->Load_Image(filePath);
 }

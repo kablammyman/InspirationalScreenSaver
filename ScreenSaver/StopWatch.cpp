@@ -1,21 +1,15 @@
 
 #include "StopWatch.h"
 
-void StopWatch::UpdateMilli()
-{
-	curTime = high_resolution_clock::now();
-	time_span = curTime - start;
 
-	milli = time_span.count();
-}
 
 void StopWatch::StartElapsedTimer()
 {  
 	start = high_resolution_clock::now();
 	elapsedTimer = true;
-	milli = 0;
-	seconds = 0;
-	minutes = 0;
+	dispMilli = 0;
+	dispSeconds = 0;
+	dispMinutes = 0;
 	pause = false;
 	timeOver = false;
 }
@@ -26,19 +20,25 @@ void StopWatch::UpdateElapsedTime()
 	//and if the ipdated time diff is always 0, then it would add 0 to the current time, meaning no change.
 	if(pause)
 	{
+		start = high_resolution_clock::now();
 		return;
 	}
-	
+
+	curTime = high_resolution_clock::now();
+	time_span = curTime - start;
+
+	milli = time_span.count();
+	ConvertMilliToTimePieces();
 }
 
 //---------------------------------------------------
 void StopWatch::StartCountdown(int min, int sec, int _milli)
 {  
-	start = high_resolution_clock::now();
+	milli = Convert_to_milliseconds(min, sec, _milli);
 	elapsedTimer = false;
-	milli = milli;
-	seconds = sec;
-	minutes = min;
+	dispMilli = _milli;
+	dispSeconds = sec;
+	dispMinutes = min;
 	pause = false;
 	timeOver = false;
 }
@@ -47,14 +47,23 @@ void StopWatch::UpdateCountdown()
 {  
 	if(pause)
 	{
+		start = high_resolution_clock::now();
 		return;
 	}
-
+	curTime = high_resolution_clock::now();
+	time_span = curTime - start;
+	unsigned long milSinceLAstFrame = time_span.count();
+	if (milSinceLAstFrame < milli)
+		milli -= milSinceLAstFrame;
+	else
+		milli = 0;
+	ConvertMilliToTimePieces();
+	start = high_resolution_clock::now();
 }
 //---------------------------------------------------
 void StopWatch::UpdateStopWatch()
 {  
-	UpdateMilli();
+
 
 	if(elapsedTimer)
 		UpdateElapsedTime();
@@ -64,7 +73,7 @@ void StopWatch::UpdateStopWatch()
 //---------------------------------------------------
 bool StopWatch::IsTimeUp()
 {  
-	if(milli <= 0 && seconds <= 0 && minutes <= 0)
+	if(dispMilli <= 0 && dispSeconds <= 0 && dispMinutes <= 0 && dispHours <=0)
 		return true;
 	return false;
 }
