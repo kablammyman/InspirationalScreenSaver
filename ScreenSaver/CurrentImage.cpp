@@ -15,7 +15,7 @@ CurrentImage::CurrentImage(SDL_ScreenStruct *ss) : RenderObject(0, 0, 200, 200)
 	targetScaleFactor = 1.0f;
 
 	imageTransition = false;
-	amt = 0.005f;
+	amt = 0.05f;
 }
 //---------------------------------------------------------------------------------------
 void CurrentImage::Load_Image(std::string imageToLoad)
