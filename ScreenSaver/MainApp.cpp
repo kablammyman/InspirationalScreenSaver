@@ -62,7 +62,8 @@ bool MainApp::ReadCFG(string path)
 
 	mainWorkingPath = CFGUtils::GetCfgStringValue("mainWorkingPath");
 	int numFoldersInBase = FileUtils::GetNumFoldersinDir(mainWorkingPath);
-	
+	screenSaver->WriteToLogFile("MainWorking path: "+ mainWorkingPath);
+	screenSaver->WriteToLogFile("num folders in main working path: "+ to_string(numFoldersInBase));
 	
 	if (numFoldersInBase < 1)
 	{
@@ -74,7 +75,8 @@ bool MainApp::ReadCFG(string path)
 	}
 
 	screenSaver->dirSelectionForDisplay = CFGUtils::GetCfgIntValue("dirSelectionForDisplay");
-	
+	screenSaver->WriteToLogFile("dirSelectionForDisplay: "+ to_string(screenSaver->dirSelectionForDisplay));
+
 	vector<string> dirs = CFGUtils::GetCfgListValue("displayDirs");
 	for (size_t i = 0; i < dirs.size(); i++)
 	{
@@ -96,6 +98,10 @@ bool MainApp::ReadCFG(string path)
 	}
 
 	screenSaver->SetDisplayDirs(dirs);
+	for (size_t i = 0; i < dirs.size(); i++)
+	{
+		screenSaver->WriteToLogFile("added dir: "+ dirs[i]);
+	}
 
 	vector<string> stopWatch = CFGUtils::GetCfgListValue("stopWatch");
 	if (!stopWatch.empty())

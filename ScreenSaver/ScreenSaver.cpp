@@ -143,6 +143,7 @@ void ScreenSaver::ChangeImage(string newImage)
 	//if we STILL dont have an image...
 	if (filePath.empty())
 	{
+		WriteToLogFile("File path is empty:\nnewImagePath: "+ newImage);
 		curImage->NoImageMessage();
 		return;
 	}
