@@ -1,6 +1,12 @@
 # InspirationalScreenSaver
 This can only be built with visual studio 2010 becasue of the allegro 4 lib i used. If you build allegro 4 with a newer vis studio, or use another graphics lib, then you can build the project with a more modern version of visual studio.
 
+updates:
+when buiding on linux
+You'll want to download the development version of SDL_image. As of the last update of this tutorial, the development package of SDL_image is libsdl2-image-dev. You can install this package using the command
+apt-get install libsdl2-image-dev
+For SDL_ttf, the development package name is libsdl2-ttf-dev. For SDL_mixer it's libsdl2-mixer-dev.
+
 
 updates:
 
