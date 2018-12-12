@@ -107,7 +107,7 @@ bool ScreenSaver::DoDelete(string path, string createDate)
 		permDeleteErrorVal = FileUtils::Delete_File( path.c_str(),true );
 		if(permDeleteErrorVal == 0)//cant send there, perm delete
 		{
-			lastError = FileUtils::DeleteAllFilesInDir( path.c_str() );
+			lastError = FileUtils::DeleteAllFilesInDir( path );
 			if(lastError != "") //try to delete each file individually
 			{
 				string errorString = ("-------recycle error1: " + recycleErrorVal);

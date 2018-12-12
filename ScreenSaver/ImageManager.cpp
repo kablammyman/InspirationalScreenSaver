@@ -86,7 +86,7 @@ string ImageManager::GetDirFromIndex(string baseDir, size_t index)
 	return "";
 	}*/
 
-	vector<string> curDirList = FileUtils::GetAllFileNamesInDir(baseDir.c_str());
+	vector<string> curDirList = FileUtils::GetAllFileNamesInDir(baseDir);
 	if (index >= curDirList.size())
 		index = curDirList.size() - 1;
 	if (index < curDirList.size() && index > -1)
