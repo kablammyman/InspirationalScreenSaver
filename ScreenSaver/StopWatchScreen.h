@@ -31,7 +31,7 @@ class StopWatchScreen : public Scene, public ButtonCallback
 	void ButtonPressed(int _id);
 	vector<Button *> stopWatchButtons;
 	MouseProxy mouse;
-	char curTime[20];
+	string curTime;
 public:
 
 	bool timeOver;//used to know when to play time over sound

@@ -116,8 +116,9 @@ void StopWatch::AddToMils(int amt)
 	milli += amt;
 }
 //---------------------------------------------------
-void StopWatch::ToString(char * outStr)
+std::string StopWatch::ToString()
 {
+	outStr[0] = '/0';
 	//return 2 digits for each time unit
 	outStr[0] = char('0' + (dispHours / 10));
 	outStr[1] = char('0' + (dispHours % 10));
@@ -130,9 +131,12 @@ void StopWatch::ToString(char * outStr)
 	outStr[6] = char('0' + (dispSeconds / 10));
 	outStr[7] = char('0' + (dispSeconds % 10));
 	outStr[8] = ':';
+	
+	milliConv = milli / 100;
 
-	outStr[9] = char('0' + (milli / 10));
-	outStr[10] = char('0' + (milli % 10));
+	outStr[9] = char('0' + (milliConv / 10));
+	outStr[10] = char('0' + (milliConv % 10));
 	outStr[11] = '\0';
+	return outStr;
 
 }

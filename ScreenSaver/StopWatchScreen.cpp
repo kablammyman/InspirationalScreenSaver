@@ -170,7 +170,7 @@ void StopWatchScreen::DrawScene()
 	//clear(timer->getBitmap());
 
 
-	workoutTimer.ToString(curTime);
+	curTime = workoutTimer.ToString();
 	
 	font.Draw(timer->GetPIXMAP(), curTime, 0, 0);
 

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <ctime>
 #include <chrono>
-
+#include <string>
 using namespace std::chrono;
 
 class StopWatch
@@ -14,6 +14,8 @@ private:
 	duration<double, std::milli> time_span;
 	float seconds,minutes,hours;
 	unsigned long over,milli, milSinceLAstFrame;//used in conversion process
+	char outStr[12];
+	int milliConv;
 
 public:
 	//the vars hold what we will display on screen
@@ -30,7 +32,7 @@ public:
 		startMilli = 0;
 	}
 	void ConvertMilliToTimePieces();
-	void ToString(char *outStr);
+	std::string ToString();
 	void StartElapsedTimer();
 	void StartCountdown(int min, int sec, int milli);
 	void UpdateElapsedTime();
