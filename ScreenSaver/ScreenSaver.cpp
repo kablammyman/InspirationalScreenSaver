@@ -214,6 +214,11 @@ void ScreenSaver::DrawScene()
 	string timerString = imageTimer.ToString();
 	DrawTextOnScene(timerString, 500, 10);
 
+	string imgSize = curImage->GetDebugScaleString();
+	DrawTextOnScene(imgSize, 10, 20);
+
+	string posString = curImage->GetDebugPosString();
+	DrawTextOnScene(posString, 10, 30);
 	//renderer.drawText( 10, 10, makecol(255, 255, 255), 0, to_string((int)fps));
 
 

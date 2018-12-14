@@ -153,3 +153,14 @@ void CurrentImage::NoImageMessage()
 {
 	noImages = true;
 }
+
+
+string CurrentImage::GetDebugPosString()
+{
+	return "pos: " + to_string(x) + " x " + to_string(y);
+}
+
+string CurrentImage::GetDebugScaleString()
+{
+	return "scale: " + to_string(scaleFactor) + " " + to_string(curImgWidth) + " x " + to_string(curImgHeight);
+}

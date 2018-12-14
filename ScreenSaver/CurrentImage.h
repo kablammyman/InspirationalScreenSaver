@@ -29,6 +29,8 @@ public:
 	void NoImageMessage();
 	void Load_Image(std::string imageToLoad);
 	void Draw(PIXMAP *dest);
+	std::string GetDebugPosString();
+	std::string GetDebugScaleString();
 };
 
 class AppLegend : public RenderObject
