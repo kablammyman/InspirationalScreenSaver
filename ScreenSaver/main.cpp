@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 	size_t found = startPath.find_last_of("/\\");
 	startPath = startPath.substr(0, found);
 	
-	app.ReadCFG(startPath);
+	app.ReadCFGAndInitApp(startPath);
 
 	app.InitWindow();
 	app.InitScreens();

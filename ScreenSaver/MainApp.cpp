@@ -47,7 +47,7 @@ MainApp::MainApp()
 
 }
 //---------------------------------------------------------------------------------------
-bool MainApp::ReadCFG(string path)
+bool MainApp::ReadCFGAndInitApp(string path)
 {
 	
 	//sndFile.replace( sndFile.begin(), sndFile.end(), '\\', '/' );
@@ -61,9 +61,12 @@ bool MainApp::ReadCFG(string path)
 		return false;
 	}
 	Globals::InitLogger();
+
 	screenStruct.screenW = CFGUtils::GetCfgIntValue("SCREEN_WIDTH");
 	screenStruct.screenH = CFGUtils::GetCfgIntValue("SCREEN_HEIGHT");
 	screenStruct.fullScreen = CFGUtils::GetCfgBoolValue("FULL_SCREEN");
+
+	screenSaver = new ScreenSaver(&screenStruct);
 
 
 	mainWorkingPath = CFGUtils::GetCfgStringValue("mainWorkingPath");
@@ -148,12 +151,6 @@ void MainApp::InitWindow()
 //---------------------------------------------------------------------------------------
 void MainApp::InitWindow(int SCREEN_WIDTH, int SCREEN_HEIGHT, bool fullScreen)
 {
-	screenStruct.screenW = SCREEN_WIDTH;
-	screenStruct.screenH = SCREEN_HEIGHT;
-	screenStruct.fullScreen = fullScreen;
-
-	screenSaver = new ScreenSaver(&screenStruct);
-
 	// Create an application window with the following settings:
 	if (!fullScreen)
 		window = SDL_CreateWindow(

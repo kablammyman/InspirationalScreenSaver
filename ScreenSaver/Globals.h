@@ -40,7 +40,7 @@ public:
 	}
 	static void Log(string msg)
 	{
-		logRouter.Log(LOG_LEVEL_DEBUG, msg);
+		logRouter.Log(LOG_LEVEL_INFORMATIONAL, msg);
 	}
 
 };

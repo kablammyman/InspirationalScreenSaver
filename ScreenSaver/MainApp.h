@@ -38,7 +38,7 @@ public:
 	void LogicUpdate();
 	void GraphicsUpdate();
 
-	bool ReadCFG(string path = "");
+	bool ReadCFGAndInitApp(string path = "");
 
 	string mainWorkingPath;//main path to work from
 	string sndFile;
