@@ -1,5 +1,6 @@
 // BlockComp.cpp : Defines the entry point for the console application.
 //
+#include "Globals.h"
 
 #include <string>
 
@@ -32,12 +33,13 @@ int main(int argc, char *argv[])
 	//Event handler
 	SDL_Event e;
 	
+	
 
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
 	//IMG_Init(IMG_INIT_PNG);
 	TTF_Init();
 
-	app.InitWindow(1280, 1024, false);
+	
 	
 	//inGameTimer = SDL_AddTimer(DEFAULT_RESOLUTION, ticktock, NULL);//how long have we been playing this game
 	//inputTimer = SDL_AddTimer(DEFAULT_RESOLUTION, ticktock, NULL);//when was the last time someone pressed any sort of button
@@ -46,9 +48,10 @@ int main(int argc, char *argv[])
 
 	size_t found = startPath.find_last_of("/\\");
 	startPath = startPath.substr(0, found);
+	
 	app.ReadCFG(startPath);
 
-	
+	app.InitWindow();
 	app.InitScreens();
 
 	next_time = SDL_GetTicks() + TICK_INTERVAL;

@@ -12,6 +12,7 @@ struct SDL_ScreenStruct
 	std::string fontPath;
 	int fontSize;
 	int screenW,screenH;
+	bool fullScreen;
 	SDL_Rect* rect;
 	SDL_Texture* texture;
 	SDL_Surface *surface;

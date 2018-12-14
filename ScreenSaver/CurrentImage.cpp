@@ -1,5 +1,7 @@
 #include "CurrentImage.h"
 #include "MainApp.h"
+#include "Globals.h"
+
 #include "stb_image.h"
 CurrentImage::CurrentImage(SDL_ScreenStruct *ss) : RenderObject(0, 0, 200, 200)
 {
@@ -39,7 +41,7 @@ void CurrentImage::Load_Image(std::string imageToLoad)
 	unsigned char* imgData = stbi_load(imageToLoad.c_str(), &bw, &bh, &bpp, 4);
 	if (!imgData)
 	{
-		//screenSaver->WriteToLogFile("could not load image: "+ imageToLoad);
+		Globals::Log("could not load image: "+ imageToLoad);
 		return;
 	}
 	bmp = new PIXMAP(imgData,bw,bh);
@@ -48,7 +50,7 @@ void CurrentImage::Load_Image(std::string imageToLoad)
 
 	if (!bmp)//sometimes the bmp fails to load, until i figure out why, ill just do this
 	{	
-		//screenSaver->WriteToLogFile("bmp wasnt created even tho the image loaded for some reason..."+imageToLoad);
+		Globals::Log("bmp wasnt created even tho the image loaded for some reason..."+imageToLoad);
 		bmp = nullptr;
 		return;
 	}

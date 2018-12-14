@@ -26,7 +26,7 @@ StopWatchScreen::StopWatchScreen(SDL_ScreenStruct *s)
 	if (!myFont)
 	{
 		string errorString = ("couldnt load font: " + fontFile);
-		Globals::writeToLogFile(errorString);
+		Globals::Globals::Log(errorString);
 		myFont = font;
 	}
 

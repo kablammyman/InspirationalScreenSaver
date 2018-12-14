@@ -52,9 +52,6 @@ class ScreenSaver : public Scene
 
 	long ltime;
 	int stime;
-
-	FILE *logFile;
-	
 	
 	void updateTime();
 	string getTimeString();
@@ -63,11 +60,7 @@ public:
 	int dirSelectionForDisplay;
 	//vector<string> displayDirs;
 	ScreenSaver(SDL_ScreenStruct *s);
-	~ScreenSaver()
-	{
-		if (logFile)
-			fclose(logFile);
-	}
+	
 	void SetCurImgObj(CurrentImage *c);
 	
 	bool DoDelete(string path, string createDate = "");
@@ -82,6 +75,5 @@ public:
 	//void PauseWorkoutTimer();
 	void ChangeScreenSize(int screenW, int screenH);
 	void DrawScene();
-	void WriteToLogFile(string line);
 };
 

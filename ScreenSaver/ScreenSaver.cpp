@@ -61,8 +61,7 @@ ScreenSaver::ScreenSaver(SDL_ScreenStruct *s)
 	
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
-	logFile = fopen("screenSaverLog.txt", "w");
-	fprintf(logFile, "\nCurrent local time and date: %s \n", asctime(timeinfo));
+	Globals::Log("Current local time and date: " + string(asctime(timeinfo)));
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::SetCurImgObj( CurrentImage *c)
@@ -92,12 +91,12 @@ bool ScreenSaver::DoDelete(string path, string createDate)
 	if (createDate != "")
 	{
 		string delString = ("deleting: " + path + "created: " + createDate);
-		WriteToLogFile(delString);
+		Globals::Log(delString);
 	}
 	else
 	{
 		string delString = ("deleting: " + path);
-		WriteToLogFile(delString);
+		Globals::Log(delString);
 	}
 	
 	int recycleErrorVal = 	FileUtils::Delete_File( path.c_str() );
@@ -111,13 +110,13 @@ bool ScreenSaver::DoDelete(string path, string createDate)
 			if(lastError != "") //try to delete each file individually
 			{
 				string errorString = ("-------recycle error1: " + recycleErrorVal);
-				WriteToLogFile(errorString);
+				Globals::Log(errorString);
 
 				errorString = ("-------perm error: " + permDeleteErrorVal);
-				WriteToLogFile(errorString);
+				Globals::Log(errorString);
 #ifdef _WIN32
 				errorString = ("-------GetLastError: " + GetLastError());
-				WriteToLogFile(errorString);
+				Globals::Log(errorString);
 #endif
 				return false;
 			}
@@ -126,9 +125,9 @@ bool ScreenSaver::DoDelete(string path, string createDate)
 	
 
 	if(recycleErrorVal == 0)
-		WriteToLogFile("-----sent to recycle");
+		Globals::Log("-----sent to recycle");
 	else if(permDeleteErrorVal > 0)
-		WriteToLogFile("-----sent to hell!");
+		Globals::Log("-----sent to hell!");
 	return true;
 
 }
@@ -143,7 +142,7 @@ void ScreenSaver::ChangeImage(string newImage)
 	//if we STILL dont have an image...
 	if (filePath.empty())
 	{
-		WriteToLogFile("File path is empty:\nnewImagePath: "+ newImage);
+		Globals::Log("File path is empty:\nnewImagePath: "+ newImage);
 		curImage->NoImageMessage();
 		return;
 	}
@@ -259,13 +258,6 @@ void ScreenSaver::DeleteGallery(string galleryToDelete)
 void ScreenSaver::ToggleLegend()
 {
 	showLegend = !showLegend;
-}
-//---------------------------------------------------------------------------------------
-void ScreenSaver::WriteToLogFile(string line)
-{
-	if (!logFile)
-		return;
-	fprintf(logFile, "%s\n", line.c_str());
 }
 //---------------------------------------------------------------------------------------
 void  ScreenSaver::updateTime()

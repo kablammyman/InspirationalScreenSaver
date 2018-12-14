@@ -20,6 +20,8 @@ bool Globals::viewClock;
 bool Globals::viewWorkoutTimer;
 bool Globals::useImageMemory;
 char Globals::SLASH;
+LogRouter Globals::logRouter;
+
 MainApp::MainApp()
 {
 #ifdef _WIN32
@@ -56,26 +58,31 @@ bool MainApp::ReadCFG(string path)
 	if (!CFGUtils::ReadCfgFile(cfgFile, '|'))
 	{
 		printf("Error opening %s\n", cfgFile.c_str());
-		screenSaver->WriteToLogFile("Error opening "+ cfgFile);
 		return false;
 	}
+	Globals::InitLogger();
+	screenStruct.screenW = CFGUtils::GetCfgIntValue("SCREEN_WIDTH");
+	screenStruct.screenH = CFGUtils::GetCfgIntValue("SCREEN_HEIGHT");
+	screenStruct.fullScreen = CFGUtils::GetCfgBoolValue("FULL_SCREEN");
+
 
 	mainWorkingPath = CFGUtils::GetCfgStringValue("mainWorkingPath");
 	int numFoldersInBase = FileUtils::GetNumFoldersinDir(mainWorkingPath);
-	screenSaver->WriteToLogFile("MainWorking path: "+ mainWorkingPath);
-	screenSaver->WriteToLogFile("num folders in main working path: "+ to_string(numFoldersInBase));
+	Globals::Log("MainWorking path: "+ mainWorkingPath);
+	Globals::Log("num folders in main working path: "+ to_string(numFoldersInBase));
 	
 	if (numFoldersInBase < 1)
 	{
 		if (FileUtils::GetNumFilesInDir(mainWorkingPath) == 0)
 		{
-			screenSaver->WriteToLogFile("invalid mainWorkingPath in cfg file: " + mainWorkingPath);
+			Globals::Log("invalid mainWorkingPath in cfg file: " + mainWorkingPath);
 			return false;
 		}
 	}
 
+	//screen saver doesnt exist yet...so this cant be set. how to get around this?
 	screenSaver->dirSelectionForDisplay = CFGUtils::GetCfgIntValue("dirSelectionForDisplay");
-	screenSaver->WriteToLogFile("dirSelectionForDisplay: "+ to_string(screenSaver->dirSelectionForDisplay));
+	Globals::Log("dirSelectionForDisplay: "+ to_string(screenSaver->dirSelectionForDisplay));
 
 	vector<string> dirs = CFGUtils::GetCfgListValue("displayDirs");
 	for (size_t i = 0; i < dirs.size(); i++)
@@ -100,7 +107,7 @@ bool MainApp::ReadCFG(string path)
 	screenSaver->SetDisplayDirs(dirs);
 	for (size_t i = 0; i < dirs.size(); i++)
 	{
-		screenSaver->WriteToLogFile("added dir: "+ dirs[i]);
+		Globals::Log("added dir: "+ dirs[i]);
 	}
 
 	vector<string> stopWatch = CFGUtils::GetCfgListValue("stopWatch");
@@ -133,10 +140,18 @@ void MainApp::GraphicsUpdate()
 	SDL_RenderPresent(renderer);
 }
 //---------------------------------------------------------------------------------------
+void MainApp::InitWindow()
+{
+	//use the values we read in from the cfg file
+	InitWindow(screenStruct.screenW, screenStruct.screenH, screenStruct.fullScreen);
+}
+//---------------------------------------------------------------------------------------
 void MainApp::InitWindow(int SCREEN_WIDTH, int SCREEN_HEIGHT, bool fullScreen)
 {
 	screenStruct.screenW = SCREEN_WIDTH;
 	screenStruct.screenH = SCREEN_HEIGHT;
+	screenStruct.fullScreen = fullScreen;
+
 	screenSaver = new ScreenSaver(&screenStruct);
 
 	// Create an application window with the following settings:
@@ -145,8 +160,8 @@ void MainApp::InitWindow(int SCREEN_WIDTH, int SCREEN_HEIGHT, bool fullScreen)
 			"ScreenSaver",                  // window title
 			SDL_WINDOWPOS_UNDEFINED,           // initial x position
 			SDL_WINDOWPOS_UNDEFINED,           // initial y position
-			screenStruct.screenW,                               // width, in pixels
-			screenStruct.screenH,                               // height, in pixels
+			SCREEN_WIDTH,                               // width, in pixels
+			SCREEN_HEIGHT,                               // height, in pixels
 			SDL_WINDOW_RESIZABLE
 		);
 	else
@@ -154,8 +169,8 @@ void MainApp::InitWindow(int SCREEN_WIDTH, int SCREEN_HEIGHT, bool fullScreen)
 			"ScreenSaver",                  // window title
 			SDL_WINDOWPOS_UNDEFINED,           // initial x position
 			SDL_WINDOWPOS_UNDEFINED,           // initial y position
-			screenStruct.screenW,                               // width, in pixels
-			screenStruct.screenH,                               // height, in pixels
+			SCREEN_WIDTH,                               // width, in pixels
+			SCREEN_HEIGHT,                               // height, in pixels
 			SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE
 		);
 
@@ -172,8 +187,8 @@ void MainApp::InitWindow(int SCREEN_WIDTH, int SCREEN_HEIGHT, bool fullScreen)
 	{
 		SDL_DisplayMode DM;
 		SDL_GetCurrentDisplayMode(0, &DM);
-		screenStruct.screenW = DM.w;
-		screenStruct.screenH = DM.h;
+		SCREEN_WIDTH = DM.w;
+		SCREEN_HEIGHT = DM.h;
 		fontSize = 24;
 	}
 

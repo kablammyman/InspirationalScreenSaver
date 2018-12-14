@@ -32,7 +32,7 @@ public:
 
 	MainApp();
 	
-
+	void InitWindow();
 	void InitWindow(int SCREEN_WIDTH, int SCREEN_HEIGHT, bool fullScreen = true);
 	void InitScreens();
 	void LogicUpdate();

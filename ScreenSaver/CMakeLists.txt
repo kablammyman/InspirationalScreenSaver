@@ -3,6 +3,7 @@ include_directories($ENV{MY_GAME_UTILS} )
 include_directories($ENV{MY_FILE_UTILS} )
 include_directories($ENV{MY_CFG_UTILS} )
 include_directories($ENV{MY_STRING_UTILS} )
+include_directories($ENV{MY_LOG_UTILS} )
 include_directories(${CMAKE_SOURCE_DIR}/3rdParty )
 
 IF(WIN32)
@@ -34,6 +35,11 @@ set(MY_STRING_LIB_32_D $ENV{MY_X86_DEBUG_LIBS}/StringUtils.lib)
 set(MY_STRING_LIB_64_D $ENV{MY_X64_DEBUG_LIBS}/StringUtils.lib)
 set(MY_STRING_LIB_32_R $ENV{MY_X86_RELEASE_LIBS}/StringUtils.lib)
 set(MY_STRING_LIB_64_R $ENV{MY_X64_RELEASE_LIBS}/StringUtils.lib)
+
+set(MY_LOGGING_LIB_32_D $ENV{MY_X86_DEBUG_LIBS}/LogUtils.lib)
+set(MY_LOGGING_LIB_64_D $ENV{MY_X64_DEBUG_LIBS}/LogUtils.lib)
+set(MY_LOGGING_LIB_32_R $ENV{MY_X86_RELEASE_LIBS}/LogUtils.lib)
+set(MY_LOGGING_LIB_64_R $ENV{MY_X64_RELEASE_LIBS}/LogUtils.lib)
 
 
 ELSE()
@@ -68,6 +74,12 @@ set(MY_STRING_LIB_64_D $ENV{MY_X64_DEBUG_LIBS}/libStringUtils.a)
 set(MY_STRING_LIB_32_R $ENV{MY_X86_RELEASE_LIBS}/libStringUtils.a)
 set(MY_STRING_LIB_64_R $ENV{MY_X64_RELEASE_LIBS}/libStringUtils.a)
 
+set(MY_LOGGING_LIB_32_D $ENV{MY_X86_DEBUG_LIBS}/libLogUtils.a)
+set(MY_LOGGING_LIB_64_D $ENV{MY_X64_DEBUG_LIBS}/libLogUtils.a)
+set(MY_LOGGING_LIB_32_R $ENV{MY_X86_RELEASE_LIBS}/libLogUtils.a)
+set(MY_LOGGING_LIB_64_R $ENV{MY_X64_RELEASE_LIBS}/libLogUtils.a)
+
+
 ENDIF()
 
 file(GLOB SOURCES
@@ -78,5 +90,5 @@ file(GLOB SOURCES
 add_executable(ScreenSaver ${SOURCES})
 
 
-target_link_libraries (ScreenSaver debug     ${SDL2_64_LIB} ${SDL2MAIN_64_LIB} ${SDL2_TTF_64_LIB}  ${MY_STRING_LIB_64_D} ${MY_GAME_LIB_64_D} ${MY_FILE_LIB_64_D} ${MY_CFG_LIB_64_D} )
+target_link_libraries (ScreenSaver debug     ${SDL2_64_LIB} ${SDL2MAIN_64_LIB} ${SDL2_TTF_64_LIB}  ${MY_STRING_LIB_64_D} ${MY_GAME_LIB_64_D} ${MY_FILE_LIB_64_D} ${MY_CFG_LIB_64_D} ${MY_LOGGING_LIB_64_D} )
 #optimized ${SDL2_64_LIB} ${SDL2MAIN_64_LIB} ${SDL2_TTF_64_LIB} ${SDL2_IMAGE_64_LIB} ${MY_STRING_LIB_64_R} ${MY_GAME_LIB_64_R} ${MY_FILE_LIB_64_R} ${MY_CFG_LIB_64_R} )
