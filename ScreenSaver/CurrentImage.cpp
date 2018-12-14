@@ -41,7 +41,7 @@ void CurrentImage::Load_Image(std::string imageToLoad)
 	unsigned char* imgData = stbi_load(imageToLoad.c_str(), &bw, &bh, &bpp, 4);
 	if (!imgData)
 	{
-		Globals::Log("could not load image: "+ imageToLoad);
+		Globals::LogError("could not load image: "+ imageToLoad);
 		return;
 	}
 	bmp = new PIXMAP(imgData,bw,bh);
@@ -49,13 +49,13 @@ void CurrentImage::Load_Image(std::string imageToLoad)
 	stbi_image_free(imgData);
 
 	if (!bmp)//sometimes the bmp fails to load, until i figure out why, ill just do this
-	{	
-		Globals::Log("bmp wasnt created even tho the image loaded for some reason..."+imageToLoad);
+	{
+		Globals::LogError("bmp wasnt created even tho the image loaded for some reason..."+imageToLoad);
 		bmp = nullptr;
 		return;
 	}
 	imageTransition = true;
-	
+
 	if (bmp->w >= bmp->h)
 		targetScaleFactor = float(screenStruct->screenW) / float(bw);
 	else
@@ -123,7 +123,7 @@ void CurrentImage::Draw(PIXMAP *dest)
 		font.Draw(dest, msg,dest->w / 4, (dest->h / 2) + 10 );
 		return;
 	}
-	
+
 	if (noImages)
 	{
 		string msg = "NO IMAGES IN MAIN WORKING PATH! Check the log file and your cfg file";
@@ -133,7 +133,7 @@ void CurrentImage::Draw(PIXMAP *dest)
 	if (imageTransition)
 		bmp->DrawScaledCopy(dest, x, y, (unsigned int)curImgWidth, (unsigned int)curImgHeight);
 		//stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, x, y, (int)curImgWidth, (int)curImgHeight);
-	
+
 	else
 		bmp->DrawScaledCopy(dest, x, y, targetImgWidth, targetImgHeight);
 		//stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, targetX, targetY, targetImgWidth, targetImgHeight);*/

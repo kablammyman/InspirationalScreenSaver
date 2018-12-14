@@ -145,7 +145,8 @@ string RandomImageSelector::GetRandomDirFromFolderList(vector<string> &dirList)
 	else if (dirList.size() == 1)
 		return dirList[0];
 
-	return dirList[GetRandomNum(0, (int)dirList.size() - 1)];
+    int index = GetRandomNum(0, (int)dirList.size() - 1);
+	return dirList[index];
 }
 //--------------------------------------------------------------------------------------------------------
 string RandomImageSelector::GetNewImage()
@@ -159,7 +160,7 @@ string RandomImageSelector::GetNewImage()
 		count++;
 		string curDir = GetRandomDir(true);
 		int numFiles = FileUtils::GetNumFilesInDir(curDir);
-		
+
 		if (numFiles == 0)
 		{
 			if (count > MAX_LOOP_COUNT)

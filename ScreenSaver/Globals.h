@@ -23,6 +23,7 @@ public:
 		for (size_t i = 0; i < loggerList.size(); i++)
 		{
 			string listName = loggerList[i];
+
 			vector<string> curLogger = CFGUtils::GetCfgListValue(listName);
 
 			string loggingType = CFGUtils::GetStringValueFromList(listName, "TYPE");//consle, logfile syslog etc
@@ -30,7 +31,7 @@ public:
 			string loggerDetails = CFGUtils::GetStringValueFromList(listName, "PATH");
 
 			LogOutput * newLogger = logRouter.LogOutputFactory(loggingType, loggerDetails); //optional, so far, only textfiles have this data
-		
+
 			LogEntity * temp = logRouter.AddLogger(newLogger, severityLevelString);
 			if (CFGUtils::GetCfgBoolValue("ADD_TIMESTAMP"))
 				temp->logOut->useTimeStamp = true;
@@ -41,6 +42,10 @@ public:
 	static void Log(string msg)
 	{
 		logRouter.Log(LOG_LEVEL_INFORMATIONAL, msg);
+	}
+	static void LogError(string msg)
+	{
+		logRouter.Log(LOG_LEVEL_ERROR, msg);
 	}
 
 };

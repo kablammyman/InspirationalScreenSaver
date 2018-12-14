@@ -1,17 +1,16 @@
 #include "ImageSelector.h"
 #include "StringUtils.h"
-
+#include <random>
 
 int ImageSelector::GetRandomNum(int min, int max)
 {
-	if (max - min == 1)
-		return (1 + rand() % 10) > 5 ? 1 : 0;
+	 // Seed with a real random value, if available
+    std::random_device r;
 
-	else
-	{
-		int diff = ((max - min) + 1);
-		return ((diff * rand()) / RAND_MAX) + min;
-	}
+    // Choose a random mean between 1 and 6
+    std::default_random_engine e1(r());
+    std::uniform_int_distribution<int> uniform_dist(min, max);
+    return uniform_dist(e1);
 }
 //--------------------------------------------------------------------------------------------------------
 void ImageSelector::AddRangeToIgnoreList(std::vector<std::string> range)

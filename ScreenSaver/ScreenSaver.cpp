@@ -31,7 +31,7 @@ ScreenSaver::ScreenSaver(SDL_ScreenStruct *s)
 	//workoutTimer->pauseWorkoutTimer(true);
 
 	legend = new AppLegend(ss->screenW - 300,ss->screenH - 100);
-	
+
 	curImage = new CurrentImage(ss);
 
 	InitRenderController(ss->screenW, ss->screenH);
@@ -56,9 +56,9 @@ ScreenSaver::ScreenSaver(SDL_ScreenStruct *s)
 	break;
 	}*/
 
-	
+
 	imageManager.SetImageMemAmt(Globals::imageMemAmt);
-	
+
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
 	Globals::Log("Current local time and date: " + string(asctime(timeinfo)));
@@ -73,14 +73,14 @@ void ScreenSaver::SetDisplayDirs(vector<string> dirs)
 {
 	imageManager.SetDisplayList(dirs);
 
-	
+
 
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::ChangeScreenSize(int screenW, int screenH)
 {
 	Scene::ChangeScreenSize(screenW, screenH);
-	//workoutTimer->setX( GraphicsProxy::getScreenWidth() - 100); 
+	//workoutTimer->setX( GraphicsProxy::getScreenWidth() - 100);
 	legend->SetX(ss->screenW - 300);
 	legend->SetY(ss->screenH - 100);
 }
@@ -98,7 +98,7 @@ bool ScreenSaver::DoDelete(string path, string createDate)
 		string delString = ("deleting: " + path);
 		Globals::Log(delString);
 	}
-	
+
 	int recycleErrorVal = 	FileUtils::Delete_File( path.c_str() );
 	int permDeleteErrorVal = 0;
 	if(recycleErrorVal > 0)//try to send to recycle bin failed
@@ -122,7 +122,7 @@ bool ScreenSaver::DoDelete(string path, string createDate)
 			}
 		}
 	}
-	
+
 
 	if(recycleErrorVal == 0)
 		Globals::Log("-----sent to recycle");
@@ -133,7 +133,7 @@ bool ScreenSaver::DoDelete(string path, string createDate)
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::ChangeImage(string newImage)
-{			
+{
 	if (!newImage.empty())
 		filePath = newImage;
 	else
@@ -142,7 +142,7 @@ void ScreenSaver::ChangeImage(string newImage)
 	//if we STILL dont have an image...
 	if (filePath.empty())
 	{
-		Globals::Log("File path is empty:\nnewImagePath: "+ newImage);
+		Globals::LogError("File path is empty in ScreenSaver::ChangeImage\nnewImagePath: "+ newImage);
 		curImage->NoImageMessage();
 		return;
 	}
@@ -155,15 +155,15 @@ void ScreenSaver::ChangeImage(string newImage)
 //---------------------------------------------------------------------------------------
 void ScreenSaver::UpdateScene()
 {
-	
+
 	//when the timer is up, but we are still in logic loop, this will cause imgages to be skipped over
 	if(imageTimer.IsTimeUp())
 		ChangeImage();
 
 	curImage->Update();
 	imageTimer.UpdateStopWatch();
-	
-	
+
+
 	refreshTimer.UpdateStopWatch();
 
 	if(!curImage->imageTransition)
@@ -213,14 +213,14 @@ void ScreenSaver::DrawScene()
 	//debug
 	string timerString = imageTimer.ToString();
 	DrawTextOnScene(timerString, 500, 10);
-	
+
 	//renderer.drawText( 10, 10, makecol(255, 255, 255), 0, to_string((int)fps));
-	
-	
+
+
 
 	/*#ifdef _DEBUG
 	textprintf_ex(screenBuffer, font, 10, 10, makecol(255, 255, 255), 0, "scale: %f (%f x %f)", scaleFactor, imgWidth, imgHeight);
-	
+
 	textprintf_ex(dest, font, 10, 10,  makecol(255,255,255), 0, "x t:  (%d x %d)", x,y);
 	textprintf_ex(dest, font, 10, 20,  makecol(255,255,255), 0, "tarX tarY: %f (%d x %d)",scaleFactor, targetX,targetY);
 	textprintf_ex(screenBuffer, font, 10, 40, makecol(255, 255, 255), 0, "%s", filePath.c_str());
@@ -237,7 +237,7 @@ void ScreenSaver::GotoPrevImage()
 {
 	string img = imageManager.GotoPrevImage();
 	ChangeImage(img);
-	
+
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::DeleteSingleImage(string fileToDelete)
