@@ -31,6 +31,7 @@ ScreenSaver::ScreenSaver(SDL_ScreenStruct *s)
 	//workoutTimer->pauseWorkoutTimer(true);
 
 	legend = new AppLegend(ss->screenW - 300,ss->screenH - 100);
+	debugInfo = new DebugInfo(10,40);
 
 	curImage = new CurrentImage(ss);
 
@@ -211,14 +212,19 @@ void ScreenSaver::DrawScene()
 		DrawTextOnScene(getTimeString(), 10, 10);
 
 	//debug
-	string timerString = imageTimer.ToString();
-	DrawTextOnScene(timerString, 500, 10);
+	if (debugInfo->IsEnabled())
+	{
+		string timerString = imageTimer.ToString();
+		debugInfo->Textout(0, 0, timerString);
 
-	string imgSize = curImage->GetDebugScaleString();
-	DrawTextOnScene(imgSize, 10, 20);
+		string imgSize = curImage->GetDebugScaleString();
+		debugInfo->Textout(0, 10, imgSize);
 
-	string posString = curImage->GetDebugPosString();
-	DrawTextOnScene(posString, 10, 30);
+		string posString = curImage->GetDebugPosString();
+		debugInfo->Textout(0, 20, posString);
+
+		debugInfo->Draw(GetSceneScreenBuffer());
+	}
 	//renderer.drawText( 10, 10, makecol(255, 255, 255), 0, to_string((int)fps));
 
 

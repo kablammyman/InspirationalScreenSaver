@@ -42,7 +42,7 @@ class ScreenSaver : public Scene
 	string filePath;
 	AppLegend* legend;
 	CurrentImage* curImage;
-	
+	DebugInfo *debugInfo;
 
 	//WorkoutTimer* workoutTimer;
 	SDL_ScreenStruct *ss;

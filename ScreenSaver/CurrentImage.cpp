@@ -68,7 +68,7 @@ void CurrentImage::Load_Image(std::string imageToLoad)
 	targetX = (screenStruct->screenW / 2) - (targetImgWidth / 2);
 	targetY = (screenStruct->screenH / 2) - (targetImgHeight / 2);
 
-	x = GetRandomNum(-(screenStruct->screenW / 2), (screenStruct->screenW));
+	x = -500;// GetRandomNum(-(screenStruct->screenW / 2), (screenStruct->screenW));
 	y = GetRandomNum(-(screenStruct->screenH / 2), (screenStruct->screenH));
 	scaleFactor = 0;
 
@@ -132,11 +132,10 @@ void CurrentImage::Draw(PIXMAP *dest)
 	}
 	if (imageTransition)
 		bmp->DrawScaledCopy(dest, x, y, (unsigned int)curImgWidth, (unsigned int)curImgHeight);
-		//stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, x, y, (int)curImgWidth, (int)curImgHeight);
+		//bmp->DrawScaledCopyForScreenSaver(dest, x, y, (unsigned int)curImgWidth, (unsigned int)curImgHeight);
 
 	else
 		bmp->DrawScaledCopy(dest, x, y, targetImgWidth, targetImgHeight);
-		//stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h, targetX, targetY, targetImgWidth, targetImgHeight);*/
 }
 //---------------------------------------------------------------------------------------
 int CurrentImage::GetRandomNum(int min, int max)
@@ -162,5 +161,21 @@ string CurrentImage::GetDebugPosString()
 
 string CurrentImage::GetDebugScaleString()
 {
-	return "scale: " + to_string(scaleFactor) + " " + to_string(curImgWidth) + " x " + to_string(curImgHeight);
+	return "scale: " + to_string(scaleFactor) + " " + to_string(round  (curImgWidth)) + " x " + to_string(round  (curImgHeight));
+}
+
+void DebugInfo::Draw(PIXMAP *dest)
+{
+	if ( !enabled || !bmp)
+	{
+		return;
+	}
+	
+	bmp->Blit(dest, x, y);
+	bmp->Clear();
+}
+
+void DebugInfo::Textout(int x, int y, string text)
+{
+	font.Draw(bmp, text, x, y);
 }
