@@ -52,7 +52,7 @@ void StopWatch::UpdateCountdown()
 	}
 	curTime = high_resolution_clock::now();
 	time_span = curTime - start;
-	unsigned long milSinceLAstFrame = time_span.count();
+	milSinceLAstFrame = time_span.count();
 	if (milSinceLAstFrame < milli)
 		milli -= milSinceLAstFrame;
 	else

@@ -1,48 +1,13 @@
 #include <algorithm>    // std::sort
-#include "RandomImageSelector.h"
+#include "SequentialRandomImageSelector.h"
 #include "FileUtils.h"
 
 using namespace std;
 //--------------------------------------------------------------------------------------------------------
-//im not sure what this is for....so i keep changing it trying to make sense of it...
-void RandomImageSelector::RandomizeFolderList(int numFolders)
-{
-	vector <string> newList = displayList;
-	displayList.clear();
-	bool done = false;
-	while(!done)
-	{
-		bool validFile = false;
-		int loopCpunter = 0;
-		int i = GetRandomNum(0, numFolders);
-		do {
-			if (loopCpunter >= MAX_LOOP_COUNT)
-			{
-				validFile = true;
-				break;
-			}
-			//countall the dirs in the path given, then get a random num from that!
-			//int randomDir = getRandomNum(0,masterFolderList.size()-1);//doesnt seem to get last dir with the size() -1
-			string newPath = newList[i];
-			if (CheckForIgnorePathList(newPath))
-			{
-				validFile = false;
-				loopCpunter++;
-			}
-			else
-			{
-				displayList.push_back(newPath);
-				validFile = true;
-			}
-
-		} while (!validFile);
-	}
-}
-//--------------------------------------------------------------------------------------------------------
 //picks a dir from the master list, then "digs" down to get soething new
-string RandomImageSelector::GetRandomDir(bool useIgnoreList)
+string SequentialRandomImageSelector::GetRandomDirFromSequentialList(bool useIgnoreList)
 {
-	string curDir = GetRandomDirFromFolderList();
+	string curDir = GetNextDirFromFolderList();
 
 	//short circuit for ignore stuff
 	if (useIgnoreList)
@@ -138,18 +103,21 @@ string RandomImageSelector::GetRandomDir(bool useIgnoreList)
 	return curDir;
 }
 //--------------------------------------------------------------------------------------------------------
-string RandomImageSelector::GetRandomDirFromFolderList()
+string SequentialRandomImageSelector::GetNextDirFromFolderList()
 {
 	if (displayList.size() == 0)
 		return "";
 	else if (displayList.size() == 1)
 		return displayList[0];
-
-    int index = GetRandomNum(0, (int)displayList.size() - 1);
-	return displayList[index];
+	
+	if (masterPathIndex < displayList.size() - 1)
+		masterPathIndex++;
+	else masterPathIndex = 0;
+	return displayList[masterPathIndex];
 }
+
 //--------------------------------------------------------------------------------------------------------
-string RandomImageSelector::GetNewImage()
+string SequentialRandomImageSelector::GetNewImage()
 {
 	string returnImg;
 	bool isUniqueImg = false;
@@ -158,7 +126,7 @@ string RandomImageSelector::GetNewImage()
 	while (!isUniqueImg)
 	{
 		count++;
-		string curDir = GetRandomDir(true);
+		string curDir = GetRandomDirFromSequentialList(true);
 		int numFiles = FileUtils::GetNumFilesInDir(curDir);
 
 		if (numFiles == 0)

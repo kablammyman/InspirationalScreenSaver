@@ -21,7 +21,6 @@ class CurrentImage : public RenderObject
 	SDL_ScreenStruct *screenStruct;
 	StockBitmapFont font;
 
-	int GetRandomNum(int min, int max);
 public:
 	bool imageTransition;
 	void Update();

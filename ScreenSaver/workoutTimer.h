@@ -7,6 +7,7 @@ class WorkoutTimer : public RenderObject
 	StopWatch workoutTimer;
 	bool timerOn;
 	SoundUtils *sound;
+	StockBitmapFont font;
 	bool soundPlayed;
 	void KillSound();
 public: 

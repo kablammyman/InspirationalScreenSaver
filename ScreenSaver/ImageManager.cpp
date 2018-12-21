@@ -3,12 +3,15 @@
 #include "FileUtils.h"
 #include "CFGUtils.h"
 #include "RandomImageSelector.h"
+#include "SequentialRandomImageSelector.h"
 
 using namespace std;
 
 ImageManager::ImageManager()
 {
-	imgSelector = new RandomImageSelector();
+	//imgSelector = new RandomImageSelector();
+	imgSelector = new SequentialRandomImageSelector();
+	
 }
 
 

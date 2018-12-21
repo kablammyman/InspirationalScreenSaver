@@ -72,9 +72,8 @@ void WorkoutTimer::StartCountdownTimer()
 	{
 		if (!Globals::viewWorkoutTimer)
 			return;
-		//VIC//clear(bmp);
-		//VIC//textprintf_ex(bmp, font, 0, 0, makecol(255, 255, 255), 0, "%d:%d:%d", workoutTimer.minutes, workoutTimer.seconds, workoutTimer.decimals);
 
-		//blit(bmp, dest, 0, 0, x, y, w, h); 
-		//VIC//stretch_blit(bmp, dest, 0, 0, bmp->w, bmp->h,x-100,y+30, bmp->w*2, bmp->h*2);
+		bmp->Clear();
+		font.Draw(bmp, workoutTimer.ToString(), x, y);
+		bmp->Blit(dest, x, y);
 	}

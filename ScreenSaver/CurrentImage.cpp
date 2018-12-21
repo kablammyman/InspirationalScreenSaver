@@ -1,7 +1,7 @@
 #include "CurrentImage.h"
 #include "MainApp.h"
 #include "Globals.h"
-
+#include <random>
 #include "stb_image.h"
 CurrentImage::CurrentImage(SDL_ScreenStruct *ss) : RenderObject(0, 0, 200, 200)
 {
@@ -68,8 +68,8 @@ void CurrentImage::Load_Image(std::string imageToLoad)
 	targetX = (screenStruct->screenW / 2) - (targetImgWidth / 2);
 	targetY = (screenStruct->screenH / 2) - (targetImgHeight / 2);
 
-	x = -500;// GetRandomNum(-(screenStruct->screenW / 2), (screenStruct->screenW));
-	y = GetRandomNum(-(screenStruct->screenH / 2), (screenStruct->screenH));
+	x = FileUtils::GetRandomInt(-(screenStruct->screenW / 2), (screenStruct->screenW));
+	y = FileUtils::GetRandomInt(-(screenStruct->screenH / 2), (screenStruct->screenH));
 	scaleFactor = 0;
 
 }
@@ -89,11 +89,11 @@ void CurrentImage::Update()
 	curImgHeight = bmp->h * scaleFactor;
 	curImgWidth = bmp->w * scaleFactor;
 
-	if (curImgWidth >= targetImgWidth)
-		curImgWidth = targetImgWidth;
+	if (curImgWidth >= (float) targetImgWidth)
+		curImgWidth = (float)targetImgWidth;
 
-	if (curImgHeight >= targetImgHeight)
-		curImgHeight = targetImgHeight;
+	if (curImgHeight >= (float)targetImgHeight)
+		curImgHeight = (float)targetImgHeight;
 
 
 
@@ -132,20 +132,9 @@ void CurrentImage::Draw(PIXMAP *dest)
 	}
 	if (imageTransition)
 		bmp->DrawScaledCopy(dest, x, y, (unsigned int)curImgWidth, (unsigned int)curImgHeight);
-		//bmp->DrawScaledCopyForScreenSaver(dest, x, y, (unsigned int)curImgWidth, (unsigned int)curImgHeight);
 
 	else
 		bmp->DrawScaledCopy(dest, x, y, targetImgWidth, targetImgHeight);
-}
-//---------------------------------------------------------------------------------------
-int CurrentImage::GetRandomNum(int min, int max)
-{
-	//if(rand()%10 > 5)
-	{
-		int diff = ((max - min) + 1);
-		return ((diff * rand()) / RAND_MAX) + min;
-	}
-	//return rand()%max + min;
 }
 //---------------------------------------------------------------------------------------
 void CurrentImage::NoImageMessage()
@@ -175,7 +164,7 @@ void DebugInfo::Draw(PIXMAP *dest)
 	bmp->Clear();
 }
 
-void DebugInfo::Textout(int x, int y, string text)
+void DebugInfo::Textout(int _x, int _y, string text)
 {
-	font.Draw(bmp, text, x, y);
+	font.Draw(bmp, text, _x, _y);
 }

@@ -35,7 +35,7 @@ MainApp::MainApp()
 	
 
 	Globals::min = 2, Globals::sec = 5, Globals::mil = 0;
-	Globals::imageDisplayTimeLength = 5;
+	Globals::imageDisplayTimeLength = 1;
 	Globals::imageMemAmt = 10;
 	Globals::viewPathInfo = true;
 	Globals::viewClock = true;
