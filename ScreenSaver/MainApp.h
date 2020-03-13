@@ -27,8 +27,8 @@ public:
 	SDL_ScreenStruct screenStruct;
 	SDL_Texture * screenBufferTexture;
 
-	int largeFontSize;
-	int fontSize;
+	//int largeFontSize;
+	//int fontSize;
 
 	MainApp();
 	

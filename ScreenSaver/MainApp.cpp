@@ -186,7 +186,7 @@ void MainApp::InitWindow(int SCREEN_WIDTH, int SCREEN_HEIGHT, bool fullScreen)
 		SDL_GetCurrentDisplayMode(0, &DM);
 		SCREEN_WIDTH = DM.w;
 		SCREEN_HEIGHT = DM.h;
-		fontSize = 24;
+		//fontSize = 24;
 	}
 
 }
@@ -195,13 +195,13 @@ void MainApp::InitScreens()
 {
 	string menuFontPath = "";
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	TTF_Font* font = TTF_OpenFont(menuFontPath.c_str(), largeFontSize);
+	//TTF_Font* font = TTF_OpenFont(menuFontPath.c_str(), largeFontSize);
 	screenBufferTexture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, screenStruct.screenW, screenStruct.screenH);
 
 	sceneIndex = 0;
-	screenStruct.font = font;
+	//screenStruct.font = font;
 	screenStruct.renderer = renderer;
-	screenStruct.fontSize = fontSize;
+	//screenStruct.fontSize = fontSize;
 	screenStruct.fontPath = menuFontPath;
 
 	allScenes.push_back(screenSaver);

@@ -8,9 +8,9 @@
 struct SDL_ScreenStruct
 {
 	SDL_Renderer *renderer;
-	TTF_Font* font;
+	//TTF_Font* font;
 	std::string fontPath;
-	int fontSize;
+	//int fontSize;
 	int screenW,screenH;
 	bool fullScreen;
 	SDL_Rect* rect;
