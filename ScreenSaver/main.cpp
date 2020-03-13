@@ -5,7 +5,7 @@
 #include <string>
 
 #include "SDL.h"
-#include "SDL_ttf.h"
+//#include "SDL_ttf.h"
 #include "SDL_syswm.h"
 //#include <SDL_image.h>
 
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER);
 	//IMG_Init(IMG_INIT_PNG);
-	TTF_Init();
+	//TTF_Init();
 
 	
 	
