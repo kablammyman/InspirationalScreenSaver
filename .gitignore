@@ -5,5 +5,5 @@ ipch/
 *.sdf
 .vs/
 *.suo
-build_vs2015/
+build_vs*/
 build_linux/
