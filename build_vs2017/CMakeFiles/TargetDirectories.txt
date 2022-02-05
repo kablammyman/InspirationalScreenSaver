@@ -1,3 +1,0 @@
-E:/source/InspirationalScreenSaver/build_vs2017/CMakeFiles/ALL_BUILD.dir
-E:/source/InspirationalScreenSaver/build_vs2017/CMakeFiles/ZERO_CHECK.dir
-E:/source/InspirationalScreenSaver/build_vs2017/ScreenSaver/CMakeFiles/ScreenSaver.dir
