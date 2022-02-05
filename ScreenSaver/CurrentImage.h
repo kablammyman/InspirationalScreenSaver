@@ -57,11 +57,12 @@ class DebugInfo : public RenderObject
 public:
 	DebugInfo(int x, int y) : RenderObject(x, y, 200, 90)
 	{
-		enabled = true;
+		enabled = false;
 	}
 	
 	void Draw(PIXMAP *dest);
 	void Enable(bool isEnabled) { enabled = isEnabled; }
+	void Toggle() {enabled = !enabled;}
 	bool IsEnabled() { return enabled; }
 	void Textout(int x, int y, std::string text);
 };

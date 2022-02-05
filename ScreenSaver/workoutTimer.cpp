@@ -2,12 +2,13 @@
 #include "MainApp.h"
 #include "Globals.h"
 
-WorkoutTimer::WorkoutTimer (int x, int y) : RenderObject(x,y,75,16)
+WorkoutTimer::WorkoutTimer (int x, int y) : RenderObject(x,y,100,16)
 {
 	soundPlayed = false;
-	timerOn = true;
+	timerOn = false;
 	StartElapsedTimer();
 	sound = nullptr;
+	this->x -= xOff;
 }
 
 WorkoutTimer::~WorkoutTimer()
@@ -72,8 +73,11 @@ void WorkoutTimer::StartCountdownTimer()
 	{
 		if (!Globals::viewWorkoutTimer)
 			return;
+		if (!timerOn)
+			return;
+	/*	bmp->Clear();
+		font.Draw(bmp, workoutTimer.ToString(), 0, 0);
+		bmp->Blit(dest, x, y);*/
 
-		bmp->Clear();
-		font.Draw(bmp, workoutTimer.ToString(), x, y);
-		bmp->Blit(dest, x, y);
+		font.Draw(dest, workoutTimer.ToString(), x, y);
 	}

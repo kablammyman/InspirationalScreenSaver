@@ -1,0 +1,10 @@
+File path is empty in ScreenSaver::ChangeImage
+newImagePath: 
+File path is empty in ScreenSaver::ChangeImage
+newImagePath: 
+File path is empty in ScreenSaver::ChangeImage
+newImagePath: 
+File path is empty in ScreenSaver::ChangeImage
+newImagePath: 
+File path is empty in ScreenSaver::ChangeImage
+newImagePath: 

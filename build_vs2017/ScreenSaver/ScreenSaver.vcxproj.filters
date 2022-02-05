@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\3rdParty\stb_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\3rdParty\stb_image_write.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\BitMask.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\CurrentImage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\GalleryMemory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\ImageManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\ImageSelector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\KeyProxy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\MainApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\RandomImageSelector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\ScreenSaver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\SequentialRandomImageSelector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\SoundEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\StopWatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\StopWatchScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\workoutTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\3rdParty\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\3rdParty\stb_image_write.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\BitMask.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\CurrentImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\GalleryMemory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\Globals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\ImageManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\ImageSelector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\KeyProxy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\MainApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\RandomImageSelector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\SDL_ScreenStruct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\ScreenSaver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\SequentialRandomImageSelector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\SoundEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\StopWatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\StopWatchScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\workoutTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\source\InspirationalScreenSaver\ScreenSaver\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{2C6E1D4D-3E80-3D69-B05B-6413F2D545F6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{BEA8590B-D760-33E0-9732-616C10338A86}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

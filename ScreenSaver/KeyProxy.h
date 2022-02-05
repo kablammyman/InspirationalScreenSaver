@@ -14,11 +14,13 @@ public:
 		startUpTimer  = 32,
 		startDownTimer = 64,
 		stopTimer = 128,
-		resetTimer = 256
+		resetTimer = 256,
+		toggleDebug = 512
 	};
 
 	KeyFunctions keyFunctions;
-	int ConvertKeyCodesToKeyFunction();
+	int curKey;
+	int ConvertKeyCodesToKeyFunction(int keycode);
 	int pollKeys();
 
 };

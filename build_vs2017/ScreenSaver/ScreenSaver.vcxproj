@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{D2B129A3-A03F-3421-8F63-4FB07C1777B7}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>x64</Platform>
+    <ProjectName>ScreenSaver</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\source\InspirationalScreenSaver\bin\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ScreenSaver.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ScreenSaver</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\source\InspirationalScreenSaver\bin\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ScreenSaver.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ScreenSaver</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\source\InspirationalScreenSaver\build_vs2017\ScreenSaver\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">ScreenSaver.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">ScreenSaver</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\source\InspirationalScreenSaver\build_vs2017\ScreenSaver\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">ScreenSaver.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">ScreenSaver</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\source\Utils\GameUtils;E:\source\Utils\FileUtils;E:\source\Utils\CFGUtils;E:\source\Utils\StringUtils;E:\source\Utils\LogUtils;E:\source\InspirationalScreenSaver\3rdParty;E:\source\InspirationalScreenSaver\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CRT_SECURE_NO_WARNINGS;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\source\Utils\GameUtils;E:\source\Utils\FileUtils;E:\source\Utils\CFGUtils;E:\source\Utils\StringUtils;E:\source\Utils\LogUtils;E:\source\InspirationalScreenSaver\3rdParty;E:\source\InspirationalScreenSaver\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\source\Utils\GameUtils;E:\source\Utils\FileUtils;E:\source\Utils\CFGUtils;E:\source\Utils\StringUtils;E:\source\Utils\LogUtils;E:\source\InspirationalScreenSaver\3rdParty;E:\source\InspirationalScreenSaver\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\..\lib\win\x64\SDL2.lib;..\..\lib\win\x64\SDL2main.lib;..\..\lib\win\x64\SDL2_ttf.lib;E:\source\Utils\x64\Debug\StringUtils.lib;E:\source\Utils\x64\Debug\GameUtils.lib;E:\source\Utils\x64\Debug\FileUtils.lib;E:\source\Utils\x64\Debug\CFGUtils.lib;E:\source\Utils\x64\Debug\LogUtils.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>E:/source/InspirationalScreenSaver/build_vs2017/ScreenSaver/Debug/ScreenSaver.lib</ImportLibrary>
+      <ProgramDataBaseFile>E:/source/InspirationalScreenSaver/bin/Debug/ScreenSaver.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\source\Utils\GameUtils;E:\source\Utils\FileUtils;E:\source\Utils\CFGUtils;E:\source\Utils\StringUtils;E:\source\Utils\LogUtils;E:\source\InspirationalScreenSaver\3rdParty;E:\source\InspirationalScreenSaver\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\source\Utils\GameUtils;E:\source\Utils\FileUtils;E:\source\Utils\CFGUtils;E:\source\Utils\StringUtils;E:\source\Utils\LogUtils;E:\source\InspirationalScreenSaver\3rdParty;E:\source\InspirationalScreenSaver\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\source\Utils\GameUtils;E:\source\Utils\FileUtils;E:\source\Utils\CFGUtils;E:\source\Utils\StringUtils;E:\source\Utils\LogUtils;E:\source\InspirationalScreenSaver\3rdParty;E:\source\InspirationalScreenSaver\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\..\lib\win\x64\SDL2main.lib;..\..\lib\win\x64\SDL2_ttf.lib;E:\source\Utils\x64\Debug\StringUtils.lib;E:\source\Utils\x64\Debug\GameUtils.lib;E:\source\Utils\x64\Debug\FileUtils.lib;E:\source\Utils\x64\Debug\CFGUtils.lib;E:\source\Utils\x64\Debug\LogUtils.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>E:/source/InspirationalScreenSaver/build_vs2017/ScreenSaver/Release/ScreenSaver.lib</ImportLibrary>
+      <ProgramDataBaseFile>E:/source/InspirationalScreenSaver/bin/Release/ScreenSaver.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\source\Utils\GameUtils;E:\source\Utils\FileUtils;E:\source\Utils\CFGUtils;E:\source\Utils\StringUtils;E:\source\Utils\LogUtils;E:\source\InspirationalScreenSaver\3rdParty;E:\source\InspirationalScreenSaver\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\source\Utils\GameUtils;E:\source\Utils\FileUtils;E:\source\Utils\CFGUtils;E:\source\Utils\StringUtils;E:\source\Utils\LogUtils;E:\source\InspirationalScreenSaver\3rdParty;E:\source\InspirationalScreenSaver\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\source\Utils\GameUtils;E:\source\Utils\FileUtils;E:\source\Utils\CFGUtils;E:\source\Utils\StringUtils;E:\source\Utils\LogUtils;E:\source\InspirationalScreenSaver\3rdParty;E:\source\InspirationalScreenSaver\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\..\lib\win\x64\SDL2main.lib;..\..\lib\win\x64\SDL2_ttf.lib;E:\source\Utils\x64\Debug\StringUtils.lib;E:\source\Utils\x64\Debug\GameUtils.lib;E:\source\Utils\x64\Debug\FileUtils.lib;E:\source\Utils\x64\Debug\CFGUtils.lib;E:\source\Utils\x64\Debug\LogUtils.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>E:/source/InspirationalScreenSaver/build_vs2017/ScreenSaver/MinSizeRel/ScreenSaver.lib</ImportLibrary>
+      <ProgramDataBaseFile>E:/source/InspirationalScreenSaver/build_vs2017/ScreenSaver/MinSizeRel/ScreenSaver.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\source\Utils\GameUtils;E:\source\Utils\FileUtils;E:\source\Utils\CFGUtils;E:\source\Utils\StringUtils;E:\source\Utils\LogUtils;E:\source\InspirationalScreenSaver\3rdParty;E:\source\InspirationalScreenSaver\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>E:\source\Utils\GameUtils;E:\source\Utils\FileUtils;E:\source\Utils\CFGUtils;E:\source\Utils\StringUtils;E:\source\Utils\LogUtils;E:\source\InspirationalScreenSaver\3rdParty;E:\source\InspirationalScreenSaver\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>E:\source\Utils\GameUtils;E:\source\Utils\FileUtils;E:\source\Utils\CFGUtils;E:\source\Utils\StringUtils;E:\source\Utils\LogUtils;E:\source\InspirationalScreenSaver\3rdParty;E:\source\InspirationalScreenSaver\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>..\..\lib\win\x64\SDL2main.lib;..\..\lib\win\x64\SDL2_ttf.lib;E:\source\Utils\x64\Debug\StringUtils.lib;E:\source\Utils\x64\Debug\GameUtils.lib;E:\source\Utils\x64\Debug\FileUtils.lib;E:\source\Utils\x64\Debug\CFGUtils.lib;E:\source\Utils\x64\Debug\LogUtils.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>E:/source/InspirationalScreenSaver/build_vs2017/ScreenSaver/RelWithDebInfo/ScreenSaver.lib</ImportLibrary>
+      <ProgramDataBaseFile>E:/source/InspirationalScreenSaver/build_vs2017/ScreenSaver/RelWithDebInfo/ScreenSaver.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="E:\source\InspirationalScreenSaver\ScreenSaver\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule E:/source/InspirationalScreenSaver/ScreenSaver/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/source/InspirationalScreenSaver -BE:/source/InspirationalScreenSaver/build_vs2017 --check-stamp-file E:/source/InspirationalScreenSaver/build_vs2017/ScreenSaver/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">E:\source\InspirationalScreenSaver\build_vs2017\ScreenSaver\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule E:/source/InspirationalScreenSaver/ScreenSaver/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/source/InspirationalScreenSaver -BE:/source/InspirationalScreenSaver/build_vs2017 --check-stamp-file E:/source/InspirationalScreenSaver/build_vs2017/ScreenSaver/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">E:\source\InspirationalScreenSaver\build_vs2017\ScreenSaver\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule E:/source/InspirationalScreenSaver/ScreenSaver/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/source/InspirationalScreenSaver -BE:/source/InspirationalScreenSaver/build_vs2017 --check-stamp-file E:/source/InspirationalScreenSaver/build_vs2017/ScreenSaver/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">E:\source\InspirationalScreenSaver\build_vs2017\ScreenSaver\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule E:/source/InspirationalScreenSaver/ScreenSaver/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SE:/source/InspirationalScreenSaver -BE:/source/InspirationalScreenSaver/build_vs2017 --check-stamp-file E:/source/InspirationalScreenSaver/build_vs2017/ScreenSaver/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">E:\source\InspirationalScreenSaver\build_vs2017\ScreenSaver\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="E:\source\InspirationalScreenSaver\3rdParty\stb_image.cpp" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\3rdParty\stb_image.h" />
+    <ClCompile Include="E:\source\InspirationalScreenSaver\3rdParty\stb_image_write.cpp" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\3rdParty\stb_image_write.h" />
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\BitMask.cpp" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\BitMask.h" />
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\CurrentImage.cpp" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\CurrentImage.h" />
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\GalleryMemory.cpp" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\GalleryMemory.h" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\Globals.h" />
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\ImageManager.cpp" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\ImageManager.h" />
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\ImageSelector.cpp" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\ImageSelector.h" />
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\KeyProxy.cpp" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\KeyProxy.h" />
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\MainApp.cpp" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\MainApp.h" />
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\RandomImageSelector.cpp" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\RandomImageSelector.h" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\SDL_ScreenStruct.h" />
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\ScreenSaver.cpp" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\ScreenSaver.h" />
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\SequentialRandomImageSelector.cpp" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\SequentialRandomImageSelector.h" />
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\SoundEffect.cpp" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\SoundEffect.h" />
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\StopWatch.cpp" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\StopWatch.h" />
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\StopWatchScreen.cpp" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\StopWatchScreen.h" />
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\main.cpp" />
+    <ClCompile Include="E:\source\InspirationalScreenSaver\ScreenSaver\workoutTimer.cpp" />
+    <ClInclude Include="E:\source\InspirationalScreenSaver\ScreenSaver\workoutTimer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="E:\source\InspirationalScreenSaver\build_vs2017\ZERO_CHECK.vcxproj">
+      <Project>{6B50EA51-A352-3845-B790-1110B2808B30}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

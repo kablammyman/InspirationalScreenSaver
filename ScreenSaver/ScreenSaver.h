@@ -16,7 +16,7 @@
 
 //#include "queueImageManager.h"
 //#include "shuffledImageManager.h"
-//#include "workoutTimer.h"
+#include "workoutTimer.h"
 
 
 #define GET_RANDOM_FOLDERS 0
@@ -31,7 +31,7 @@ class ScreenSaver : public Scene
 	unsigned int  folderNum;
 	StopWatch imageTimer;
 	StopWatch refreshTimer;
-	
+
 	bool timerOn;
 	bool showLegend;
 	bool timeOver;
@@ -44,7 +44,7 @@ class ScreenSaver : public Scene
 	CurrentImage* curImage;
 	DebugInfo *debugInfo;
 
-	//WorkoutTimer* workoutTimer;
+	WorkoutTimer* workoutTimer;
 	SDL_ScreenStruct *ss;
 
 	time_t rawtime;
@@ -53,8 +53,8 @@ class ScreenSaver : public Scene
 	long ltime;
 	int stime;
 	
-	void updateTime();
-	string getTimeString();
+	void UpdateTime();
+	string GetTimeString();
 
 public:
 	int dirSelectionForDisplay;
@@ -62,7 +62,7 @@ public:
 	ScreenSaver(SDL_ScreenStruct *s);
 	
 	void SetCurImgObj(CurrentImage *c);
-	
+	void SetKeys(int keyReleased);
 	bool DoDelete(string path, string createDate = "");
 	void UpdateScene();
 	void SetDisplayDirs(vector<string> dirs);

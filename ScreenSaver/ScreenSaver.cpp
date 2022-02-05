@@ -26,9 +26,9 @@ ScreenSaver::ScreenSaver(SDL_ScreenStruct *s)
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
 
-	//workoutTimer = new WorkoutTimer(ss->screenW - 100, 10);
+	workoutTimer = new WorkoutTimer(ss->screenW, 30);
 	//workoutTimer->loadSoundFile(mainApp->sndFile.c_str());
-	//workoutTimer->pauseWorkoutTimer(true);
+	workoutTimer->PauseWorkoutTimer(true);
 
 	legend = new AppLegend(ss->screenW - 300,ss->screenH - 100);
 	debugInfo = new DebugInfo(10,40);
@@ -38,7 +38,7 @@ ScreenSaver::ScreenSaver(SDL_ScreenStruct *s)
 	InitRenderController(ss->screenW, ss->screenH);
 	AddToRenderList(legend);
 	AddToRenderList(curImage);
-	//AddToRenderList(workoutTimer);
+	AddToRenderList(workoutTimer);
 	SetCurImgObj(curImage);
 
 	//imageManager.Init(mainApp->numFoldersInBase);
@@ -81,7 +81,7 @@ void ScreenSaver::SetDisplayDirs(vector<string> dirs)
 void ScreenSaver::ChangeScreenSize(int screenW, int screenH)
 {
 	Scene::ChangeScreenSize(screenW, screenH);
-	//workoutTimer->setX( GraphicsProxy::getScreenWidth() - 100);
+	workoutTimer->SetX(ss->screenW - workoutTimer->xOff);
 	legend->SetX(ss->screenW - 300);
 	legend->SetY(ss->screenH - 100);
 }
@@ -154,6 +154,11 @@ void ScreenSaver::ChangeImage(string newImage)
 	curImage->Load_Image(filePath);
 }
 //---------------------------------------------------------------------------------------
+void ScreenSaver::SetKeys(int keyReleased)
+{
+	keyProxy.ConvertKeyCodesToKeyFunction(keyReleased);
+}
+//---------------------------------------------------------------------------------------
 void ScreenSaver::UpdateScene()
 {
 
@@ -163,24 +168,24 @@ void ScreenSaver::UpdateScene()
 
 	curImage->Update();
 	imageTimer.UpdateStopWatch();
-
+	workoutTimer->Update();
 
 	refreshTimer.UpdateStopWatch();
 
 	if(!curImage->imageTransition)
 		imageTimer.pause = false;
 
-	int keys = keyProxy.ConvertKeyCodesToKeyFunction();
+	//int keys = keyProxy.ConvertKeyCodesToKeyFunction();
 
-	switch(keys)
+	switch(keyProxy.curKey)
 	{
-	case KeyProxy::nextImage:
+		case KeyProxy::nextImage:
 			GotoNextImage();
 			break;
-
 		case KeyProxy::KeyFunctions::prevImage:
 			GotoPrevImage();
 			break;
+
 		case KeyProxy::pauseImage:
 			//GotoNextImage();
 			break;
@@ -193,23 +198,29 @@ void ScreenSaver::UpdateScene()
 			break;
 
 		case KeyProxy::startDownTimer:
-			//workoutTimer->startCountdownTimer();
+			workoutTimer->StartCountdownTimer();
 			break;
 		case KeyProxy::startUpTimer:
-			//workoutTimer->startElapsedTimer();
+			workoutTimer->StartElapsedTimer();
+			break;
+		case KeyProxy::toggleDebug:
+			debugInfo->Toggle();
 			break;
 	}
+	//clear the key once we processed it
+	keyProxy.curKey = 0;
 }
 //---------------------------------------------------------------------------------------
 void ScreenSaver::DrawScene()
 {
 	ClearScreenBuffer();
 	Scene::DrawScene();
+	
 	if (Globals::viewPathInfo)
 		DrawTextOnScene(filePath, 10, 0);
 
 	if(Globals::viewClock)
-		DrawTextOnScene(getTimeString(), 10, 10);
+		DrawTextOnScene(GetTimeString(), GetScreenW() - 200, 10);
 
 	//debug
 	if (debugInfo->IsEnabled())
@@ -227,16 +238,7 @@ void ScreenSaver::DrawScene()
 	}
 	//renderer.drawText( 10, 10, makecol(255, 255, 255), 0, to_string((int)fps));
 
-
-
-	/*#ifdef _DEBUG
-	textprintf_ex(screenBuffer, font, 10, 10, makecol(255, 255, 255), 0, "scale: %f (%f x %f)", scaleFactor, imgWidth, imgHeight);
-
-	textprintf_ex(dest, font, 10, 10,  makecol(255,255,255), 0, "x t:  (%d x %d)", x,y);
-	textprintf_ex(dest, font, 10, 20,  makecol(255,255,255), 0, "tarX tarY: %f (%d x %d)",scaleFactor, targetX,targetY);
-	textprintf_ex(screenBuffer, font, 10, 40, makecol(255, 255, 255), 0, "%s", filePath.c_str());
-	textprintf_ex(screenBuffer, font, 10, 50, makecol(255, 255, 255), 0, "%s", asctime(timeinfo));
-	#endif*/
+	workoutTimer->Draw(GetSceneScreenBuffer());
 }
 void ScreenSaver::GotoNextImage()
 {
@@ -271,13 +273,13 @@ void ScreenSaver::ToggleLegend()
 	showLegend = !showLegend;
 }
 //---------------------------------------------------------------------------------------
-void  ScreenSaver::updateTime()
+void  ScreenSaver::UpdateTime()
 {
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
 }
 //---------------------------------------------------------------------------------------
-string ScreenSaver::getTimeString()
+string ScreenSaver::GetTimeString()
 {
 	return asctime(timeinfo);
 }

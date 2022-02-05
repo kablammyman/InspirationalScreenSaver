@@ -1,38 +1,51 @@
 #include "KeyProxy.h"
+#include "SDL.h"
 
 int KeyProxy::pollKeys()
 {
 	return 0;//AllegroKeys::getKeyByScanCode();
 }
-int KeyProxy::ConvertKeyCodesToKeyFunction()
+
+
+int KeyProxy::ConvertKeyCodesToKeyFunction(int keycode)
 {
-	int temp = pollKeys();
-	switch(temp)
+	switch(keycode)
 	{
-		//KEY_G
+		/*case SDLK_UP:
 		case 7:
 			return deleteGallery;
 		//KEY_I
 		case 9:
 			return deleteImage;
-
+			*/
 		//KEY_SPACE
-		case 75:
+		case SDLK_d:
+			curKey = toggleDebug;
+			return toggleDebug;
+		
+		case SDLK_SPACE:
+		//case 75:
+			curKey = pauseImage;
 			return pauseImage;
 
-		//KEY_LEFT
-		case 82:
+		case SDLK_LEFT:
+		//case 82:
+			curKey = prevImage;
 			return prevImage;
-		//KEY_UP
-		case 84:
+		
+		case SDLK_UP:
+		//case 84:
+			curKey = startUpTimer;
 			return startUpTimer;
 
-		//KEY_RIGHT
-		case 83:
+		case SDLK_RIGHT:
+		//case 83:
+			curKey = nextImage;
 			return nextImage;
 
-		//KEY_DOWN
-		case 85:
+		case SDLK_DOWN:
+		//case 85:
+			curKey = startDownTimer;
 			return startDownTimer;
 	}
 	return -1;

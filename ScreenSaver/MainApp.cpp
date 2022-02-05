@@ -35,10 +35,10 @@ MainApp::MainApp()
 	
 
 	Globals::min = 2, Globals::sec = 5, Globals::mil = 0;
-	Globals::imageDisplayTimeLength = 1;
+	Globals::imageDisplayTimeLength = 5;
 	Globals::imageMemAmt = 10;
 	Globals::viewPathInfo = true;
-	Globals::viewClock = true;
+	Globals::viewClock = false;
 	Globals::viewWorkoutTimer = true;
 	Globals::useImageMemory = true;
 
@@ -71,6 +71,10 @@ bool MainApp::ReadCFGAndInitApp(string path)
 
 	mainWorkingPath = CFGUtils::GetCfgStringValue("mainWorkingPath");
 	int numFoldersInBase = FileUtils::GetNumFoldersinDir(mainWorkingPath);
+	Globals::imageDisplayTimeLength = CFGUtils::GetCfgIntValue("TimeToShowImg");
+	if (Globals::imageDisplayTimeLength == 0)
+		Globals::imageDisplayTimeLength = 5;
+
 	Globals::Log("MainWorking path: "+ mainWorkingPath);
 	Globals::Log("num folders in main working path: "+ to_string(numFoldersInBase));
 	
@@ -90,6 +94,8 @@ bool MainApp::ReadCFGAndInitApp(string path)
 	vector<string> dirs = CFGUtils::GetCfgListValue("displayDirs");
 	for (size_t i = 0; i < dirs.size(); i++)
 	{
+		if (dirs[i].empty())
+			continue;
 		if(dirs[i].back() == '\r')
 		    dirs[i].pop_back();
 		if (dirs[i] == "all")
@@ -120,7 +126,7 @@ bool MainApp::ReadCFGAndInitApp(string path)
 		Globals::sec = CFGUtils::GetFloatValueFromList("stopWatch", "sec");
 		Globals::mil = CFGUtils::GetFloatValueFromList("stopWatch", "mil");
 	}
-
+	
 	return true;
 }
 

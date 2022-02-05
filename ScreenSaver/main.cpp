@@ -49,7 +49,8 @@ int main(int argc, char *argv[])
 	size_t found = startPath.find_last_of("/\\");
 	startPath = startPath.substr(0, found);
 	
-	app.ReadCFGAndInitApp(startPath);
+	if (!app.ReadCFGAndInitApp(startPath))
+		exit(0);
 
 	app.InitWindow();
 	app.InitScreens();
@@ -68,6 +69,8 @@ int main(int argc, char *argv[])
 				break;
 
 			case SDL_KEYUP:
+				app.screenSaver->SetKeys(e.key.keysym.sym);
+				
 				break;
 
 			default:
